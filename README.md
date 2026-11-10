@@ -12,6 +12,7 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 - **JavaScript** (amélioration progressive : le site reste utilisable sans JS)
 - **PHP 8.5** (inclusions communes, traitement du formulaire de contact)
 - **Docker** (environnement de développement Apache + PHP)
+- **Icônes** : [Bootstrap Icons](https://icons.getbootstrap.com/) (licence MIT)
 
 ## Principes du projet
 
@@ -54,13 +55,14 @@ Le site est accessible sur **http://localhost:8080**.
 ```
 solvr/
 ├── includes/
-│   ├── functions.php  # Fonctions utilitaires (échappement des sorties…)
+│   ├── functions.php  # Fonctions utilitaires (échappement, icônes SVG…)
 │   ├── pages.php      # Configuration des pages (SEO, menu, liens)
 │   ├── head.php       # <head> : métadonnées SEO, Open Graph, CSS
 │   ├── header.php     # Lien d'évitement, en-tête et navigation
 │   └── footer.php     # Pied de page et scripts
 ├── assets/
 │   ├── css/           # Styles personnalisés (style.css)
+│   ├── img/           # Images et illustrations
 │   └── vendor/        # Bibliothèques tierces (Bootstrap)
 ├── index.php          # Page d'accueil
 ├── Dockerfile         # Image PHP 8.5 + Apache
@@ -109,7 +111,8 @@ Les messages de commit suivent la convention [Conventional Commits](https://www.
 - [x] Environnement Docker
 - [x] Gabarit commun (head, header, footer)
 - [x] Charte graphique et navigation
-- [ ] Page d'accueil
+- [x] Page d'accueil (structure et contenus)
+- [ ] Images : portrait et captures des réalisations
 - [ ] Pages Services, Réalisations, À propos
 - [ ] Page Contact et formulaire
 - [ ] Pages légales (mentions légales, confidentialité)
