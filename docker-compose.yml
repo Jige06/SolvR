@@ -1,0 +1,8 @@
+services:
+  web:
+    build: .                     # construit l'image à partir du Dockerfile
+    container_name: solvr-web
+    ports:
+      - "8080:80"                # localhost:8080 → port 80 d'Apache
+    volumes:
+      - ./:/var/www/html         # ton dossier projet = racine du site
