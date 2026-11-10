@@ -1,0 +1,9 @@
+# Secrets
+includes/config.php
+
+# Systèmes
+.DS_Store
+Thumbs.db
+
+# Dépendances PHP (Composer, pour PHPMailer plus tard)
+/vendor/
