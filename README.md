@@ -16,9 +16,9 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 ## Principes du projet
 
 - **Mobile first** et responsive
-- **Accessibilité** : respect des recommandations WCAG / RGAA (balises sémantiques, contrastes AA, navigation au clavier, lien d'évitement)
-- **Sécurité** : validation côté serveur, protection CSRF, anti-spam, secrets hors du dépôt
-- **Référencement** : métadonnées uniques par page, données structurées, référencement local
+- **Accessibilité** : respect des recommandations WCAG / RGAA (balises sémantiques, contrastes AA, navigation au clavier, lien d'évitement, focus visible, respect de `prefers-reduced-motion`)
+- **Sécurité** : échappement systématique des sorties, validation côté serveur, protection CSRF, anti-spam, secrets hors du dépôt
+- **Référencement** : métadonnées uniques par page, Open Graph, URL canoniques, données structurées, référencement local
 - **RGPD** : aucune ressource chargée depuis un serveur tiers (polices et Bootstrap hébergés localement)
 
 ## Prérequis
@@ -45,6 +45,7 @@ Le site est accessible sur **http://localhost:8080**.
 |---|---|
 | `docker compose up -d` | Démarrer le conteneur |
 | `docker compose up -d --build` | Reconstruire l'image (après modification du `Dockerfile`) |
+| `docker compose ps` | Vérifier que le conteneur tourne |
 | `docker compose logs -f web` | Afficher les logs Apache / PHP en direct |
 | `docker compose down` | Arrêter le conteneur |
 
@@ -52,14 +53,25 @@ Le site est accessible sur **http://localhost:8080**.
 
 ```
 solvr/
-├── includes/          # Morceaux communs à toutes les pages (head, header, footer)
+├── includes/
+│   ├── functions.php  # Fonctions utilitaires (échappement des sorties…)
+│   ├── pages.php      # Configuration des pages (SEO, menu, liens)
+│   ├── head.php       # <head> : métadonnées SEO, Open Graph, CSS
+│   ├── header.php     # Lien d'évitement, en-tête et navigation
+│   └── footer.php     # Pied de page et scripts
 ├── assets/
-│   ├── css/           # Styles personnalisés
+│   ├── css/           # Styles personnalisés (style.css)
 │   └── vendor/        # Bibliothèques tierces (Bootstrap)
 ├── index.php          # Page d'accueil
 ├── Dockerfile         # Image PHP 8.5 + Apache
 └── docker-compose.yml # Lancement de l'environnement local
 ```
+
+### Ajouter une page
+
+1. Déclarer la page dans `includes/pages.php` (chemin, libellé, title, description, présence dans le menu)
+2. Créer le fichier `.php` à la racine en définissant `$currentPage` avec la clé correspondante
+3. Inclure `head.php` et `header.php`, écrire le contenu dans `<main id="contenu">`, puis inclure `footer.php`
 
 ## Conventions
 
@@ -74,6 +86,8 @@ Le projet suit un **Git Flow simplifié** :
 | `feature/…` | Nouvelle fonctionnalité, créée depuis `develop` |
 | `fix/…` | Correction de bug, créée depuis `develop` |
 | `chore/…` | Configuration, outillage, créée depuis `develop` |
+| `style/…` | Mise en forme, CSS, créée depuis `develop` |
+| `docs/…` | Documentation, créée depuis `develop` |
 | `hotfix/…` | Correction urgente, créée depuis `main` |
 
 ### Commits
@@ -87,12 +101,14 @@ Les messages de commit suivent la convention [Conventional Commits](https://www.
 | `style:` | Mise en forme, CSS |
 | `docs:` | Documentation |
 | `chore:` | Configuration, outillage |
+
 ## Feuille de route
 
 - [x] Cahier des charges
 - [x] Arborescence et wireframes
 - [x] Environnement Docker
-- [ ] Gabarit commun (head, header, footer)
+- [x] Gabarit commun (head, header, footer)
+- [x] Charte graphique et navigation
 - [ ] Page d'accueil
 - [ ] Pages Services, Réalisations, À propos
 - [ ] Page Contact et formulaire
