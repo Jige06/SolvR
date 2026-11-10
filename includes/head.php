@@ -11,8 +11,24 @@ $pageDescription = $page['description'] ?? 'Création de sites internet et d\'ap
 $canonicalUrl    = SITE_URL . ($page['path'] ?? '/');
 ?>
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-bs-theme="light">
+
 <head>
+    <!-- Thème appliqué AVANT l'affichage, pour éviter un flash de couleur au chargement -->
+    <script>
+        (function() {
+            let theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            try {
+                const saved = localStorage.getItem('solvr-theme');
+                if (saved === 'light' || saved === 'dark') {
+                    theme = saved;
+                }
+            } catch (error) {
+                /* localStorage indisponible (navigation privée stricte…) : on garde le thème du système */
+            }
+            document.documentElement.setAttribute('data-bs-theme', theme);
+        })();
+    </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
