@@ -1,41 +1,100 @@
 /* ==========================================================
-   1. Variables — charte graphique SolvR
+   1. Variables
    ========================================================== */
+
+/* --- Couleurs de marque : fixes, identiques dans les deux thèmes --- */
 :root {
-    /* Couleurs de marque */
-    --solvr-bg:         #FFFDFA;  /* fond beige orangé */
-    --solvr-gray:       #64626E;  /* gris */
-    --solvr-blue:       #254BEB;  /* bleu vif */
+    --brand-bg:         #FFFDFA;  /* fond beige orangé */
+    --brand-gray:       #64626E;  /* gris */
+    --brand-blue:       #254BEB;  /* bleu vif */
+    --brand-blue-hover: #1E3CC4;
+}
 
-    /* Nuances dérivées (interface) */
-    --solvr-bg-alt:     #F0E7D8;  /* sections alternées, header */
-    --solvr-gray-dark:  #2B2A31;  /* titres, texte principal */
-    --solvr-blue-hover: #1E3CC4;  /* survol, actif */
+/* --- Rôles : thème CLAIR (par défaut) --- */
+:root {
+    --solvr-bg:                 var(--brand-bg);
+    --solvr-bg-alt:             #F0E7D8;
+    --solvr-text:               #2B2A31;
+    --solvr-text-muted:         var(--brand-gray);
+    --solvr-accent:             var(--brand-blue);   /* liens, icônes, bordures d'accent */
+    --solvr-accent-rgb:         37, 75, 235;
+    --solvr-accent-hover:       var(--brand-blue-hover);
+    --solvr-accent-hover-rgb:   30, 60, 196;
+    --solvr-accent-soft:        rgba(37, 75, 235, 0.10);
+    --solvr-border:             rgba(100, 98, 110, 0.15);
+    --solvr-border-strong:      rgba(100, 98, 110, 0.40);
+    --solvr-shadow:             rgba(43, 42, 49, 0.08);
+    --solvr-footer-bg:          var(--brand-gray);
+    --solvr-footer-text:        var(--brand-bg);
 
-    /* Surcharge des variables globales de Bootstrap */
+    /* Branchement sur Bootstrap : suit automatiquement le thème */
     --bs-body-bg: var(--solvr-bg);
-    --bs-body-color: var(--solvr-gray-dark);
-    --bs-heading-color: var(--solvr-gray-dark);
-    --bs-secondary-color: var(--solvr-gray);
-    --bs-primary: var(--solvr-blue);
+    --bs-body-color: var(--solvr-text);
+    --bs-heading-color: var(--solvr-text);
+    --bs-secondary-color: var(--solvr-text-muted);
+    --bs-primary: var(--brand-blue);
     --bs-primary-rgb: 37, 75, 235;
-    --bs-link-color: var(--solvr-blue);
-    --bs-link-color-rgb: 37, 75, 235;
-    --bs-link-hover-color: var(--solvr-blue-hover);
-    --bs-link-hover-color-rgb: 30, 60, 196;
+    --bs-link-color: var(--solvr-accent);
+    --bs-link-color-rgb: var(--solvr-accent-rgb);
+    --bs-link-hover-color: var(--solvr-accent-hover);
+    --bs-link-hover-color-rgb: var(--solvr-accent-hover-rgb);
+}
+
+/* --- Rôles : thème SOMBRE (doit rester APRÈS le bloc clair) --- */
+[data-bs-theme="dark"] {
+    --solvr-bg:                 #18171D;
+    --solvr-bg-alt:             #2C2B33;
+    --solvr-text:               #F3EEE6;
+    --solvr-text-muted:         #B4B1BD;
+    --solvr-accent:             #8EA2FF;
+    --solvr-accent-rgb:         142, 162, 255;
+    --solvr-accent-hover:       #B7C4FF;
+    --solvr-accent-hover-rgb:   183, 196, 255;
+    --solvr-accent-soft:        rgba(142, 162, 255, 0.14);
+    --solvr-border:             rgba(243, 238, 230, 0.12);
+    --solvr-border-strong:      rgba(243, 238, 230, 0.30);
+    --solvr-shadow:             rgba(0, 0, 0, 0.35);
+    --solvr-footer-bg:          #0F0E13;
+    --solvr-footer-text:        #E9E4DC;
 }
 
 /* ==========================================================
-   2. Composants Bootstrap
+   2. Boutons
    ========================================================== */
 .btn-primary {
-    --bs-btn-bg: var(--solvr-blue);
-    --bs-btn-border-color: var(--solvr-blue);
-    --bs-btn-hover-bg: var(--solvr-blue-hover);
-    --bs-btn-hover-border-color: var(--solvr-blue-hover);
-    --bs-btn-active-bg: var(--solvr-blue-hover);
-    --bs-btn-active-border-color: var(--solvr-blue-hover);
+    --bs-btn-bg: var(--brand-blue);
+    --bs-btn-border-color: var(--brand-blue);
+    --bs-btn-hover-bg: var(--brand-blue-hover);
+    --bs-btn-hover-border-color: var(--brand-blue-hover);
+    --bs-btn-active-bg: var(--brand-blue-hover);
+    --bs-btn-active-border-color: var(--brand-blue-hover);
     --bs-btn-focus-shadow-rgb: 37, 75, 235;
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--solvr-accent);
+    --bs-btn-border-color: var(--solvr-accent);
+    --bs-btn-hover-color: #FFFFFF;
+    --bs-btn-hover-bg: var(--brand-blue);
+    --bs-btn-hover-border-color: var(--brand-blue);
+    --bs-btn-active-color: #FFFFFF;
+    --bs-btn-active-bg: var(--brand-blue-hover);
+    --bs-btn-active-border-color: var(--brand-blue-hover);
+    --bs-btn-focus-shadow-rgb: var(--solvr-accent-rgb);
+}
+
+/* Bouton clair sur fond bleu : couleurs de marque fixes */
+.btn-inverse {
+    --bs-btn-color: var(--brand-blue);
+    --bs-btn-bg: var(--brand-bg);
+    --bs-btn-border-color: var(--brand-bg);
+    --bs-btn-hover-color: var(--brand-blue-hover);
+    --bs-btn-hover-bg: #F0E7D8;
+    --bs-btn-hover-border-color: #F0E7D8;
+    --bs-btn-active-color: var(--brand-blue-hover);
+    --bs-btn-active-bg: #F0E7D8;
+    --bs-btn-active-border-color: #F0E7D8;
+    --bs-btn-focus-shadow-rgb: 255, 253, 250;
 }
 
 /* ==========================================================
@@ -47,48 +106,45 @@
     left: 0.5rem;
     z-index: 1080;
     padding: 0.5rem 1rem;
-    background-color: var(--solvr-gray-dark);
+    background-color: var(--solvr-text);   /* s'inverse tout seul selon le thème */
     color: var(--solvr-bg);
 }
 
 /* ==========================================================
-   4. Header
+   4. Header et navigation
    ========================================================== */
 .site-header {
     background-color: var(--solvr-bg-alt);
-    border-bottom: 1px solid rgba(100, 98, 110, 0.15);  /* ton gris à 15 % d'opacité */
-    box-shadow: 0 2px 8px rgba(43, 42, 49, 0.06);
+    border-bottom: 1px solid var(--solvr-border);
+    box-shadow: 0 2px 8px var(--solvr-shadow);
 }
 
 .navbar-brand {
     font-weight: 700;
-    color: var(--solvr-gray-dark);
+    color: var(--solvr-text);
 }
 
-/* --- Navigation : couleurs de la charte --- */
 .navbar {
-    --solvr-nav-pad-x: 0.75rem;                        /* espacement horizontal des liens */
+    --solvr-nav-pad-x: 0.75rem;
 
-    --bs-navbar-color: var(--solvr-gray);              /* liens au repos : 5,9:1 */
-    --bs-navbar-hover-color: var(--solvr-blue);        /* survol : 6,3:1 */
-    --bs-navbar-active-color: var(--solvr-gray-dark);  /* page en cours : 14:1 */
-    --bs-navbar-nav-link-padding-x: var(--solvr-nav-pad-x);  /* menu déplié (desktop) */
+    --bs-navbar-color: var(--solvr-text-muted);
+    --bs-navbar-hover-color: var(--solvr-accent);
+    --bs-navbar-active-color: var(--solvr-text);
+    --bs-navbar-nav-link-padding-x: var(--solvr-nav-pad-x);
 }
 
-.navbar .nav-link {
-    display: inline-block;            /* sur mobile, le lien prend la largeur de son texte */
-    position: relative;               /* repère pour le soulignement (::after) */
-    border: 1px solid transparent;    /* réserve la place de la bordure : pas de décalage */
-    border-radius: 0.5rem;
-    transition: color 0.2s ease, box-shadow 0.2s ease;
-}
-
-/* Menu burger : Bootstrap met le padding à 0, on le rétablit */
 .navbar .navbar-nav {
     --bs-nav-link-padding-x: var(--solvr-nav-pad-x);
 }
 
-/* Soulignement animé : aligné sur le padding, donc sur la largeur du mot */
+.navbar .nav-link {
+    display: inline-block;
+    position: relative;
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    transition: color 0.2s ease, box-shadow 0.2s ease;
+}
+
 .navbar .nav-link::after {
     content: "";
     position: absolute;
@@ -96,7 +152,7 @@
     right: var(--solvr-nav-pad-x);
     bottom: 0.3rem;
     height: 2px;
-    background-color: var(--solvr-blue);
+    background-color: var(--solvr-accent);
     transform: scaleX(0);
     transition: transform 0.25s ease;
 }
@@ -106,33 +162,62 @@
     transform: scaleX(1);
 }
 
-/* Page en cours : trait fin arrondi + ombre douce */
 .navbar .nav-link.active {
-    border-color: var(--solvr-blue);
-    box-shadow: 0 2px 8px rgba(37, 75, 235, 0.18);
+    border-color: var(--solvr-accent);
+    box-shadow: 0 2px 8px rgba(var(--solvr-accent-rgb), 0.18);
 }
 
-/* Focus clavier toujours visible, y compris sur le lien actif */
 .navbar .nav-link:focus-visible {
-    outline: 2px solid var(--solvr-blue);
+    outline: 2px solid var(--solvr-accent);
     outline-offset: 2px;
 }
+
+/* Bouton de bascule clair / sombre */
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border: 1px solid var(--solvr-text-muted);
+    border-radius: 50%;
+    background-color: transparent;
+    color: var(--solvr-text);
+    font-size: 1.15rem;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+    color: var(--solvr-accent);
+    border-color: var(--solvr-accent);
+}
+
+.theme-toggle:focus-visible {
+    outline: 2px solid var(--solvr-accent);
+    outline-offset: 2px;
+}
+
+/* En clair : on affiche la lune (passer en sombre). En sombre : le soleil. */
+.theme-toggle .icon-sun { display: none; }
+[data-bs-theme="dark"] .theme-toggle .icon-sun { display: inline; }
+[data-bs-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
 /* ==========================================================
    5. Footer
    ========================================================== */
 .site-footer {
-    background-color: var(--solvr-gray);
-    color: var(--solvr-bg);
+    background-color: var(--solvr-footer-bg);
+    color: var(--solvr-footer-text);
+    border-top: 1px solid var(--solvr-border);
 }
 
 .site-footer h2 {
-    color: var(--solvr-bg);
+    color: var(--solvr-footer-text);
 }
 
-/* Bleu illisible sur gris : liens couleur fond, soulignés */
 .site-footer a {
-    color: var(--solvr-bg);
+    color: var(--solvr-footer-text);
     text-decoration: underline;
     text-underline-offset: 0.2em;
 }
@@ -143,41 +228,12 @@
 }
 
 .site-footer hr {
-    border-color: var(--solvr-bg);
+    border-color: var(--solvr-footer-text);
     opacity: 0.4;
 }
 
 /* ==========================================================
-   6. Boutons complémentaires
-   ========================================================== */
-.btn-outline-primary {
-    --bs-btn-color: var(--solvr-blue);
-    --bs-btn-border-color: var(--solvr-blue);
-    --bs-btn-hover-color: #FFFFFF;
-    --bs-btn-hover-bg: var(--solvr-blue);
-    --bs-btn-hover-border-color: var(--solvr-blue);
-    --bs-btn-active-color: #FFFFFF;
-    --bs-btn-active-bg: var(--solvr-blue-hover);
-    --bs-btn-active-border-color: var(--solvr-blue-hover);
-    --bs-btn-focus-shadow-rgb: 37, 75, 235;
-}
-
-/* Bouton clair, pour les fonds bleus */
-.btn-inverse {
-    --bs-btn-color: var(--solvr-blue);
-    --bs-btn-bg: var(--solvr-bg);
-    --bs-btn-border-color: var(--solvr-bg);
-    --bs-btn-hover-color: var(--solvr-blue-hover);
-    --bs-btn-hover-bg: var(--solvr-bg-alt);
-    --bs-btn-hover-border-color: var(--solvr-bg-alt);
-    --bs-btn-active-color: var(--solvr-blue-hover);
-    --bs-btn-active-bg: var(--solvr-bg-alt);
-    --bs-btn-active-border-color: var(--solvr-bg-alt);
-    --bs-btn-focus-shadow-rgb: 255, 253, 250;
-}
-
-/* ==========================================================
-   7. Sections (mobile first : padding réduit, puis agrandi)
+   6. Sections et éléments communs
    ========================================================== */
 .section {
     padding-block: 4.5rem;
@@ -198,10 +254,9 @@
 }
 
 .icon-accent {
-    color: var(--solvr-blue);
+    color: var(--solvr-accent);
 }
 
-/* Lien avec flèche qui avance au survol */
 .link-fleche {
     display: inline-flex;
     align-items: center;
@@ -223,24 +278,22 @@
     transform: translateX(3px);
 }
 
-/* Emplacement d'image en attente */
 .media-placeholder {
     background-color: var(--solvr-bg-alt);
-    border: 2px dashed rgba(100, 98, 110, 0.4);
+    border: 2px dashed var(--solvr-border-strong);
     border-radius: 1rem;
-    color: var(--solvr-gray);
+    color: var(--solvr-text-muted);
 }
 
 /* ==========================================================
-   8. Hero
+   7. Hero
    ========================================================== */
 .hero {
-    /* Halo bleu très léger en haut à droite */
-    background-image: radial-gradient(circle at 85% 15%, rgba(37, 75, 235, 0.10), transparent 45%);
+    background-image: radial-gradient(circle at 85% 15%, var(--solvr-accent-soft), transparent 45%);
 }
 
 .hero-surtitre {
-    color: var(--solvr-blue);
+    color: var(--solvr-accent);
     font-weight: 600;
     letter-spacing: 0.02em;
 }
@@ -249,15 +302,15 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--solvr-gray);
+    color: var(--solvr-text-muted);
 }
 
 /* ==========================================================
-   9. Cartes de services
+   8. Cartes de services
    ========================================================== */
 .service-card {
     background-color: var(--solvr-bg);
-    border: 1px solid rgba(100, 98, 110, 0.15);
+    border: 1px solid var(--solvr-border);
     border-radius: 1rem;
     padding: 2rem 1.5rem;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -265,7 +318,7 @@
 
 .service-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(43, 42, 49, 0.08);
+    box-shadow: 0 8px 24px var(--solvr-shadow);
 }
 
 .service-icon {
@@ -276,24 +329,23 @@
     height: 3.5rem;
     margin-bottom: 1.25rem;
     border-radius: 50%;
-    background-color: rgba(37, 75, 235, 0.10);
-    color: var(--solvr-blue);
-    font-size: 1.5rem;     /* taille de l'icône (1em) */
+    background-color: var(--solvr-accent-soft);
+    color: var(--solvr-accent);
+    font-size: 1.5rem;
 }
 
 /* ==========================================================
-   10. Réalisation, méthode, zone
+   9. Réalisation, méthode, zone
    ========================================================== */
 .badge-formation {
     display: inline-block;
     padding: 0.25rem 0.75rem;
     border-radius: 999px;
     background-color: var(--solvr-bg-alt);
-    color: var(--solvr-gray-dark);
+    color: var(--solvr-text);
     font-size: 0.875rem;
 }
 
-/* Étapes : icône dans un cercle + pastille numérotée */
 .methode-visuel {
     position: relative;
     display: inline-flex;
@@ -302,11 +354,11 @@
     width: 5rem;
     height: 5rem;
     margin-bottom: 1.25rem;
-    border: 2px solid var(--solvr-blue);
+    border: 2px solid var(--solvr-accent);
     border-radius: 50%;
-    background-color: var(--solvr-bg);   /* se détache du fond beige de la section */
-    color: var(--solvr-blue);
-    font-size: 2rem;                     /* taille de l'icône */
+    background-color: var(--solvr-bg);
+    color: var(--solvr-accent);
+    font-size: 2rem;
 }
 
 .methode-numero {
@@ -319,13 +371,12 @@
     width: 1.75rem;
     height: 1.75rem;
     border-radius: 50%;
-    background-color: var(--solvr-blue);
+    background-color: var(--brand-blue);
     color: #FFFFFF;
     font-size: 0.875rem;
     font-weight: 700;
 }
 
-/* Desktop : ligne pointillée reliant les étapes */
 @media (min-width: 992px) {
     .methode-etape {
         position: relative;
@@ -334,10 +385,10 @@
     .methode-etape:not(:last-child)::after {
         content: "";
         position: absolute;
-        top: 2.5rem;  /* milieu du cercle (5rem / 2) */
+        top: 2.5rem;
         left: calc(var(--bs-gutter-x) * 0.5 + 5rem + 0.75rem);
         right: calc(0.75rem - var(--bs-gutter-x) * 0.5);
-        border-top: 2px dashed rgba(37, 75, 235, 0.35);
+        border-top: 2px dashed rgba(var(--solvr-accent-rgb), 0.35);
     }
 }
 
@@ -357,10 +408,10 @@
 }
 
 /* ==========================================================
-   11. Appel à l'action final
+   10. Appel à l'action final (bleu de marque dans les deux thèmes)
    ========================================================== */
 .cta-final {
-    background-color: var(--solvr-blue);
+    background-color: var(--brand-blue);
     color: #FFFFFF;
 }
 
@@ -369,7 +420,7 @@
 }
 
 /* ==========================================================
-   12. Réduction des animations (s'applique à tout le site)
+   11. Réduction des animations
    ========================================================== */
 @media (prefers-reduced-motion: reduce) {
     *,

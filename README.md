@@ -9,7 +9,7 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 
 - **HTML5** sémantique
 - **CSS3** et **Bootstrap 5.3** (auto-hébergé)
-- **JavaScript** (amélioration progressive : le site reste utilisable sans JS)
+- **JavaScript** (amélioration progressive : le site reste utilisable sans JS) : bascule clair / sombre mémorisée
 - **PHP 8.5** (inclusions communes, traitement du formulaire de contact)
 - **Docker** (environnement de développement Apache + PHP)
 - **Icônes** : [Bootstrap Icons](https://icons.getbootstrap.com/) (licence MIT)
@@ -21,6 +21,7 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 - **Sécurité** : échappement systématique des sorties, validation côté serveur, protection CSRF, anti-spam, secrets hors du dépôt
 - **Référencement** : métadonnées uniques par page, Open Graph, URL canoniques, données structurées, référencement local
 - **RGPD** : aucune ressource chargée depuis un serveur tiers (polices et Bootstrap hébergés localement)
+- **Thème clair / sombre** : suit le réglage du système, bascule manuelle mémorisée, sans flash au chargement
 
 ## Prérequis
 
@@ -57,11 +58,12 @@ solvr/
 ├── includes/
 │   ├── functions.php  # Fonctions utilitaires (échappement, icônes SVG…)
 │   ├── pages.php      # Configuration des pages (SEO, menu, liens)
-│   ├── head.php       # <head> : métadonnées SEO, Open Graph, CSS
-│   ├── header.php     # Lien d'évitement, en-tête et navigation
+│   ├── head.php       # <head> : thème initial, métadonnées SEO, Open Graph, CSS
+│   ├── header.php     # Lien d'évitement, en-tête, navigation, bouton de thème
 │   └── footer.php     # Pied de page et scripts
 ├── assets/
 │   ├── css/           # Styles personnalisés (style.css)
+│   ├── js/            # Scripts (main.js : bascule de thème)
 │   ├── img/           # Images et illustrations
 │   └── vendor/        # Bibliothèques tierces (Bootstrap)
 ├── index.php          # Page d'accueil
@@ -112,6 +114,7 @@ Les messages de commit suivent la convention [Conventional Commits](https://www.
 - [x] Gabarit commun (head, header, footer)
 - [x] Charte graphique et navigation
 - [x] Page d'accueil (structure et contenus)
+- [x] Mode sombre
 - [ ] Images : portrait et captures des réalisations
 - [ ] Pages Services, Réalisations, À propos
 - [ ] Page Contact et formulaire
