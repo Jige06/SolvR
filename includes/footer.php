@@ -24,7 +24,7 @@
 
             <div class="d-flex flex-column flex-md-row justify-content-between gap-2">
                 <p class="mb-0">&copy; <?= date('Y') ?> SolvR — EI</p>
-                                <nav aria-label="Liens légaux">
+                <nav aria-label="Liens légaux">
                     <ul class="list-inline mb-0">
                         <?php foreach (['mentions-legales', 'confidentialite'] as $key): ?>
                             <li class="list-inline-item">
@@ -38,5 +38,6 @@
     </footer>
 
     <script src="/assets/vendor/bootstrap/bootstrap.bundle.min.js" defer></script>
-</body>
-</html>
+    </body>
+
+    </html>

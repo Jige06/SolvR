@@ -8,7 +8,7 @@
     --solvr-blue:       #254BEB;  /* bleu vif */
 
     /* Nuances dérivées (interface) */
-    --solvr-bg-alt:     #F7F2EA;  /* sections alternées */
+    --solvr-bg-alt:     #F0E7D8;  /* sections alternées, header */
     --solvr-gray-dark:  #2B2A31;  /* titres, texte principal */
     --solvr-blue-hover: #1E3CC4;  /* survol, actif */
 
@@ -118,14 +118,6 @@
     outline-offset: 2px;
 }
 
-/* Respect du réglage « réduire les animations » du système */
-@media (prefers-reduced-motion: reduce) {
-    .navbar .nav-link,
-    .navbar .nav-link::after {
-        transition: none;
-    }
-}
-
 /* ==========================================================
    5. Footer
    ========================================================== */
@@ -153,4 +145,237 @@
 .site-footer hr {
     border-color: var(--solvr-bg);
     opacity: 0.4;
+}
+
+/* ==========================================================
+   6. Boutons complémentaires
+   ========================================================== */
+.btn-outline-primary {
+    --bs-btn-color: var(--solvr-blue);
+    --bs-btn-border-color: var(--solvr-blue);
+    --bs-btn-hover-color: #FFFFFF;
+    --bs-btn-hover-bg: var(--solvr-blue);
+    --bs-btn-hover-border-color: var(--solvr-blue);
+    --bs-btn-active-color: #FFFFFF;
+    --bs-btn-active-bg: var(--solvr-blue-hover);
+    --bs-btn-active-border-color: var(--solvr-blue-hover);
+    --bs-btn-focus-shadow-rgb: 37, 75, 235;
+}
+
+/* Bouton clair, pour les fonds bleus */
+.btn-inverse {
+    --bs-btn-color: var(--solvr-blue);
+    --bs-btn-bg: var(--solvr-bg);
+    --bs-btn-border-color: var(--solvr-bg);
+    --bs-btn-hover-color: var(--solvr-blue-hover);
+    --bs-btn-hover-bg: var(--solvr-bg-alt);
+    --bs-btn-hover-border-color: var(--solvr-bg-alt);
+    --bs-btn-active-color: var(--solvr-blue-hover);
+    --bs-btn-active-bg: var(--solvr-bg-alt);
+    --bs-btn-active-border-color: var(--solvr-bg-alt);
+    --bs-btn-focus-shadow-rgb: 255, 253, 250;
+}
+
+/* ==========================================================
+   7. Sections (mobile first : padding réduit, puis agrandi)
+   ========================================================== */
+.section {
+    padding-block: 4.5rem;
+}
+
+@media (min-width: 992px) {
+    .section {
+        padding-block: 6.5rem;
+    }
+}
+
+.section-alt {
+    background-color: var(--solvr-bg-alt);
+}
+
+.section-titre {
+    margin-bottom: 2.5rem;
+}
+
+.icon-accent {
+    color: var(--solvr-blue);
+}
+
+/* Lien avec flèche qui avance au survol */
+.link-fleche {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.link-fleche:hover,
+.link-fleche:focus-visible {
+    text-decoration: underline;
+}
+
+.link-fleche .bi {
+    transition: transform 0.2s ease;
+}
+
+.link-fleche:hover .bi {
+    transform: translateX(3px);
+}
+
+/* Emplacement d'image en attente */
+.media-placeholder {
+    background-color: var(--solvr-bg-alt);
+    border: 2px dashed rgba(100, 98, 110, 0.4);
+    border-radius: 1rem;
+    color: var(--solvr-gray);
+}
+
+/* ==========================================================
+   8. Hero
+   ========================================================== */
+.hero {
+    /* Halo bleu très léger en haut à droite */
+    background-image: radial-gradient(circle at 85% 15%, rgba(37, 75, 235, 0.10), transparent 45%);
+}
+
+.hero-surtitre {
+    color: var(--solvr-blue);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.hero-atouts li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--solvr-gray);
+}
+
+/* ==========================================================
+   9. Cartes de services
+   ========================================================== */
+.service-card {
+    background-color: var(--solvr-bg);
+    border: 1px solid rgba(100, 98, 110, 0.15);
+    border-radius: 1rem;
+    padding: 2rem 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(43, 42, 49, 0.08);
+}
+
+.service-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-bottom: 1.25rem;
+    border-radius: 50%;
+    background-color: rgba(37, 75, 235, 0.10);
+    color: var(--solvr-blue);
+    font-size: 1.5rem;     /* taille de l'icône (1em) */
+}
+
+/* ==========================================================
+   10. Réalisation, méthode, zone
+   ========================================================== */
+.badge-formation {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background-color: var(--solvr-bg-alt);
+    color: var(--solvr-gray-dark);
+    font-size: 0.875rem;
+}
+
+/* Étapes : icône dans un cercle + pastille numérotée */
+.methode-visuel {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 5rem;
+    height: 5rem;
+    margin-bottom: 1.25rem;
+    border: 2px solid var(--solvr-blue);
+    border-radius: 50%;
+    background-color: var(--solvr-bg);   /* se détache du fond beige de la section */
+    color: var(--solvr-blue);
+    font-size: 2rem;                     /* taille de l'icône */
+}
+
+.methode-numero {
+    position: absolute;
+    top: -0.25rem;
+    right: -0.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background-color: var(--solvr-blue);
+    color: #FFFFFF;
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+/* Desktop : ligne pointillée reliant les étapes */
+@media (min-width: 992px) {
+    .methode-etape {
+        position: relative;
+    }
+
+    .methode-etape:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 2.5rem;  /* milieu du cercle (5rem / 2) */
+        left: calc(var(--bs-gutter-x) * 0.5 + 5rem + 0.75rem);
+        right: calc(0.75rem - var(--bs-gutter-x) * 0.5);
+        border-top: 2px dashed rgba(37, 75, 235, 0.35);
+    }
+}
+
+.atouts li {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.atouts .bi {
+    flex-shrink: 0;
+    margin-top: 0.3rem;
+}
+
+.portrait {
+    border-radius: 1rem;
+}
+
+/* ==========================================================
+   11. Appel à l'action final
+   ========================================================== */
+.cta-final {
+    background-color: var(--solvr-blue);
+    color: #FFFFFF;
+}
+
+.cta-final h2 {
+    color: #FFFFFF;
+}
+
+/* ==========================================================
+   12. Réduction des animations (s'applique à tout le site)
+   ========================================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+        animation: none !important;
+    }
 }
