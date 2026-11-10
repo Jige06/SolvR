@@ -1,0 +1,156 @@
+/* ==========================================================
+   1. Variables — charte graphique SolvR
+   ========================================================== */
+:root {
+    /* Couleurs de marque */
+    --solvr-bg:         #FFFDFA;  /* fond beige orangé */
+    --solvr-gray:       #64626E;  /* gris */
+    --solvr-blue:       #254BEB;  /* bleu vif */
+
+    /* Nuances dérivées (interface) */
+    --solvr-bg-alt:     #F7F2EA;  /* sections alternées */
+    --solvr-gray-dark:  #2B2A31;  /* titres, texte principal */
+    --solvr-blue-hover: #1E3CC4;  /* survol, actif */
+
+    /* Surcharge des variables globales de Bootstrap */
+    --bs-body-bg: var(--solvr-bg);
+    --bs-body-color: var(--solvr-gray-dark);
+    --bs-heading-color: var(--solvr-gray-dark);
+    --bs-secondary-color: var(--solvr-gray);
+    --bs-primary: var(--solvr-blue);
+    --bs-primary-rgb: 37, 75, 235;
+    --bs-link-color: var(--solvr-blue);
+    --bs-link-color-rgb: 37, 75, 235;
+    --bs-link-hover-color: var(--solvr-blue-hover);
+    --bs-link-hover-color-rgb: 30, 60, 196;
+}
+
+/* ==========================================================
+   2. Composants Bootstrap
+   ========================================================== */
+.btn-primary {
+    --bs-btn-bg: var(--solvr-blue);
+    --bs-btn-border-color: var(--solvr-blue);
+    --bs-btn-hover-bg: var(--solvr-blue-hover);
+    --bs-btn-hover-border-color: var(--solvr-blue-hover);
+    --bs-btn-active-bg: var(--solvr-blue-hover);
+    --bs-btn-active-border-color: var(--solvr-blue-hover);
+    --bs-btn-focus-shadow-rgb: 37, 75, 235;
+}
+
+/* ==========================================================
+   3. Accessibilité
+   ========================================================== */
+.skip-link:focus {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 1080;
+    padding: 0.5rem 1rem;
+    background-color: var(--solvr-gray-dark);
+    color: var(--solvr-bg);
+}
+
+/* ==========================================================
+   4. Header
+   ========================================================== */
+.site-header {
+    background-color: var(--solvr-bg-alt);
+    border-bottom: 1px solid rgba(100, 98, 110, 0.15);  /* ton gris à 15 % d'opacité */
+    box-shadow: 0 2px 8px rgba(43, 42, 49, 0.06);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    color: var(--solvr-gray-dark);
+}
+
+/* --- Navigation : couleurs de la charte --- */
+.navbar {
+    --solvr-nav-pad-x: 0.75rem;                        /* espacement horizontal des liens */
+
+    --bs-navbar-color: var(--solvr-gray);              /* liens au repos : 5,9:1 */
+    --bs-navbar-hover-color: var(--solvr-blue);        /* survol : 6,3:1 */
+    --bs-navbar-active-color: var(--solvr-gray-dark);  /* page en cours : 14:1 */
+    --bs-navbar-nav-link-padding-x: var(--solvr-nav-pad-x);  /* menu déplié (desktop) */
+}
+
+.navbar .nav-link {
+    display: inline-block;            /* sur mobile, le lien prend la largeur de son texte */
+    position: relative;               /* repère pour le soulignement (::after) */
+    border: 1px solid transparent;    /* réserve la place de la bordure : pas de décalage */
+    border-radius: 0.5rem;
+    transition: color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Menu burger : Bootstrap met le padding à 0, on le rétablit */
+.navbar .navbar-nav {
+    --bs-nav-link-padding-x: var(--solvr-nav-pad-x);
+}
+
+/* Soulignement animé : aligné sur le padding, donc sur la largeur du mot */
+.navbar .nav-link::after {
+    content: "";
+    position: absolute;
+    left: var(--solvr-nav-pad-x);
+    right: var(--solvr-nav-pad-x);
+    bottom: 0.3rem;
+    height: 2px;
+    background-color: var(--solvr-blue);
+    transform: scaleX(0);
+    transition: transform 0.25s ease;
+}
+
+.navbar .nav-link:not(.active):hover::after,
+.navbar .nav-link:not(.active):focus-visible::after {
+    transform: scaleX(1);
+}
+
+/* Page en cours : trait fin arrondi + ombre douce */
+.navbar .nav-link.active {
+    border-color: var(--solvr-blue);
+    box-shadow: 0 2px 8px rgba(37, 75, 235, 0.18);
+}
+
+/* Focus clavier toujours visible, y compris sur le lien actif */
+.navbar .nav-link:focus-visible {
+    outline: 2px solid var(--solvr-blue);
+    outline-offset: 2px;
+}
+
+/* Respect du réglage « réduire les animations » du système */
+@media (prefers-reduced-motion: reduce) {
+    .navbar .nav-link,
+    .navbar .nav-link::after {
+        transition: none;
+    }
+}
+
+/* ==========================================================
+   5. Footer
+   ========================================================== */
+.site-footer {
+    background-color: var(--solvr-gray);
+    color: var(--solvr-bg);
+}
+
+.site-footer h2 {
+    color: var(--solvr-bg);
+}
+
+/* Bleu illisible sur gris : liens couleur fond, soulignés */
+.site-footer a {
+    color: var(--solvr-bg);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+.site-footer a:hover,
+.site-footer a:focus {
+    text-decoration-thickness: 2px;
+}
+
+.site-footer hr {
+    border-color: var(--solvr-bg);
+    opacity: 0.4;
+}
