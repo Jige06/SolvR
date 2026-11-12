@@ -420,7 +420,88 @@
 }
 
 /* ==========================================================
-   11. Réduction des animations
+   11. Page Services
+   ========================================================== */
+
+/* Sommaire : liens « pilules » vers les sections de la page */
+.sommaire a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--solvr-border-strong);
+    border-radius: 999px;
+    color: var(--solvr-text);
+    text-decoration: none;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.sommaire a:hover,
+.sommaire a:focus-visible {
+    border-color: var(--solvr-accent);
+    color: var(--solvr-accent);
+}
+
+/* Encart « Idéal pour » : se détache du fond de sa section */
+.encart {
+    padding: 1.75rem 1.5rem;
+    border: 1px solid var(--solvr-border);
+    border-radius: 1rem;
+    background-color: var(--solvr-bg);
+}
+
+.section:not(.section-alt) .encart {
+    background-color: var(--solvr-bg-alt);
+}
+
+/* FAQ : <details> / <summary> natifs, sans JavaScript */
+.faq details {
+    border-bottom: 1px solid var(--solvr-border-strong);
+}
+
+.faq summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;                 /* retire le triangle par défaut */
+}
+
+.faq summary::-webkit-details-marker {
+    display: none;                    /* idem pour Safari */
+}
+
+.faq summary::after {
+    content: "+";
+    flex-shrink: 0;
+    color: var(--solvr-accent);
+    font-size: 1.5rem;
+    line-height: 1;
+    transition: transform 0.2s ease;
+}
+
+.faq details[open] summary::after {
+    transform: rotate(45deg);         /* le + devient un × */
+}
+
+.faq summary:hover {
+    color: var(--solvr-accent);
+}
+
+.faq summary:focus-visible {
+    outline: 2px solid var(--solvr-accent);
+    outline-offset: 4px;
+}
+
+.faq-reponse {
+    padding-bottom: 1.25rem;
+}
+
+/* ==========================================================
+   12. Réduction des animations
    ========================================================== */
 @media (prefers-reduced-motion: reduce) {
     *,
