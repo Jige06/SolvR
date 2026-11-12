@@ -60,6 +60,7 @@ solvr/
 │   ├── pages.php      # Configuration des pages (SEO, menu, liens)
 │   ├── head.php       # <head> : thème initial, métadonnées SEO, Open Graph, CSS
 │   ├── header.php     # Lien d'évitement, en-tête, navigation, bouton de thème
+│   ├── cta.php        # Bloc d'appel à l'action partagé entre les pages
 │   └── footer.php     # Pied de page et scripts
 ├── assets/
 │   ├── css/           # Styles personnalisés (style.css)
@@ -67,6 +68,7 @@ solvr/
 │   ├── img/           # Images et illustrations
 │   └── vendor/        # Bibliothèques tierces (Bootstrap)
 ├── index.php          # Page d'accueil
+├── services.php       # Page Services
 ├── Dockerfile         # Image PHP 8.5 + Apache
 └── docker-compose.yml # Lancement de l'environnement local
 ```
@@ -103,6 +105,7 @@ Les messages de commit suivent la convention [Conventional Commits](https://www.
 | `feat:` | Nouvelle fonctionnalité ou nouvelle page |
 | `fix:` | Correction de bug |
 | `style:` | Mise en forme, CSS |
+| `refactor:` | Réorganisation du code sans changement de comportement |
 | `docs:` | Documentation |
 | `chore:` | Configuration, outillage |
 
@@ -115,8 +118,9 @@ Les messages de commit suivent la convention [Conventional Commits](https://www.
 - [x] Charte graphique et navigation
 - [x] Page d'accueil (structure et contenus)
 - [x] Mode sombre
+- [x] Page Services
 - [ ] Images : portrait et captures des réalisations
-- [ ] Pages Services, Réalisations, À propos
+- [ ] Pages Réalisations et À propos
 - [ ] Page Contact et formulaire
 - [ ] Pages légales (mentions légales, confidentialité)
 - [ ] Audit accessibilité, SEO et sécurité
