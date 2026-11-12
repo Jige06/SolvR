@@ -69,6 +69,7 @@ solvr/
 │   └── vendor/        # Bibliothèques tierces (Bootstrap)
 ├── index.php          # Page d'accueil
 ├── services.php       # Page Services
+├── realisations.php   # Page Réalisations (étude de cas Vite & Gourmand)
 ├── Dockerfile         # Image PHP 8.5 + Apache
 └── docker-compose.yml # Lancement de l'environnement local
 ```
@@ -119,8 +120,9 @@ Les messages de commit suivent la convention [Conventional Commits](https://www.
 - [x] Page d'accueil (structure et contenus)
 - [x] Mode sombre
 - [x] Page Services
+- [x] Page Réalisations
 - [ ] Images : portrait et captures des réalisations
-- [ ] Pages Réalisations et À propos
+- [ ] Page À propos
 - [ ] Page Contact et formulaire
 - [ ] Pages légales (mentions légales, confidentialité)
 - [ ] Audit accessibilité, SEO et sécurité
