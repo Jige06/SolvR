@@ -1,12 +1,12 @@
 <?php
 require_once __DIR__ . '/functions.php';
-$pages = require __DIR__ . '/pages.php';
+$pages = $pages ?? require __DIR__ . '/pages.php';   // déjà chargé par la page ? on le réutilise
 
 // Chaque page définit $currentPage avant d'inclure ce fichier
 $currentPage = $currentPage ?? '';
 $page        = $pages[$currentPage] ?? [];
 
-$pageTitle       = $page['title']       ?? 'SolvR — Développeur web et web mobile';
+$pageTitle       = ($pageTitlePrefix ?? '') . ($page['title'] ?? 'SolvR — Développeur web et web mobile');
 $pageDescription = $page['description'] ?? 'Création de sites internet et d\'applications sur mesure.';
 $canonicalUrl    = SITE_URL . ($page['path'] ?? '/');
 ?>

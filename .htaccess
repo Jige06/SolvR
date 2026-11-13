@@ -1,0 +1,11 @@
+# Interdit l'accès direct aux dossiers et fichiers internes du projet
+RewriteEngine On
+
+# Dossiers de code (inclusions, classes, dépendances)
+RewriteRule ^(includes|src|vendor)(/|$) - [R=404,L]
+
+# Fichiers de configuration et de documentation
+RewriteRule ^(composer\.(json|lock)|Dockerfile|docker-compose\.yml|README\.md)$ - [R=404,L]
+
+# Fichiers et dossiers cachés (.git, .gitignore, .env…)
+RewriteRule (^|/)\. - [R=404,L]
