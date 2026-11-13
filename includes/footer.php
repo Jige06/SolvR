@@ -9,8 +9,8 @@
                 <div class="col-12 col-md-4">
                     <h2 class="h6">Contact</h2>
                     <address class="mb-0">
-                        <a href="mailto:contact@solvr.fr">contact@solvr.fr</a><br>
-                        <a href="tel:+33670104428">06 70 10 44 28</a>
+                        <a href="mailto:<?= e(CONTACT_EMAIL) ?>"><?= e(CONTACT_EMAIL) ?></a><br>
+                        <a href="tel:<?= e(CONTACT_PHONE_LINK) ?>"><?= e(CONTACT_PHONE) ?></a>
                     </address>
                 </div>
 
