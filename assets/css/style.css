@@ -26,6 +26,7 @@
     --solvr-shadow:             rgba(43, 42, 49, 0.08);
     --solvr-footer-bg:          var(--brand-gray);
     --solvr-footer-text:        var(--brand-bg);
+    --solvr-danger:             #B42318;   /* erreurs : 6,5:1 sur fond */
 
     /* Branchement sur Bootstrap : suit automatiquement le thème */
     --bs-body-bg: var(--solvr-bg);
@@ -38,6 +39,8 @@
     --bs-link-color-rgb: var(--solvr-accent-rgb);
     --bs-link-hover-color: var(--solvr-accent-hover);
     --bs-link-hover-color-rgb: var(--solvr-accent-hover-rgb);
+    --bs-form-invalid-color: var(--solvr-danger);
+    --bs-form-invalid-border-color: var(--solvr-danger);
 }
 
 /* --- Rôles : thème SOMBRE (doit rester APRÈS le bloc clair) --- */
@@ -56,6 +59,7 @@
     --solvr-shadow:             rgba(0, 0, 0, 0.35);
     --solvr-footer-bg:          #0F0E13;
     --solvr-footer-text:        #E9E4DC;
+    --solvr-danger:             #FF8A80;   /* erreurs : 7,8:1 sur fond sombre */
 }
 
 /* ==========================================================
@@ -528,7 +532,54 @@
 }
 
 /* ==========================================================
-   13. Réduction des animations
+   13. Formulaire de contact
+   ========================================================== */
+.form-label {
+    font-weight: 600;
+}
+
+/* Bordure des champs bien visible : 5,9:1 en clair, 8,5:1 en sombre (minimum : 3:1) */
+.form-control,
+.form-select {
+    border-color: var(--solvr-text-muted);
+    background-color: var(--solvr-bg);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--solvr-accent);
+    box-shadow: 0 0 0 0.25rem rgba(var(--solvr-accent-rgb), 0.25);
+}
+
+.champ-requis {
+    color: var(--solvr-danger);
+    font-weight: 700;
+}
+
+/* Honeypot : hors de l'écran (pas display:none, que certains robots savent repérer) */
+.champ-piege {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.mention-rgpd {
+    color: var(--solvr-text-muted);
+    font-size: 0.875rem;
+}
+
+.etapes-contact {
+    padding-left: 1.25rem;
+}
+
+.etapes-contact li {
+    margin-bottom: 0.5rem;
+}
+
+/* ==========================================================
+   14. Réduction des animations
    ========================================================== */
 @media (prefers-reduced-motion: reduce) {
     *,
