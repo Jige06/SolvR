@@ -10,34 +10,42 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 - **HTML5** sémantique
 - **CSS3** et **Bootstrap 5.3** (auto-hébergé)
 - **JavaScript** (amélioration progressive : le site reste utilisable sans JS) : bascule clair / sombre mémorisée
-- **PHP 8.5** (inclusions communes, traitement du formulaire de contact)
-- **Docker** (environnement de développement Apache + PHP)
+- **PHP 8.5** : inclusions communes, formulaire de contact en POO (classes chargées par l'autoload de Composer)
+- **PHPMailer** : envoi des e-mails en SMTP (tests avec Mailtrap)
+- **Composer** : gestion des dépendances PHP
+- **Docker** : environnement de développement Apache + PHP + Composer
 - **Icônes** : [Bootstrap Icons](https://icons.getbootstrap.com/) (licence MIT)
 
 ## Principes du projet
 
 - **Mobile first** et responsive
-- **Accessibilité** : respect des recommandations WCAG / RGAA (balises sémantiques, contrastes AA, navigation au clavier, lien d'évitement, focus visible, respect de `prefers-reduced-motion`)
-- **Sécurité** : échappement systématique des sorties, validation côté serveur, protection CSRF, anti-spam, secrets hors du dépôt
-- **Référencement** : métadonnées uniques par page, Open Graph, URL canoniques, données structurées, référencement local
-- **RGPD** : aucune ressource chargée depuis un serveur tiers (polices et Bootstrap hébergés localement)
+- **Accessibilité** : respect des recommandations WCAG / RGAA (balises sémantiques, contrastes AA vérifiés, navigation au clavier, lien d'évitement, focus visible, formulaires accessibles, respect de `prefers-reduced-motion`)
+- **Sécurité** : échappement systématique des sorties, validation côté serveur, protection CSRF, honeypot anti-spam, sessions sécurisées, secrets hors du dépôt, fichiers internes inaccessibles depuis le web
+- **Référencement** : métadonnées uniques par page, Open Graph, URL canoniques, référencement local
+- **RGPD** : aucune ressource chargée depuis un serveur tiers, minimisation des données collectées, information sous le formulaire
 - **Thème clair / sombre** : suit le réglage du système, bascule manuelle mémorisée, sans flash au chargement
 
 ## Prérequis
 
 - [Git](https://git-scm.com/)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) (WSL 2 sous Windows)
+- Un compte [Mailtrap](https://mailtrap.io/) pour tester l'envoi des e-mails
 
 ## Installation et lancement
 
 ```bash
-# Cloner le dépôt
+# 1. Cloner le dépôt
 git clone https://github.com/Jige06/SolvR.git
 cd solvr
 
-# Construire l'image et démarrer le conteneur
+# 2. Construire l'image et démarrer le conteneur
 docker compose up -d --build
+
+# 3. Installer les dépendances PHP (PHPMailer)
+docker compose exec web composer install
 ```
+
+**4. Configurer l'envoi des e-mails** : copier `includes/config.example.php` en `includes/config.php`, puis y renseigner les identifiants SMTP de Mailtrap (*Sandboxes → Integration → SMTP*). Ce fichier est ignoré par Git.
 
 Le site est accessible sur **http://localhost:8080**.
 
@@ -49,6 +57,7 @@ Le site est accessible sur **http://localhost:8080**.
 | `docker compose up -d --build` | Reconstruire l'image (après modification du `Dockerfile`) |
 | `docker compose ps` | Vérifier que le conteneur tourne |
 | `docker compose logs -f web` | Afficher les logs Apache / PHP en direct |
+| `docker compose exec web composer dump-autoload` | Régénérer l'autoload après l'ajout d'une classe dans `src/` |
 | `docker compose down` | Arrêter le conteneur |
 
 ## Structure du projet
@@ -56,22 +65,30 @@ Le site est accessible sur **http://localhost:8080**.
 ```
 solvr/
 ├── includes/
-│   ├── functions.php  # Fonctions utilitaires (échappement, icônes SVG…)
-│   ├── pages.php      # Configuration des pages (SEO, menu, liens)
-│   ├── head.php       # <head> : thème initial, métadonnées SEO, Open Graph, CSS
-│   ├── header.php     # Lien d'évitement, en-tête, navigation, bouton de thème
-│   ├── cta.php        # Bloc d'appel à l'action partagé entre les pages
-│   └── footer.php     # Pied de page et scripts
+│   ├── functions.php       # Fonctions utilitaires et coordonnées
+│   ├── pages.php           # Configuration des pages (SEO, menu, liens)
+│   ├── head.php            # <head> : thème initial, métadonnées SEO, Open Graph, CSS
+│   ├── header.php          # Lien d'évitement, en-tête, navigation, bouton de thème
+│   ├── cta.php             # Bloc d'appel à l'action partagé entre les pages
+│   ├── footer.php          # Pied de page et scripts
+│   └── config.example.php  # Modèle de configuration SMTP (à copier en config.php)
+├── src/                    # Classes PHP (formulaire de contact)
+│   ├── ContactForm.php     # Données et validation du formulaire
+│   ├── ContactMailer.php   # Envoi de l'e-mail via PHPMailer
+│   └── CsrfToken.php       # Jeton anti-CSRF
 ├── assets/
-│   ├── css/           # Styles personnalisés (style.css)
-│   ├── js/            # Scripts (main.js : bascule de thème)
-│   ├── img/           # Images et illustrations
-│   └── vendor/        # Bibliothèques tierces (Bootstrap)
-├── index.php          # Page d'accueil
-├── services.php       # Page Services
-├── realisations.php   # Page Réalisations (étude de cas Vite & Gourmand)
-├── Dockerfile         # Image PHP 8.5 + Apache
-└── docker-compose.yml # Lancement de l'environnement local
+│   ├── css/                # Styles personnalisés (style.css)
+│   ├── js/                 # Scripts (main.js : bascule de thème)
+│   ├── img/                # Images et illustrations
+│   └── vendor/             # Bibliothèques tierces (Bootstrap)
+├── index.php               # Page d'accueil
+├── services.php            # Page Services
+├── realisations.php        # Page Réalisations (étude de cas Vite & Gourmand)
+├── contact.php             # Page Contact (affichage et traitement du formulaire)
+├── .htaccess               # Protection des fichiers internes
+├── composer.json           # Dépendances PHP et autoload
+├── Dockerfile              # Image PHP 8.5 + Apache + Composer
+└── docker-compose.yml      # Lancement de l'environnement local
 ```
 
 ### Ajouter une page
@@ -121,10 +138,10 @@ Les messages de commit suivent la convention [Conventional Commits](https://www.
 - [x] Mode sombre
 - [x] Page Services
 - [x] Page Réalisations
+- [x] Page Contact et formulaire
 - [ ] Images : portrait et captures des réalisations
 - [ ] Page À propos
-- [ ] Page Contact et formulaire
-- [ ] Pages légales (mentions légales, confidentialité)
+- [ ] Pages légales (mentions légales, confidentialité) et page 404
 - [ ] Audit accessibilité, SEO et sécurité
 - [ ] Mise en ligne
 
