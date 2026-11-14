@@ -9,6 +9,7 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 
 - **HTML5** sémantique
 - **CSS3** et **Bootstrap 5.3** (auto-hébergé)
+- **Polices** : [Heebo](https://fonts.google.com/specimen/Heebo) (titres) et [Inter](https://rsms.me/inter/) (texte), auto-hébergées en woff2 (licence SIL Open Font License)
 - **JavaScript** (amélioration progressive : le site reste utilisable sans JS) : bascule clair / sombre mémorisée
 - **PHP 8.5** : inclusions communes, formulaire de contact en POO (classes chargées par l'autoload de Composer)
 - **PHPMailer** : envoi des e-mails en SMTP (tests avec Mailtrap)
@@ -22,8 +23,9 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 - **Accessibilité** : respect des recommandations WCAG / RGAA (balises sémantiques, contrastes AA vérifiés, navigation au clavier, lien d'évitement, focus visible, formulaires accessibles, respect de `prefers-reduced-motion`)
 - **Sécurité** : échappement systématique des sorties, validation côté serveur, protection CSRF, honeypot anti-spam, sessions sécurisées, secrets hors du dépôt, fichiers internes inaccessibles depuis le web
 - **Référencement** : métadonnées uniques par page, Open Graph, URL canoniques, référencement local
-- **RGPD** : aucune ressource chargée depuis un serveur tiers, minimisation des données collectées, information sous le formulaire
+- **RGPD** : aucune ressource chargée depuis un serveur tiers (polices et Bootstrap hébergés localement), minimisation des données collectées, information sous le formulaire
 - **Thème clair / sombre** : suit le réglage du système, bascule manuelle mémorisée, sans flash au chargement
+- **Performance** : polices variables légères (78 Ko au total) et préchargées, images optimisées, scripts en `defer`
 
 ## Prérequis
 
@@ -78,6 +80,7 @@ solvr/
 │   └── CsrfToken.php       # Jeton anti-CSRF
 ├── assets/
 │   ├── css/                # Styles personnalisés (style.css)
+│   ├── fonts/              # Polices Heebo et Inter (woff2) et leurs licences
 │   ├── js/                 # Scripts (main.js : bascule de thème)
 │   ├── img/                # Images et illustrations
 │   └── vendor/             # Bibliothèques tierces (Bootstrap)
@@ -126,6 +129,7 @@ Les messages de commit suivent la convention [Conventional Commits](https://www.
 | `refactor:` | Réorganisation du code sans changement de comportement |
 | `docs:` | Documentation |
 | `chore:` | Configuration, outillage |
+| `perf:` | Amélioration des performances |
 
 ## Feuille de route
 
@@ -139,6 +143,7 @@ Les messages de commit suivent la convention [Conventional Commits](https://www.
 - [x] Page Services
 - [x] Page Réalisations
 - [x] Page Contact et formulaire
+- [x] Typographies
 - [ ] Images : portrait et captures des réalisations
 - [ ] Page À propos
 - [ ] Pages légales (mentions légales, confidentialité) et page 404
