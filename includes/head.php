@@ -44,6 +44,10 @@ $canonicalUrl    = SITE_URL . ($page['path'] ?? '/');
     <meta property="og:description" content="<?= e($pageDescription) ?>">
     <meta property="og:url" content="<?= e($canonicalUrl) ?>">
 
+    <!-- Préchargement des polices principales (texte et titres) -->
+    <link rel="preload" href="/assets/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/heebo-variable.woff2" as="font" type="font/woff2" crossorigin>
+
     <!-- Bootstrap d'abord, nos styles ensuite pour pouvoir le surcharger -->
     <link rel="stylesheet" href="/assets/vendor/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
