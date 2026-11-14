@@ -1,4 +1,24 @@
 /* ==========================================================
+   0. Polices (auto-hébergées, licence SIL Open Font License)
+   ========================================================== */
+
+@font-face {
+    font-family: "Heebo";
+    src: url("../fonts/heebo-variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url("../fonts/inter-variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ==========================================================
    1. Variables
    ========================================================== */
 
@@ -8,6 +28,10 @@
     --brand-gray:       #64626E;  /* gris */
     --brand-blue:       #254BEB;  /* bleu vif */
     --brand-blue-hover: #1E3CC4;
+
+    /* Polices de marque, avec des polices système de secours */
+    --brand-font-heading: "Heebo", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --brand-font-text: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 /* --- Rôles : thème CLAIR (par défaut) --- */
@@ -41,6 +65,7 @@
     --bs-link-hover-color-rgb: var(--solvr-accent-hover-rgb);
     --bs-form-invalid-color: var(--solvr-danger);
     --bs-form-invalid-border-color: var(--solvr-danger);
+    --bs-body-font-family: var(--brand-font-text);
 }
 
 /* --- Rôles : thème SOMBRE (doit rester APRÈS le bloc clair) --- */
@@ -579,7 +604,20 @@
 }
 
 /* ==========================================================
-   14. Réduction des animations
+   14. Typographie
+   ========================================================== */
+
+/* Titres : Lexend */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.display-5,
+.navbar-brand {
+    font-family: var(--brand-font-heading);
+    font-weight: 600;
+}
+
+/* ==========================================================
+   15. Réduction des animations
    ========================================================== */
 @media (prefers-reduced-motion: reduce) {
     *,
