@@ -1,3 +1,6 @@
+# Page d'erreur personnalisée
+ErrorDocument 404 /404.php
+
 # Interdit l'accès direct aux dossiers et fichiers internes du projet
 RewriteEngine On
 
