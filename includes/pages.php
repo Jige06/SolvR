@@ -56,4 +56,12 @@ return [
         'description' => 'Comment SolvR collecte et protège vos données personnelles, et comment exercer vos droits.',
         'nav'         => false,
     ],
+        'erreur-404' => [
+        'path'        => '/404.php',
+        'label'       => 'Page introuvable',
+        'title'       => 'Page introuvable | SolvR',
+        'description' => 'Cette page n\'existe pas ou a été déplacée.',
+        'nav'         => false,
+        'noindex'     => true,
+    ],
 ];

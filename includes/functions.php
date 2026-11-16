@@ -4,10 +4,24 @@ declare(strict_types=1);
 
 // URL du site en production (à remplacer par le vrai domaine)
 const SITE_URL = 'https://www.solvr.fr';
-// Coordonnées (utilisées dans le footer et la page Contact)
-const CONTACT_EMAIL      = 'contact@solvr.fr';
-const CONTACT_PHONE      = '[TELEPHONE]';
-const CONTACT_PHONE_LINK = '[TELEPHONE]';   // format international pour les liens tel:
+
+/**
+ * Configuration du site (coordonnées, informations légales, SMTP).
+ * Lit includes/config.php (non versionné). S'il n'existe pas encore (dépôt tout juste cloné),
+ * on utilise le modèle config.example.php : le site fonctionne, avec des valeurs à compléter.
+ * « static » : le fichier n'est lu qu'une seule fois, même si la fonction est appelée plusieurs fois.
+ */
+function config(): array
+{
+    static $config = null;
+
+    if ($config === null) {
+        $file   = __DIR__ . '/config.php';
+        $config = require (is_file($file) ? $file : __DIR__ . '/config.example.php');
+    }
+
+    return $config;
+}
 
 /**
  * Échappe une valeur avant de l'afficher dans le HTML.
@@ -59,4 +73,15 @@ function icon(string $name, string $class = ''): string
         . ' fill="currentColor" aria-hidden="true" focusable="false" class="bi ' . e($class) . '">'
         . $paths[$name]
         . '</svg>';
+}
+
+/**
+ * Affiche une information légale. Si la valeur est encore un emplacement à compléter
+ * (elle commence par « [ »), elle est surlignée pour ne pas être oubliée avant la mise en ligne.
+ */
+function legalValue(string $value): string
+{
+    $safe = e($value);
+
+    return str_starts_with($value, '[') ? '<mark>' . $safe . '</mark>' : $safe;
 }
