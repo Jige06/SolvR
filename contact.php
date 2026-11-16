@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /* ==========================================================
@@ -16,7 +17,8 @@ session_start();
 require_once __DIR__ . '/vendor/autoload.php';      // PHPMailer + nos classes (src/)
 require_once __DIR__ . '/includes/functions.php';
 $pages  = require __DIR__ . '/includes/pages.php';
-$config = require __DIR__ . '/includes/config.php';
+$config  = config();
+$contact = $config['contact'];
 
 $form   = new ContactForm();
 $status = null;   // null | 'success' | 'invalid' | 'csrf' | 'send-error'
@@ -34,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['contact_success'] = true;
         header('Location: ' . $pages['contact']['path'], true, 303);
         exit;
-
     } else {
         $form = new ContactForm($_POST);
 
@@ -55,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     }
-
 } elseif (!empty($_SESSION['contact_success'])) {
     // Message de confirmation « flash » : affiché une seule fois après la redirection
     $status = 'success';
@@ -164,7 +164,7 @@ require __DIR__ . '/includes/header.php';
                                 <p class="mb-0">
                                     Désolé, votre message n'a pas pu être envoyé suite à un problème technique.
                                     Réessayez dans quelques minutes, ou contactez-moi directement par téléphone
-                                    au <a href="tel:<?= e(CONTACT_PHONE_LINK) ?>" class="alert-link"><?= e(CONTACT_PHONE) ?></a>.
+                                    au <a href="tel:<?= e($contact['phone_link']) ?>" class="alert-link"><?= e($contact['phone']) ?></a>.
                                 </p>
                             </div>
                         <?php endif; ?>
@@ -179,16 +179,16 @@ require __DIR__ . '/includes/header.php';
                             <div class="col-12 col-md-6">
                                 <label for="nom" class="form-label">Nom <span class="champ-requis">*</span></label>
                                 <input type="text" id="nom" name="nom" required maxlength="100"
-                                       autocomplete="name" value="<?= e($form->get('nom')) ?>"
-                                       <?= fieldAttributes($form, 'nom') ?>>
+                                    autocomplete="name" value="<?= e($form->get('nom')) ?>"
+                                    <?= fieldAttributes($form, 'nom') ?>>
                                 <?= fieldError($form, 'nom') ?>
                             </div>
 
                             <div class="col-12 col-md-6">
                                 <label for="email" class="form-label">E-mail <span class="champ-requis">*</span></label>
                                 <input type="email" id="email" name="email" required maxlength="254"
-                                       autocomplete="email" value="<?= e($form->get('email')) ?>"
-                                       <?= fieldAttributes($form, 'email') ?>>
+                                    autocomplete="email" value="<?= e($form->get('email')) ?>"
+                                    <?= fieldAttributes($form, 'email') ?>>
                                 <?= fieldError($form, 'email') ?>
                             </div>
 
@@ -196,9 +196,9 @@ require __DIR__ . '/includes/header.php';
                                 <label for="telephone" class="form-label">Téléphone <span class="text-body-secondary">(facultatif)</span></label>
                                 <p id="telephone-aide" class="form-text mt-0 mb-2">Format : 06 12 34 56 78</p>
                                 <input type="tel" id="telephone" name="telephone" maxlength="17"
-                                       pattern="(0|\+33 ?)[1-9]([ .\-]?\d{2}){4}"
-                                       autocomplete="tel" value="<?= e($form->get('telephone')) ?>"
-                                       <?= fieldAttributes($form, 'telephone', 'form-control', 'telephone-aide') ?>>
+                                    pattern="(0|\+33 ?)[1-9]([ .\-]?\d{2}){4}"
+                                    autocomplete="tel" value="<?= e($form->get('telephone')) ?>"
+                                    <?= fieldAttributes($form, 'telephone', 'form-control', 'telephone-aide') ?>>
                                 <?= fieldError($form, 'telephone') ?>
                             </div>
 
@@ -221,7 +221,7 @@ require __DIR__ . '/includes/header.php';
                                     Votre activité, ce dont vous avez besoin, vos délais éventuels…
                                 </p>
                                 <textarea id="message" name="message" rows="6" required minlength="10" maxlength="5000"
-                                          <?= fieldAttributes($form, 'message', 'form-control', 'message-aide') ?>><?= e($form->get('message')) ?></textarea>
+                                    <?= fieldAttributes($form, 'message', 'form-control', 'message-aide') ?>><?= e($form->get('message')) ?></textarea>
                                 <?= fieldError($form, 'message') ?>
                             </div>
 
@@ -252,8 +252,8 @@ require __DIR__ . '/includes/header.php';
                     <aside class="encart" aria-labelledby="coordonnees-titre">
                         <h2 id="coordonnees-titre" class="h5">Me contacter directement</h2>
                         <ul class="list-unstyled atouts mt-3">
-                            <li><?= icon('phone', 'icon-accent') ?> <a href="tel:<?= e(CONTACT_PHONE_LINK) ?>"><?= e(CONTACT_PHONE) ?></a></li>
-                            <li><?= icon('mail', 'icon-accent') ?> <a href="mailto:<?= e(CONTACT_EMAIL) ?>"><?= e(CONTACT_EMAIL) ?></a></li>
+                            <li><?= icon('phone', 'icon-accent') ?> <a href="tel:<?= e($contact['phone_link']) ?>"><?= e($contact['phone']) ?></a></li>
+                            <li><?= icon('mail', 'icon-accent') ?> <a href="mailto:<?= e($contact['email']) ?>"><?= e($contact['email']) ?></a></li>
                             <li><?= icon('geo', 'icon-accent') ?> <span>Nice et les Alpes-Maritimes, toute la France à distance</span></li>
                         </ul>
 
