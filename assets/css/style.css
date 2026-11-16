@@ -617,7 +617,59 @@ h1, h2, h3, h4, h5, h6,
 }
 
 /* ==========================================================
-   15. Réduction des animations
+   15. Pages légales et 404
+   ========================================================== */
+.page-legale h2 {
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+/* Paires « intitulé : valeur » : empilées en mobile, sur deux colonnes ensuite */
+.infos-legales {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.25rem 1.5rem;
+    margin-bottom: 0;
+}
+
+.infos-legales dt {
+    font-weight: 600;
+}
+
+.infos-legales dd {
+    margin-bottom: 0.75rem;
+}
+
+@media (min-width: 768px) {
+    .infos-legales {
+        grid-template-columns: 14rem 1fr;
+    }
+
+    .infos-legales dd {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Tableaux aux couleurs du thème */
+.tableau-legal {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--solvr-text);
+    --bs-table-border-color: var(--solvr-border-strong);
+}
+
+/* Page 404 */
+.page-404 .code-erreur {
+    margin-bottom: 1rem;
+    color: var(--solvr-accent);
+    font-family: var(--brand-font-heading);
+    font-size: clamp(5rem, 20vw, 9rem);
+    font-weight: 700;
+    line-height: 1;
+}
+
+/* ==========================================================
+   16. Réduction des animations
    ========================================================== */
 @media (prefers-reduced-motion: reduce) {
     *,
