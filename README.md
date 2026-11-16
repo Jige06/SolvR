@@ -16,6 +16,7 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 - **Composer** : gestion des dépendances PHP
 - **Docker** : environnement de développement Apache + PHP + Composer
 - **Icônes** : [Bootstrap Icons](https://icons.getbootstrap.com/) (licence MIT)
+- **Logos des technologies** : [Simple Icons](https://simpleicons.org/) (licence CC0)
 
 ## Principes du projet
 
@@ -69,6 +70,7 @@ solvr/
 ├── includes/
 │   ├── functions.php       # Fonctions utilitaires (configuration, échappement, icônes…)
 │   ├── pages.php           # Configuration des pages (SEO, menu, liens)
+│   ├── technologies.php    # Logos des technologies (page À propos)
 │   ├── head.php            # <head> : thème initial, métadonnées SEO, Open Graph, CSS
 │   ├── header.php          # Lien d'évitement, en-tête, navigation, bouton de thème
 │   ├── cta.php             # Bloc d'appel à l'action partagé entre les pages
@@ -87,15 +89,15 @@ solvr/
 ├── index.php               # Page d'accueil
 ├── services.php            # Page Services
 ├── realisations.php        # Page Réalisations (étude de cas Vite & Gourmand)
+├── a-propos.php            # Page À propos (parcours, valeurs, outils)
 ├── contact.php             # Page Contact (affichage et traitement du formulaire)
-├── .htaccess               # Protection des fichiers internes
-├── composer.json           # Dépendances PHP et autoload
-├── Dockerfile              # Image PHP 8.5 + Apache + Composer
-├── docker-compose.yml      # Lancement de l'environnement local
 ├── mentions-legales.php    # Mentions légales
 ├── confidentialite.php     # Politique de confidentialité
 ├── 404.php                 # Page d'erreur 404
 ├── .htaccess               # Page 404 et protection des fichiers internes
+├── composer.json           # Dépendances PHP et autoload
+├── Dockerfile              # Image PHP 8.5 + Apache + Composer
+└── docker-compose.yml      # Lancement de l'environnement local
 ```
 
 ### Ajouter une page
@@ -151,7 +153,7 @@ Les messages de commit suivent la convention [Conventional Commits](https://www.
 - [x] Pages légales et page 404
 - [ ] Informations légales définitives (SIREN, adresse, hébergeur)
 - [ ] Images : portrait et captures des réalisations
-- [ ] Page À propos
+- [x] Page À propos
 - [ ] Audit accessibilité, SEO et sécurité
 - [ ] Mise en ligne
 
