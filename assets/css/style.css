@@ -669,7 +669,91 @@ h1, h2, h3, h4, h5, h6,
 }
 
 /* ==========================================================
-   16. Réduction des animations
+   16. Page À propos : frise du parcours
+   ========================================================== */
+.parcours {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* La ligne verticale qui relie les étapes */
+.parcours::before {
+    content: "";
+    position: absolute;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    left: 1.25rem;                     /* centre des pastilles (2,5 rem / 2) */
+    width: 2px;
+    background-color: var(--solvr-border-strong);
+}
+
+.parcours li {
+    position: relative;
+    padding-left: 3.75rem;
+    padding-bottom: 2.5rem;
+}
+
+.parcours li:last-child {
+    padding-bottom: 0;
+}
+
+/* Pastille ronde avec l'icône de chaque étape */
+.parcours-icone {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 2px solid var(--solvr-accent);
+    border-radius: 50%;
+    background-color: var(--solvr-bg);  /* masque la ligne derrière la pastille */
+    color: var(--solvr-accent);
+    font-size: 1.1rem;
+}
+
+/* Étape actuelle (la dernière) : pastille pleine */
+.parcours li:last-child .parcours-icone {
+    border-color: var(--brand-blue);
+    background-color: var(--brand-blue);
+    color: #FFFFFF;
+}
+
+/* Grille des technologies (logos Simple Icons) */
+.technos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.technos li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0.5rem;
+    border: 1px solid var(--solvr-border);
+    border-radius: 1rem;
+    background-color: var(--solvr-bg);
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+.techno-logo {
+    width: 2rem;
+    height: 2rem;
+    color: var(--solvr-text);
+}
+
+/* ==========================================================
+   17. Réduction des animations
    ========================================================== */
 @media (prefers-reduced-motion: reduce) {
     *,
