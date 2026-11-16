@@ -185,6 +185,7 @@ require __DIR__ . '/includes/header.php';
                         <li><?= icon('check', 'icon-accent') ?> <span><strong>Des sites rapides et accessibles</strong> : agréables pour tous vos visiteurs, et appréciés par Google.</span></li>
                         <li><?= icon('check', 'icon-accent') ?> <span><strong>Vous restez propriétaire</strong> de votre site et de votre nom de domaine.</span></li>
                     </ul>
+                    <a class="link-fleche mt-3" href="<?= e($pages['a-propos']['path']) ?>">En savoir plus sur mon parcours <?= icon('arrow-right') ?></a>
                 </div>
             </div>
         </div>

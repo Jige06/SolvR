@@ -66,6 +66,7 @@ require __DIR__ . '/includes/header.php';
                 <ul>
                     <li>illustrations : <a href="https://undraw.co/">unDraw</a> (licence unDraw) ;</li>
                     <li>icônes : <a href="https://icons.getbootstrap.com/">Bootstrap Icons</a> (licence MIT) ;</li>
+                    <li>logos des technologies : <a href="https://simpleicons.org/">Simple Icons</a> (licence CC0) ;</li>
                     <li>polices : Heebo et Inter (licence SIL Open Font License).</li>
                 </ul>
 
