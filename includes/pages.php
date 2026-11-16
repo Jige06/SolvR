@@ -32,8 +32,7 @@ return [
         'path'        => '/a-propos.php',
         'label'       => 'À propos',
         'title'       => 'À propos de SolvR, développeur web à Nice',
-        'description' => 'Parcours, valeurs et méthode de travail de SolvR, développeur web et web mobile freelance basé à Nice.',
-        'nav'         => true,
+        'description' => 'Scientifique de formation et ancien responsable de magasin pendant 17 ans, je crée des sites et des applications pour les artisans, commerçants et PME des Alpes-Maritimes.',        'nav'         => true,
     ],
     'contact' => [
         'path'        => '/contact.php',
