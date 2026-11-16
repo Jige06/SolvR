@@ -32,6 +32,10 @@ $canonicalUrl    = SITE_URL . ($page['path'] ?? '/');
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <?php if (!empty($page['noindex'])): ?>
+        <meta name="robots" content="noindex">
+    <?php endif; ?>
+
     <title><?= e($pageTitle) ?></title>
     <meta name="description" content="<?= e($pageDescription) ?>">
     <link rel="canonical" href="<?= e($canonicalUrl) ?>">
