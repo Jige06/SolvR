@@ -47,7 +47,7 @@ docker compose up -d --build
 docker compose exec web composer install
 ```
 
-**4. Configurer l'envoi des e-mails** : copier `includes/config.example.php` en `includes/config.php`, puis y renseigner les identifiants SMTP de Mailtrap (*Sandboxes → Integration → SMTP*). Ce fichier est ignoré par Git.
+**4. Configurer le site** : copier `includes/config.example.php` en `includes/config.php`, puis y renseigner les coordonnées, les informations légales et les identifiants SMTP de Mailtrap (*Sandboxes → Integration → SMTP*). Ce fichier est ignoré par Git : aucune donnée personnelle ni aucun secret ne part sur GitHub. Sans lui, le site fonctionne avec les valeurs d'exemple, surlignées.
 
 Le site est accessible sur **http://localhost:8080**.
 
@@ -67,13 +67,13 @@ Le site est accessible sur **http://localhost:8080**.
 ```
 solvr/
 ├── includes/
-│   ├── functions.php       # Fonctions utilitaires et coordonnées
+│   ├── functions.php       # Fonctions utilitaires (configuration, échappement, icônes…)
 │   ├── pages.php           # Configuration des pages (SEO, menu, liens)
 │   ├── head.php            # <head> : thème initial, métadonnées SEO, Open Graph, CSS
 │   ├── header.php          # Lien d'évitement, en-tête, navigation, bouton de thème
 │   ├── cta.php             # Bloc d'appel à l'action partagé entre les pages
 │   ├── footer.php          # Pied de page et scripts
-│   └── config.example.php  # Modèle de configuration SMTP (à copier en config.php)
+│   └── config.example.php  # Modèle de configuration (coordonnées, infos légales, SMTP)
 ├── src/                    # Classes PHP (formulaire de contact)
 │   ├── ContactForm.php     # Données et validation du formulaire
 │   ├── ContactMailer.php   # Envoi de l'e-mail via PHPMailer
@@ -91,7 +91,11 @@ solvr/
 ├── .htaccess               # Protection des fichiers internes
 ├── composer.json           # Dépendances PHP et autoload
 ├── Dockerfile              # Image PHP 8.5 + Apache + Composer
-└── docker-compose.yml      # Lancement de l'environnement local
+├── docker-compose.yml      # Lancement de l'environnement local
+├── mentions-legales.php    # Mentions légales
+├── confidentialite.php     # Politique de confidentialité
+├── 404.php                 # Page d'erreur 404
+├── .htaccess               # Page 404 et protection des fichiers internes
 ```
 
 ### Ajouter une page
@@ -144,9 +148,10 @@ Les messages de commit suivent la convention [Conventional Commits](https://www.
 - [x] Page Réalisations
 - [x] Page Contact et formulaire
 - [x] Typographies
+- [x] Pages légales et page 404
+- [ ] Informations légales définitives (SIREN, adresse, hébergeur)
 - [ ] Images : portrait et captures des réalisations
 - [ ] Page À propos
-- [ ] Pages légales (mentions légales, confidentialité) et page 404
 - [ ] Audit accessibilité, SEO et sécurité
 - [ ] Mise en ligne
 
