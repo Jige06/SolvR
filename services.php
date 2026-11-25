@@ -12,15 +12,15 @@ require __DIR__ . '/includes/header.php';
         <div class="container">
             <div class="col-lg-9">
                 <p class="hero-surtitre">Mes services</p>
-                <h1 id="page-titre" class="display-5 fw-bold">
+                <h1 id="page-titre" class="display-5 fw-bold" data-entree="1">
                     Création de sites internet et d'applications sur mesure à Nice
                 </h1>
-                <p class="lead mt-3">
+                <p class="lead mt-3" data-entree="2">
                     Que vous ayez besoin d'être visible sur Google, de vendre en ligne ou de gagner du temps
                     au quotidien, je vous propose une solution adaptée à votre activité et à votre budget.
                 </p>
 
-                <nav class="mt-4" aria-label="Sur cette page">
+                <nav class="mt-4" aria-label="Sur cette page" data-entree="3">
                     <ul class="sommaire list-unstyled d-flex flex-wrap gap-2 mb-0">
                         <li><a href="#site-vitrine"><?= icon('laptop') ?> Site vitrine</a></li>
                         <li><a href="#site-ecommerce"><?= icon('cart') ?> Site e-commerce</a></li>
@@ -34,7 +34,7 @@ require __DIR__ . '/includes/header.php';
     <!-- ========== SITE VITRINE ========== -->
     <section id="site-vitrine" class="section section-alt" aria-labelledby="vitrine-titre">
         <div class="container">
-            <div class="row gy-4 gx-lg-5 align-items-start">
+            <div class="row gy-4 gx-lg-5 align-items-start" data-reveal-groupe>
                 <div class="col-12 col-lg-7">
                     <span class="service-icon"><?= icon('laptop') ?></span>
                     <h2 id="vitrine-titre">Site vitrine</h2>
@@ -56,7 +56,14 @@ require __DIR__ . '/includes/header.php';
                 </div>
 
                 <div class="col-12 col-lg-5">
-                    <aside class="encart" aria-labelledby="vitrine-ideal">
+                    <div class="mb-4">
+                        <?= zoomableImage(
+                            '/assets/img/services/vitrine-etre-trouve.webp',
+                            "Recherche « plombier Nice » sur un téléphone : la fiche « Votre entreprise » apparaît en premier résultat, avec ses avis et un bouton Appeler, et un client appelle",
+                            1200, 900
+                        ) ?>
+                    </div>
+                    <aside class="encart carte-survol" aria-labelledby="vitrine-ideal">
                         <h3 id="vitrine-ideal" class="h5 d-flex align-items-center gap-2">
                             <?= icon('people', 'icon-accent') ?> Idéal pour
                         </h3>
@@ -70,7 +77,7 @@ require __DIR__ . '/includes/header.php';
     <!-- ========== SITE E-COMMERCE ========== -->
     <section id="site-ecommerce" class="section" aria-labelledby="ecommerce-titre">
         <div class="container">
-            <div class="row gy-4 gx-lg-5 align-items-start">
+            <div class="row gy-4 gx-lg-5 align-items-start" data-reveal-groupe>
                 <div class="col-12 col-lg-7 order-lg-2">
                     <span class="service-icon"><?= icon('cart') ?></span>
                     <h2 id="ecommerce-titre">Site e-commerce</h2>
@@ -92,7 +99,14 @@ require __DIR__ . '/includes/header.php';
                 </div>
 
                 <div class="col-12 col-lg-5 order-lg-1">
-                    <aside class="encart" aria-labelledby="ecommerce-ideal">
+                    <div class="mb-4">
+                        <?= zoomableImage(
+                            '/assets/img/services/ecommerce-commande-nuit.webp',
+                            "Page produit d'une boutique en ligne avec le bouton « Ajouter au panier », et une notification de nouvelle commande reçue à 23 h 47",
+                            1200, 900
+                        ) ?>
+                    </div>
+                    <aside class="encart carte-survol" aria-labelledby="ecommerce-ideal">
                         <h3 id="ecommerce-ideal" class="h5 d-flex align-items-center gap-2">
                             <?= icon('people', 'icon-accent') ?> Idéal pour
                         </h3>
@@ -106,7 +120,7 @@ require __DIR__ . '/includes/header.php';
     <!-- ========== APPLICATION SUR MESURE ========== -->
     <section id="application-sur-mesure" class="section section-alt" aria-labelledby="app-titre">
         <div class="container">
-            <div class="row gy-4 gx-lg-5 align-items-start">
+            <div class="row gy-4 gx-lg-5 align-items-start" data-reveal-groupe>
                 <div class="col-12 col-lg-7">
                     <span class="service-icon"><?= icon('phone') ?></span>
                     <h2 id="app-titre">Application sur mesure</h2>
@@ -128,7 +142,14 @@ require __DIR__ . '/includes/header.php';
                 </div>
 
                 <div class="col-12 col-lg-5">
-                    <aside class="encart" aria-labelledby="app-ideal">
+                    <div class="mb-4">
+                        <?= zoomableImage(
+                            '/assets/img/realisations/traiteur/gerants-statistiques.webp',
+                            "Tableau de bord de l'application Vite & Gourmand sur ordinateur et téléphone : graphiques des commandes et du chiffre d'affaires par menu",
+                            1200, 900
+                        ) ?>
+                    </div>
+                    <aside class="encart carte-survol" aria-labelledby="app-ideal">
                         <h3 id="app-ideal" class="h5 d-flex align-items-center gap-2">
                             <?= icon('people', 'icon-accent') ?> Idéal pour
                         </h3>
@@ -142,12 +163,65 @@ require __DIR__ . '/includes/header.php';
         </div>
     </section>
 
-    <!-- ========== INCLUS DANS CHAQUE PROJET ========== -->
-    <section class="section" aria-labelledby="inclus-titre">
+    <!-- ========== DE L'IDÉE AU SITE ========== -->
+    <section class="section" aria-labelledby="idee-titre">
         <div class="container">
-            <h2 id="inclus-titre" class="section-titre">Inclus dans chaque projet</h2>
+            <h2 id="idee-titre" class="section-titre" data-reveal>De l'idée au site en ligne</h2>
+            <p class="lead mb-5" data-reveal>
+                Avant d'écrire la moindre ligne de code, on construit votre site pas à pas.
+                Voici les trois étapes, illustrées avec la page d'accueil de ce site.
+            </p>
 
-            <ul class="list-unstyled row g-4 mb-0">
+            <ol class="list-unstyled row g-4 g-lg-5 mb-0 etapes-projet" data-reveal-groupe>
+                <li class="col-12 col-md-4">
+                    <figure class="mb-0">
+                        <?= zoomableImage(
+                            '/assets/img/de-l-idee-au-site/1-croquis.webp',
+                            "Croquis au crayon de la page d'accueil de SolvR : l'emplacement du titre, du texte, des boutons et de l'illustration",
+                            1200, 900
+                        ) ?>
+                        <figcaption>
+                            <h3 class="h5 d-flex align-items-center gap-2"><span class="etape-numero" aria-hidden="true">1</span> Le croquis</h3>
+                            <p class="mb-0">On organise ensemble le contenu de chaque page : ce qu'il faut montrer, et dans quel ordre. Rien n'est encore figé.</p>
+                        </figcaption>
+                    </figure>
+                </li>
+                <li class="col-12 col-md-4">
+                    <figure class="mb-0">
+                        <?= zoomableImage(
+                            '/assets/img/de-l-idee-au-site/2-maquette.webp',
+                            "Maquette de la page d'accueil de SolvR dans un logiciel de design, avec les couleurs, les typographies et les boutons du site",
+                            1200, 900
+                        ) ?>
+                        <figcaption>
+                            <h3 class="h5 d-flex align-items-center gap-2"><span class="etape-numero" aria-hidden="true">2</span> La maquette</h3>
+                            <p class="mb-0">Je mets en forme votre site à vos couleurs : typographies, boutons, espacements. Vous validez avant la première ligne de code.</p>
+                        </figcaption>
+                    </figure>
+                </li>
+                <li class="col-12 col-md-4">
+                    <figure class="mb-0">
+                        <?= zoomableImage(
+                            '/assets/img/de-l-idee-au-site/3-site-en-ligne.webp',
+                            "La page d'accueil de SolvR en ligne, affichée sur un ordinateur et sur un téléphone",
+                            1200, 900
+                        ) ?>
+                        <figcaption>
+                            <h3 class="h5 d-flex align-items-center gap-2"><span class="etape-numero" aria-hidden="true">3</span> Le site en ligne</h3>
+                            <p class="mb-0">Je développe le site, adapté à tous les écrans, puis je le mets en ligne. Il ne reste plus qu'à le faire connaître.</p>
+                        </figcaption>
+                    </figure>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- ========== INCLUS DANS CHAQUE PROJET ========== -->
+    <section class="section section-alt" aria-labelledby="inclus-titre">
+        <div class="container">
+            <h2 id="inclus-titre" class="section-titre" data-reveal>Inclus dans chaque projet</h2>
+
+            <ul class="list-unstyled row g-4 mb-0" data-reveal-groupe>
                 <li class="col-12 col-sm-6 col-lg-4">
                     <span class="service-icon"><?= icon('phone') ?></span>
                     <h3 class="h5">Adapté au mobile</h3>
@@ -183,12 +257,12 @@ require __DIR__ . '/includes/header.php';
     </section>
 
     <!-- ========== QUESTIONS FRÉQUENTES ========== -->
-    <section class="section section-alt" aria-labelledby="faq-titre">
+    <section class="section" aria-labelledby="faq-titre">
         <div class="container">
             <div class="col-lg-9 mx-auto">
-                <h2 id="faq-titre" class="section-titre">Questions fréquentes</h2>
+                <h2 id="faq-titre" class="section-titre" data-reveal>Questions fréquentes</h2>
 
-                <div class="faq">
+                <div class="faq" data-reveal-groupe>
                     <details>
                         <summary>Combien coûte un site internet ?</summary>
                         <div class="faq-reponse">

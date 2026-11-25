@@ -1,6 +1,6 @@
 <?php $contact = config()['contact']; ?>
 
-<footer class="site-footer">
+<footer id="pied-de-page" class="site-footer">
     <div class="container py-5">
         <div class="row gy-4">
             <div class="col-12 col-md-4">
@@ -40,7 +40,8 @@
 </footer>
 
 <script src="/assets/vendor/bootstrap/bootstrap.bundle.min.js" defer></script>
-<script src="/assets/js/main.js" defer></script>
+<script src="<?= asset('/assets/js/main.js') ?>" defer></script>
+<script src="<?= asset('/assets/js/animations.js') ?>" defer></script>
 </body>
 
 </html>

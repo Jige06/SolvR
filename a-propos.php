@@ -14,19 +14,19 @@ require __DIR__ . '/includes/header.php';
             <div class="row align-items-center gy-5 gx-lg-5">
                 <div class="col-12 col-lg-7">
                     <p class="hero-surtitre">À propos</p>
-                    <h1 id="page-titre" class="display-5 fw-bold">Un développeur qui connaît le terrain</h1>
-                    <p class="lead mt-3">
+                    <h1 id="page-titre" class="display-5 fw-bold" data-entree="1">Un développeur qui connaît le terrain</h1>
+                    <p class="lead mt-3" data-entree="2">
                         <strong>SolvR</strong>, c'est le « solveur » : celui qui trouve des solutions.
                         C'est exactement mon métier : comprendre votre besoin, puis concevoir l'outil numérique qui y répond.
                     </p>
-                    <p class="lead mb-0">
+                    <p class="lead mb-0" data-entree="3">
                         Pendant 17 ans, j'ai travaillé aux côtés d'artisans, de commerçants et de dirigeants de PME.
                         Aujourd'hui, je mets cette expérience au service de leurs projets : des sites internet qui
                         les rendent visibles, et des applications qui leur font gagner du temps au quotidien.
                     </p>
                 </div>
 
-                <div class="col-8 col-sm-6 col-lg-4 offset-lg-1 mx-auto mx-lg-0">
+                <div class="col-8 col-sm-6 col-lg-4 offset-lg-1 mx-auto mx-lg-0" data-entree="4">
                     <!-- À remplacer par ta photo quand elle sera prête :
                     <img src="/assets/img/portrait-developpeur-web-nice.webp"
                          alt="Portrait du fondateur de SolvR, développeur web à Nice"
@@ -44,9 +44,9 @@ require __DIR__ . '/includes/header.php';
     <section class="section section-alt" aria-labelledby="parcours-titre">
         <div class="container">
             <div class="col-lg-9">
-                <h2 id="parcours-titre" class="section-titre">Mon parcours</h2>
+                <h2 id="parcours-titre" class="section-titre" data-reveal>Mon parcours</h2>
 
-                <ol class="parcours">
+                <ol class="parcours" data-reveal-groupe>
                     <li>
                         <span class="parcours-icone" aria-hidden="true"><?= icon('flask') ?></span>
                         <h3 class="h5">La rigueur scientifique</h3>
@@ -82,25 +82,25 @@ require __DIR__ . '/includes/header.php';
     <!-- ========== CE QUE ÇA CHANGE POUR VOUS ========== -->
     <section class="section" aria-labelledby="apport-titre">
         <div class="container">
-            <h2 id="apport-titre" class="section-titre">Ce que ça change pour vous</h2>
+            <h2 id="apport-titre" class="section-titre" data-reveal>Ce que ça change pour vous</h2>
 
-            <div class="row g-4">
+            <div class="row g-4" data-reveal-groupe>
                 <div class="col-12 col-lg-4">
-                    <div class="encart h-100">
+                    <div class="encart carte-survol h-100">
                         <span class="service-icon"><?= icon('chat') ?></span>
                         <h3 class="h5">Je parle votre langage</h3>
                         <p class="mb-0">Pas de jargon technique : je comprends vos priorités de chef d'entreprise et je vous explique chaque choix simplement.</p>
                     </div>
                 </div>
                 <div class="col-12 col-lg-4">
-                    <div class="encart h-100">
+                    <div class="encart carte-survol h-100">
                         <span class="service-icon"><?= icon('clipboard') ?></span>
                         <h3 class="h5">Un travail rigoureux</h3>
                         <p class="mb-0">La méthode héritée de la recherche : chaque fonctionnalité est pensée, testée et vérifiée avant d'arriver chez vous.</p>
                     </div>
                 </div>
                 <div class="col-12 col-lg-4">
-                    <div class="encart h-100">
+                    <div class="encart carte-survol h-100">
                         <span class="service-icon"><?= icon('person-check') ?></span>
                         <h3 class="h5">Un seul interlocuteur, de A à Z</h3>
                         <p class="mb-0">De l'écoute de votre besoin jusqu'à la mise en ligne et au suivi, vous parlez toujours à la même personne.</p>
@@ -115,8 +115,8 @@ require __DIR__ . '/includes/header.php';
         <div class="container">
             <div class="row gy-5 gx-lg-5">
                 <div class="col-12 col-lg-6">
-                    <h2 id="methode-titre" class="section-titre">Ma façon de travailler</h2>
-                    <ul class="list-unstyled atouts mb-0">
+                    <h2 id="methode-titre" class="section-titre" data-reveal>Ma façon de travailler</h2>
+                    <ul class="list-unstyled atouts mb-0" data-reveal-groupe>
                         <li><?= icon('check', 'icon-accent') ?> <span><strong>À l'écoute</strong> : je commence toujours par comprendre votre activité, vos clients et vos objectifs.</span></li>
                         <li><?= icon('check', 'icon-accent') ?> <span><strong>Transparent</strong> : un devis clair et détaillé, sans mauvaise surprise.</span></li>
                         <li><?= icon('check', 'icon-accent') ?> <span><strong>Sur mesure</strong> : pas de modèle tout fait, une solution pensée pour vous.</span></li>
@@ -126,12 +126,12 @@ require __DIR__ . '/includes/header.php';
                 </div>
 
                 <div class="col-12 col-lg-6">
-                    <h2 class="section-titre">Mes outils</h2>
-                    <p>
+                    <h2 class="section-titre" data-reveal>Mes outils</h2>
+                    <p data-reveal>
                         Je travaille avec des technologies standards et éprouvées, connues de tous les développeurs :
                         votre site reste facile à faire évoluer.
                     </p>
-                    <ul class="technos mt-4">
+                    <ul class="technos mt-4" data-reveal-groupe>
                         <?php foreach ($technologies as $tech): ?>
                             <li>
                                 <svg class="techno-logo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
@@ -149,7 +149,7 @@ require __DIR__ . '/includes/header.php';
     <!-- ========== EN DEHORS DU CODE ========== -->
     <section class="section" aria-labelledby="perso-titre">
         <div class="container">
-            <div class="col-lg-9">
+            <div class="col-lg-9" data-reveal-groupe>
                 <h2 id="perso-titre" class="section-titre">En dehors du code</h2>
                 <p>
                     Originaire de Picardie, je vis dans les Alpes-Maritimes depuis 17 ans et je ne m'en lasse pas :

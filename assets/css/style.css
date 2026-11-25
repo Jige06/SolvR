@@ -317,8 +317,45 @@
 /* ==========================================================
    7. Hero
    ========================================================== */
+/* Halo de lumière « émis » par le bouton Contact.
+   Clair : bleu très pâle opaque. Il reste assez clair pour que le texte gris
+   garde un contraste ≥ 4,5:1 même au centre du halo.
+   Sombre : l'accent lavande transparent. */
+:root {
+    --solvr-halo: #E0E6FF;
+}
+
+[data-bs-theme="dark"] {
+    --solvr-halo: var(--solvr-accent-soft);
+}
+
+/* Mobile et tablette : le bouton Contact est caché dans le menu replié,
+   le halo reste donc fixe en haut à droite du hero. */
 .hero {
-    background-image: radial-gradient(circle at 85% 15%, var(--solvr-accent-soft), transparent 45%);
+    background-image: radial-gradient(circle at 85% 15%, var(--solvr-halo), transparent 45%);
+}
+
+/* Desktop : le halo suit le bouton Contact pendant le défilement.
+   background-attachment: fixed place le dégradé par rapport à l'écran, et non
+   par rapport à l'élément : chaque fond affiche le morceau du halo qui se trouve
+   derrière lui, ce qui donne l'illusion d'une seule lumière continue.
+   --solvr-halo-x et --solvr-halo-y sont calculés par animations.js
+   (centre exact du bouton) ; les valeurs après la virgule servent sans JS. */
+@media (min-width: 992px) {
+    body,
+    .site-header,
+    .section-alt {
+        background-image: radial-gradient(
+            circle at var(--solvr-halo-x, 85%) var(--solvr-halo-y, 2.25rem),
+            var(--solvr-halo),
+            transparent 32rem
+        );
+        background-attachment: fixed;
+    }
+
+    .hero {
+        background-image: none;   /* le halo du body passe au travers */
+    }
 }
 
 .hero-surtitre {
@@ -755,7 +792,341 @@ h1, h2, h3, h4, h5, h6,
 /* ==========================================================
    17. Réduction des animations
    ========================================================== */
-@media (prefers-reduced-motion: reduce) {
+/* ==========================================================
+   De l'idée au site (page Services)
+   ========================================================== */
+.etapes-projet .agrandir {
+    margin-bottom: 1rem;
+}
+
+.etape-numero {
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background-color: var(--brand-blue);
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+/* ==========================================================
+   Images agrandissables et visionneuse
+   ========================================================== */
+.agrandir {
+    position: relative;
+    display: block;
+    border-radius: 1rem;
+    cursor: zoom-in;
+}
+
+.agrandir img {
+    display: block;
+}
+
+/* Loupe au centre de l'image, visible au survol et au focus clavier */
+.agrandir-badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: rgb(24 23 29 / 0.75);
+    color: #fff;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+    transition: opacity var(--solvr-duree) ease, transform var(--solvr-duree) var(--solvr-courbe);
+    pointer-events: none;
+}
+
+.agrandir-badge svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.agrandir:hover .agrandir-badge,
+.agrandir:focus-visible .agrandir-badge {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* La visionneuse : une <dialog> ouverte avec showModal() */
+.visionneuse {
+    max-width: none;
+    max-height: none;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: visible;
+}
+
+.visionneuse::backdrop {
+    background-color: rgb(15 14 19 / 0.88);
+}
+
+.visionneuse img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: min(94vw, 1400px);
+    max-height: 88vh;
+    cursor: zoom-out;
+}
+
+.visionneuse-fermer {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid rgb(255 255 255 / 0.6);
+    border-radius: 50%;
+    background-color: rgb(0 0 0 / 0.5);
+    color: #fff;
+}
+
+.visionneuse-fermer:hover {
+    background-color: rgb(0 0 0 / 0.8);
+}
+
+.visionneuse-fermer:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+}
+
+/* La page ne défile plus derrière la visionneuse */
+:root:has(.visionneuse[open]) {
+    overflow: hidden;
+}
+
+@keyframes solvr-zoom-entree { from { opacity: 0; transform: scale(0.94); } }
+@keyframes solvr-fondu-entree-simple { from { opacity: 0; } }
+
+@media (prefers-reduced-motion: no-preference) {
+    .visionneuse[open] { animation: solvr-zoom-entree 0.3s cubic-bezier(0.2, 0.7, 0.2, 1); }
+    .visionneuse[open]::backdrop { animation: solvr-fondu-entree-simple 0.3s ease; }
+}
+
+/* ==========================================================================
+   Animations
+   Tout ce qui bouge est réservé à prefers-reduced-motion: no-preference.
+   ========================================================================== */
+
+:root {
+  --solvr-duree-rapide: 0.2s;
+  --solvr-duree: 0.35s;
+  --solvr-courbe: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --solvr-ombre-survol: 0 0.75rem 1.75rem rgb(24 23 29 / 0.12);
+}
+
+[data-bs-theme="dark"] {
+  --solvr-ombre-survol: 0 0.75rem 1.75rem rgb(0 0 0 / 0.5);
+}
+
+/* --- Images clés --- */
+@keyframes solvr-apparition {
+  from { opacity: 0; translate: 0 1.5rem; }
+  to   { opacity: 1; translate: 0 0; }
+}
+@keyframes solvr-fondu-sortie { to { opacity: 0; } }
+@keyframes solvr-fondu-entree { from { opacity: 0; transform: translateY(0.75rem); } }
+@keyframes solvr-onde { to { transform: scale(1); opacity: 0; } }
+@keyframes solvr-pivot { from { opacity: 0; transform: rotate(-90deg) scale(0.6); } }
+@keyframes solvr-secousse {
+  20%, 60% { translate: -0.375rem 0; }
+  40%, 80% { translate: 0.375rem 0; }
+}
+@keyframes solvr-trace { to { stroke-dashoffset: 0; } }
+@keyframes solvr-progression { to { transform: scaleX(1); } }
+@keyframes solvr-ombre-entete { to { box-shadow: var(--solvr-ombre-survol); } }
+
+/* --- 1. Ancres : ne pas finir cachées sous l'en-tête fixe --- */
+html { scroll-padding-top: 5rem; }
+
+/* Défilement fluide seulement pour les ancres de la page en cours.
+   Bootstrap active scroll-behavior: smooth sur toute la page (:root) : on l'annule,
+   puis on le réactive avec :focus-within, qui n'est vrai qu'après une interaction
+   (le lien cliqué a le focus). En arrivant d'une autre page (services.php#site-vitrine),
+   rien n'a le focus : la page s'ouvre directement sur la bonne section. */
+@media (prefers-reduced-motion: no-preference) {
+  :root { scroll-behavior: auto; }
+  :root:focus-within { scroll-behavior: smooth; }
+}
+
+/* --- 2. Transition entre les pages --- */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+}
+
+body > header { position: relative; view-transition-name: entete; }
+
+::view-transition-old(root) {
+  animation: solvr-fondu-sortie var(--solvr-duree-rapide) ease both;
+}
+::view-transition-new(root) {
+  animation: solvr-fondu-entree var(--solvr-duree) var(--solvr-courbe) both;
+}
+
+/* --- 3. Entrée du hero au chargement (sans JS) --- */
+@media (prefers-reduced-motion: no-preference) {
+  [data-entree] { animation: solvr-apparition 0.7s var(--solvr-courbe) both; }
+  [data-entree="2"] { animation-delay: 0.1s; }
+  [data-entree="3"] { animation-delay: 0.2s; }
+  [data-entree="4"] { animation-delay: 0.3s; }
+  [data-entree="5"] { animation-delay: 0.4s; }
+}
+
+/* --- 4. Apparition au défilement (pilotée par animations.js) --- */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal]:not(.est-visible),
+  .js [data-reveal-groupe] > :not(.est-visible) {
+    opacity: 0;
+  }
+  .js .est-visible {
+    animation: solvr-apparition 0.6s var(--solvr-courbe) var(--reveal-delai, 0s) both;
+  }
+}
+
+/* --- 5. Cartes au survol --- */
+.carte-survol {
+  transition:
+    transform var(--solvr-duree) var(--solvr-courbe),
+    box-shadow var(--solvr-duree) var(--solvr-courbe);
+}
+.carte-survol:focus-within {
+  transform: translateY(-0.375rem);
+  box-shadow: var(--solvr-ombre-survol);
+}
+@media (hover: hover) {
+  .carte-survol:hover {
+    transform: translateY(-0.375rem);
+    box-shadow: var(--solvr-ombre-survol);
+  }
+  .carte-survol svg:not(.btn svg, .link-fleche svg, .agrandir svg) {
+    transition: transform var(--solvr-duree) var(--solvr-courbe);
+  }
+  .carte-survol:hover svg:not(.btn svg, .link-fleche svg, .agrandir svg) {
+    transform: scale(1.12) rotate(-6deg);
+  }
+}
+
+/* --- 6. Boutons : appui, flèche, onde --- */
+.btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out,
+    transform var(--solvr-duree-rapide) var(--solvr-courbe);
+}
+.btn:active { transform: scale(0.97); }
+
+.icone-fleche { transition: transform var(--solvr-duree) var(--solvr-courbe); }
+@media (hover: hover) {
+  .btn:hover .icone-fleche,
+  a:hover > .icone-fleche { transform: translateX(0.25rem); }
+}
+
+.onde {
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  background-color: currentColor;
+  opacity: 0.3;
+  transform: scale(0);
+  pointer-events: none;
+  animation: solvr-onde 0.6s ease-out forwards;
+}
+
+/* --- 7. Bouton de thème --- */
+@media (prefers-reduced-motion: no-preference) {
+  .theme-toggle svg { animation: solvr-pivot 0.5s var(--solvr-courbe); }
+}
+
+/* --- 8. Logos des outils --- */
+@media (hover: hover) {
+  .technos svg { transition: transform var(--solvr-duree) var(--solvr-courbe); }
+  .technos li:hover svg { transform: translateY(-0.25rem) scale(1.12); }
+}
+
+/* --- 9. FAQ : ouverture en douceur --- */
+@media (prefers-reduced-motion: no-preference) {
+  .faq { interpolate-size: allow-keywords; }
+  .faq details::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size var(--solvr-duree) var(--solvr-courbe),
+      content-visibility var(--solvr-duree) allow-discrete;
+  }
+  .faq details[open]::details-content { block-size: auto; }
+}
+
+/* --- 10. En-tête : ombre + barre de progression au défilement --- */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    body > header {
+      animation: solvr-ombre-entete linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 6rem;
+    }
+    body > header::after {
+      content: "";
+      position: absolute;
+      inset-inline: 0;
+      inset-block-end: 0;
+      block-size: 3px;
+      background-color: var(--solvr-accent);
+      transform: scaleX(0);
+      transform-origin: 0 50%;
+      pointer-events: none;
+      animation: solvr-progression linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+}
+
+/* --- 11. Formulaire de contact --- */
+.btn-envoi-chargement { display: none; align-items: center; gap: 0.5rem; }
+.btn-envoi.est-en-cours .btn-envoi-texte { display: none; }
+.btn-envoi.est-en-cours .btn-envoi-chargement { display: inline-flex; }
+.btn-envoi.est-en-cours:disabled { opacity: 1; cursor: progress; }
+
+.coche-animee {
+  flex-shrink: 0;
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  main .alert { animation: solvr-apparition 0.5s var(--solvr-courbe) both; }
+  [aria-invalid="true"] { animation: solvr-secousse 0.4s ease-in-out 0.3s; }
+
+  .coche-animee circle,
+  .coche-animee path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: solvr-trace 0.6s var(--solvr-courbe) forwards;
+  }
+  .coche-animee path { animation-delay: 0.45s; }
+}
+
+   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
     *::after {

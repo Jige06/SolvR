@@ -6,7 +6,7 @@ $navItems = array_filter($pages, fn(array $p): bool => $p['nav']);
 <body>
     <a class="visually-hidden-focusable skip-link" href="#contenu">Aller au contenu</a>
 
-    <header class="site-header">
+    <header class="site-header sticky-top">
         <nav class="navbar navbar-expand-lg" aria-label="Navigation principale">
             <div class="container">
                 <a class="navbar-brand" href="<?= e($pages['accueil']['path']) ?>">SolvR</a>

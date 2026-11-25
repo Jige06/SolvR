@@ -16,6 +16,7 @@ $canonicalUrl    = SITE_URL . ($page['path'] ?? '/');
 <head>
     <!-- Thème appliqué AVANT l'affichage, pour éviter un flash de couleur au chargement -->
     <script>
+        document.documentElement.classList.add('js');
         (function() {
             let theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
             try {
@@ -54,5 +55,10 @@ $canonicalUrl    = SITE_URL . ($page['path'] ?? '/');
 
     <!-- Bootstrap d'abord, nos styles ensuite pour pouvoir le surcharger -->
     <link rel="stylesheet" href="/assets/vendor/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="<?= asset('/assets/css/style.css') ?>">
+
+    <!-- N'affiche la page qu'une fois le HTML lu jusqu'au pied de page :
+         en arrivant sur une ancre (services.php#site-vitrine), la section visée
+         existe déjà au premier affichage, la page s'ouvre donc directement dessus. -->
+    <link rel="expect" href="#pied-de-page" blocking="render">
 </head>

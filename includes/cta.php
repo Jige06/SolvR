@@ -1,5 +1,5 @@
 <!-- ========== APPEL À L'ACTION (commun à plusieurs pages) ========== -->
-<section class="section cta-final text-center" aria-labelledby="cta-titre">
+<section class="section cta-final text-center" aria-labelledby="cta-titre" data-reveal>
     <div class="container">
         <h2 id="cta-titre">Un projet en tête ?</h2>
         <p class="lead mb-4">Parlons-en. Le premier échange est gratuit et sans engagement.</p>
