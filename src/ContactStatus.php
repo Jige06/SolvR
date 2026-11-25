@@ -12,6 +12,7 @@ enum ContactStatus: string
     case Invalid   = 'invalid';     // champs mal remplis
     case Csrf      = 'csrf';        // jeton absent ou expiré
     case SendError = 'send-error';  // problème technique à l'envoi
+    case TooManyRequests = 'too-many-requests';  // trop d'envois en peu de temps
 
     /** Vrai pour tous les statuts sauf le succès */
     public function isError(): bool
