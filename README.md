@@ -27,7 +27,7 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 - **RGPD** : aucune ressource chargée depuis un serveur tiers (polices et Bootstrap hébergés localement), minimisation des données collectées, information sous le formulaire
 - **Thème clair / sombre** : suit le réglage du système, bascule manuelle mémorisée, sans flash au chargement
 - **Animations** : discrètes et accessibles. Désactivées si `prefers-reduced-motion` est activé, aucun contenu masqué sans JavaScript, aucune animation en boucle (RGAA 13.8). Transitions entre les pages avec la View Transitions API, en amélioration progressive
-- **Performance** : polices variables légères (78 Ko au total) et préchargées, images WebP optimisées et chargées à la demande (`loading="lazy"`), scripts en `defer`, fichiers CSS et JS versionnés (`?v=`) pour que le navigateur recharge toujours la dernière version
+- **Performance** : polices variables légères (78 Ko au total) et préchargées, images WebP optimisées et chargées à la demande (`loading="lazy"`), scripts en `defer`, fichiers CSS et JS versionnés (`?v=`) et gardés un an en cache par le navigateur, polices un an, images un mois, compression gzip des fichiers texte
 
 ## Prérequis
 
@@ -105,7 +105,7 @@ solvr/
 ├── 404.php                 # Page d'erreur 404
 ├── robots.php              # Consignes aux robots, servies à l'adresse /robots.txt
 ├── sitemap.php             # Plan du site, servi à l'adresse /sitemap.xml
-├── .htaccess               # Pages d'erreur, en-têtes de sécurité, protection des fichiers internes, robots.txt / sitemap.xml, adresses sans .php
+├── .htaccess               # Pages d'erreur, en-têtes de sécurité, cache navigateur, protection des fichiers internes, robots.txt / sitemap.xml, adresses sans .php
 ├── .gitattributes          # Fins de ligne LF pour tous les fichiers texte
 ├── composer.json           # Dépendances PHP et autoload
 ├── Dockerfile              # Image PHP 8.5 + Apache + Composer
