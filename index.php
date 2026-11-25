@@ -93,7 +93,8 @@ require __DIR__ . '/includes/header.php';
                     <?= zoomableImage(
                         '/assets/img/realisations/traiteur/traiteur-menus.webp',
                         "Page des menus de l'application Vite & Gourmand : filtres par thème, régime, prix et nombre de personnes, puis les menus avec photo et prix par personne",
-                        1280, 960, 'img-fluid rounded-4 border shadow-sm'
+                        1280, 960, 'img-fluid rounded-4 border shadow-sm',
+                        sizes: 'half'
                     ) ?>
                 </div>
 

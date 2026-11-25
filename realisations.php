@@ -68,7 +68,8 @@ require __DIR__ . '/includes/header.php';
                         <?= zoomableImage(
                             '/assets/img/realisations/traiteur/vite-et-gourmand-accueil.webp',
                             "Page d'accueil de l'application Vite & Gourmand affichée sur ordinateur et sur téléphone : la photo d'un buffet, le bouton « passer une commande » et les filtres des menus",
-                            1280, 960, 'img-fluid', false
+                            1280, 960, 'img-fluid', false,
+                            sizes: 'half'
                         ) ?>
                     </div>
                 </div>
@@ -109,7 +110,8 @@ require __DIR__ . '/includes/header.php';
                                 <?= zoomableImage(
                                     '/assets/img/realisations/traiteur/clients-commande.webp',
                                     "Étape 1 de la commande dans l'application Vite & Gourmand : formulaire avec les coordonnées du client, le type de livraison et l'adresse",
-                                    1200, 900
+                                    1200, 900,
+                                    sizes: 'card'
                                 ) ?>
                             </div>
                             <span class="service-icon"><?= icon('people') ?></span>
@@ -129,7 +131,8 @@ require __DIR__ . '/includes/header.php';
                                 <?= zoomableImage(
                                     '/assets/img/realisations/traiteur/equipe-commandes.webp',
                                     "Espace employé de Vite & Gourmand : tableau des commandes avec leur statut actuel et, pour chacune, un menu pour changer de statut",
-                                    1200, 900
+                                    1200, 900,
+                                    sizes: 'card'
                                 ) ?>
                             </div>
                             <span class="service-icon"><?= icon('team') ?></span>
@@ -148,7 +151,8 @@ require __DIR__ . '/includes/header.php';
                                 <?= zoomableImage(
                                     '/assets/img/realisations/traiteur/gerants-statistiques.webp',
                                     "Statistiques de Vite & Gourmand sur ordinateur et sur téléphone : graphiques du nombre de commandes et du chiffre d'affaires par menu",
-                                    1200, 900
+                                    1200, 900,
+                                    sizes: 'card'
                                 ) ?>
                             </div>
                             <span class="service-icon"><?= icon('chart') ?></span>
