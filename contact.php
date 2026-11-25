@@ -3,109 +3,39 @@
 declare(strict_types=1);
 
 /* ==========================================================
-   1. TRAITEMENT (avant tout affichage HTML)
+   1. TRAITEMENT : délégué au contrôleur (src/ContactController.php)
    ========================================================== */
-
-// Session sécurisée : nécessaire pour le jeton CSRF et le message de confirmation
-session_set_cookie_params([
-    'httponly' => true,                              // cookie inaccessible au JavaScript
-    'samesite' => 'Lax',                             // pas envoyé par les requêtes d'autres sites
-    'secure'   => !empty($_SERVER['HTTPS']),         // HTTPS uniquement quand le site l'utilise
-]);
-session_start();
-
 require_once __DIR__ . '/vendor/autoload.php';      // PHPMailer + nos classes (src/)
 require_once __DIR__ . '/includes/functions.php';
-$pages  = require __DIR__ . '/includes/pages.php';
+require_once __DIR__ . '/includes/form-helpers.php';
+
+startSecureSession();   // nécessaire pour le jeton CSRF et le message de confirmation
+
+$pages   = require __DIR__ . '/includes/pages.php';
 $config  = config();
 $contact = $config['contact'];
 
-$form   = new ContactForm();
-$status = null;   // null | 'success' | 'invalid' | 'csrf' | 'send-error'
+// Le contrôleur décide, la page agit : c'est ici, et seulement ici, qu'on redirige.
+$controller = new ContactController($config);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    if (!CsrfToken::isValid($_POST['csrf_token'] ?? null)) {
-        // Jeton absent ou faux : session expirée, ou tentative d'attaque CSRF
-        $status = 'csrf';
-        $form = new ContactForm($_POST);   // on garde la saisie pour ne pas la faire perdre
-
-    } elseif (($_POST['site_web'] ?? '') !== '') {
-        // Honeypot rempli : c'est un robot. On fait comme si tout s'était bien passé,
-        // pour ne pas lui apprendre que son envoi a été bloqué.
-        $_SESSION['contact_success'] = true;
-        header('Location: ' . $pages['contact']['path'], true, 303);
-        exit;
-    } else {
-        $form = new ContactForm($_POST);
-
-        if (!$form->validate()) {
-            $status = 'invalid';
-        } else {
-            try {
-                (new ContactMailer($config))->send($form);
-
-                // Post/Redirect/Get : on redirige pour qu'un F5 ne renvoie pas le formulaire
-                $_SESSION['contact_success'] = true;
-                header('Location: ' . $pages['contact']['path'], true, 303);
-                exit;
-            } catch (Throwable $exception) {
-                // Le détail technique va dans le journal du serveur, jamais à l'écran
-                error_log('Échec de l\'envoi du formulaire de contact : ' . $exception->getMessage());
-                $status = 'send-error';
-            }
-        }
-    }
-} elseif (!empty($_SESSION['contact_success'])) {
-    // Message de confirmation « flash » : affiché une seule fois après la redirection
-    $status = 'success';
-    unset($_SESSION['contact_success']);
+if ($controller->handle($_SERVER['REQUEST_METHOD'], $_POST)) {
+    // Post/Redirect/Get : un F5 ne renverra pas le formulaire
+    header('Location: ' . $pages['contact']['path'], true, 303);
+    exit;
 }
+
+$form   = $controller->getForm();
+$status = $controller->getStatus();   // null au premier affichage, sinon un ContactStatus
 
 /* ==========================================================
    2. AFFICHAGE
    ========================================================== */
 $currentPage = 'contact';
 
-// En cas d'erreur, le titre de l'onglet le signale (premier élément lu par un lecteur d'écran)
-if (in_array($status, ['invalid', 'csrf', 'send-error'], true)) {
-    $pageTitlePrefix = 'Erreur : ';
-} elseif ($status === 'success') {
-    $pageTitlePrefix = 'Message envoyé : ';
+// Le titre de l'onglet annonce le résultat (premier élément lu par un lecteur d'écran)
+if ($status !== null) {
+    $pageTitlePrefix = $status->isError() ? 'Erreur : ' : 'Message envoyé : ';
 }
-
-/**
- * Attributs d'accessibilité d'un champ selon qu'il est en erreur ou non.
- * Retourne par exemple : class="form-control is-invalid" aria-invalid="true" aria-describedby="nom-erreur"
- */
-function fieldAttributes(ContactForm $form, string $field, string $baseClass = 'form-control', string $describedBy = ''): string
-{
-    $hasError = $form->getError($field) !== null;
-    $ids = trim($describedBy . ($hasError ? ' ' . $field . '-erreur' : ''));
-
-    return 'class="' . $baseClass . ($hasError ? ' is-invalid' : '') . '"'
-        . ($hasError ? ' aria-invalid="true"' : '')
-        . ($ids !== '' ? ' aria-describedby="' . $ids . '"' : '');
-}
-
-/** Message d'erreur sous un champ (rien si pas d'erreur) */
-function fieldError(ContactForm $form, string $field): string
-{
-    $error = $form->getError($field);
-
-    return $error === null
-        ? ''
-        : '<p id="' . $field . '-erreur" class="invalid-feedback d-block">' . e($error) . '</p>';
-}
-
-/** Libellés des champs, pour le récapitulatif des erreurs */
-$fieldLabels = [
-    'nom'       => 'Nom',
-    'email'     => 'E-mail',
-    'telephone' => 'Téléphone',
-    'type'      => 'Type de projet',
-    'message'   => 'Votre projet',
-];
 
 require __DIR__ . '/includes/head.php';
 require __DIR__ . '/includes/header.php';
@@ -138,7 +68,7 @@ require __DIR__ . '/includes/header.php';
 
                     <!-- Zone de messages : annoncée par les lecteurs d'écran -->
                     <div aria-live="polite">
-                        <?php if ($status === 'success'): ?>
+                        <?php if ($status === ContactStatus::Success): ?>
                             <div class="alert alert-success d-flex align-items-center gap-3" role="status">
                                 <svg class="coche-animee" viewBox="0 0 52 52" aria-hidden="true" focusable="false">
                                     <circle cx="26" cy="26" r="24" pathLength="1" />
@@ -150,22 +80,22 @@ require __DIR__ . '/includes/header.php';
                                 </div>
                             </div>
 
-                        <?php elseif ($status === 'invalid'): ?>
+                        <?php elseif ($status === ContactStatus::Invalid): ?>
                             <div class="alert alert-danger" role="alert">
                                 <p class="fw-bold mb-1">Le formulaire contient <?= count($form->getErrors()) ?> erreur(s) :</p>
                                 <ul class="mb-0">
                                     <?php foreach ($form->getErrors() as $field => $error): ?>
-                                        <li><a href="#<?= e($field) ?>" class="alert-link"><?= e($fieldLabels[$field] ?? $field) ?></a> : <?= e($error) ?></li>
+                                        <li><a href="#<?= e($field) ?>" class="alert-link"><?= e(ContactForm::FIELD_LABELS[$field] ?? $field) ?></a> : <?= e($error) ?></li>
                                     <?php endforeach; ?>
                                 </ul>
                             </div>
 
-                        <?php elseif ($status === 'csrf'): ?>
+                        <?php elseif ($status === ContactStatus::Csrf): ?>
                             <div class="alert alert-danger" role="alert">
                                 <p class="mb-0">Votre session a expiré. Vérifiez vos informations et renvoyez le formulaire.</p>
                             </div>
 
-                        <?php elseif ($status === 'send-error'): ?>
+                        <?php elseif ($status === ContactStatus::SendError): ?>
                             <div class="alert alert-danger" role="alert">
                                 <p class="mb-0">
                                     Désolé, votre message n'a pas pu être envoyé suite à un problème technique.

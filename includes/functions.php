@@ -24,6 +24,24 @@ function config(): array
 }
 
 /**
+ * Démarre une session avec un cookie sécurisé.
+ * À appeler avant tout affichage : le cookie part dans les en-têtes HTTP.
+ */
+function startSecureSession(): void
+{
+    if (session_status() === PHP_SESSION_ACTIVE) {
+        return;   // déjà démarrée : rien à faire
+    }
+
+    session_set_cookie_params([
+        'httponly' => true,                       // cookie inaccessible au JavaScript
+        'samesite' => 'Lax',                      // pas envoyé par les requêtes d'autres sites
+        'secure'   => !empty($_SERVER['HTTPS']),  // HTTPS uniquement quand le site l'utilise
+    ]);
+    session_start();
+}
+
+/**
  * Échappe une valeur avant de l'afficher dans le HTML.
  * Protège contre les failles XSS : <script> devient &lt;script&gt;
  */

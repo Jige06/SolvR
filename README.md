@@ -75,10 +75,13 @@ solvr/
 │   ├── head.php            # <head> : thème initial, métadonnées SEO, Open Graph, CSS
 │   ├── header.php          # Lien d'évitement, en-tête, navigation, bouton de thème
 │   ├── cta.php             # Bloc d'appel à l'action partagé entre les pages
+│   ├── form-helpers.php    # Aides d'affichage des formulaires (attributs ARIA, messages d'erreur)
 │   ├── footer.php          # Pied de page et scripts
 │   └── config.example.php  # Modèle de configuration (coordonnées, infos légales, SMTP)
 ├── src/                    # Classes PHP (formulaire de contact)
-│   ├── ContactForm.php     # Données et validation du formulaire
+│   ├── ContactController.php # Traitement de la requête : CSRF, honeypot, validation, envoi
+│   ├── ContactStatus.php   # Résultats possibles du traitement (enum)
+│   ├── ContactForm.php     # Données, libellés et validation du formulaire
 │   ├── ContactMailer.php   # Envoi de l'e-mail via PHPMailer
 │   └── CsrfToken.php       # Jeton anti-CSRF
 ├── assets/
@@ -94,7 +97,7 @@ solvr/
 ├── services.php            # Page Services
 ├── realisations.php        # Page Réalisations (étude de cas Vite & Gourmand)
 ├── a-propos.php            # Page À propos (parcours, valeurs, outils)
-├── contact.php             # Page Contact (affichage et traitement du formulaire)
+├── contact.php             # Page Contact : appelle le contrôleur, redirige ou affiche
 ├── mentions-legales.php    # Mentions légales
 ├── confidentialite.php     # Politique de confidentialité
 ├── 404.php                 # Page d'erreur 404
@@ -143,6 +146,7 @@ Le projet suit un **Git Flow simplifié** :
 | `feature/…` | Nouvelle fonctionnalité, créée depuis `develop` |
 | `fix/…` | Correction de bug, créée depuis `develop` |
 | `chore/…` | Configuration, outillage, créée depuis `develop` |
+| `refactor/…` | Réorganisation du code sans changement de comportement, créée depuis `develop` |
 | `style/…` | Mise en forme, CSS, créée depuis `develop` |
 | `docs/…` | Documentation, créée depuis `develop` |
 | `hotfix/…` | Correction urgente, créée depuis `main` |

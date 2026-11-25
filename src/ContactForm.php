@@ -14,6 +14,15 @@ class ContactForm
         'autre'       => 'Autre / je ne sais pas encore',
     ];
 
+    /** Libellés des champs (récapitulatif des erreurs) */
+    public const FIELD_LABELS = [
+        'nom'       => 'Nom',
+        'email'     => 'E-mail',
+        'telephone' => 'Téléphone',
+        'type'      => 'Type de projet',
+        'message'   => 'Votre projet',
+    ];
+
     /** Données du formulaire, initialisées à vide */
     private array $data = [
         'nom'       => '',
