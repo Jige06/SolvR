@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Données structurées schema.org (JSON-LD), affichées sur la page d'accueil.
  * Elles décrivent l'entreprise et le site aux moteurs de recherche,
@@ -9,6 +7,9 @@ declare(strict_types=1);
  *
  * Test : https://validator.schema.org (coller le code source de la page d'accueil).
  */
+
+declare(strict_types=1);
+
 $contact = config()['contact'];
 
 $structuredData = [

@@ -17,7 +17,7 @@ function config(): array
 
     if ($config === null) {
         $file   = __DIR__ . '/config.php';
-        $config = require (is_file($file) ? $file : __DIR__ . '/config.example.php');
+        $config = require(is_file($file) ? $file : __DIR__ . '/config.example.php');
     }
 
     return $config;
@@ -57,6 +57,7 @@ function e(string $value): string
  */
 function icon(string $name, string $class = ''): string
 {
+    // phpcs:disable Generic.Files.LineLength -- tracés SVG : des données, longues par nature
     $paths = [
         'laptop'       => '<path d="M13.5 3a.5.5 0 0 1 .5.5V11H2V3.5a.5.5 0 0 1 .5-.5zm-11-1A1.5 1.5 0 0 0 1 3.5V12h14V3.5A1.5 1.5 0 0 0 13.5 2zM0 12.5h16a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5"/>',
         'cart'         => '<path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>',
@@ -87,6 +88,7 @@ function icon(string $name, string $class = ''): string
         'clipboard'    => '<path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>',
         'person-check' => '<path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/><path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"/>',
     ];
+    // phpcs:enable Generic.Files.LineLength
 
     if (!isset($paths[$name])) {
         return '';
@@ -134,6 +136,7 @@ const IMAGE_WIDTHS = [480, 800];
  * Il prend ainsi la variante de 800 px au lieu de l'originale : une densité ×2 suffit largement
  * pour des captures de cette taille, et la différence est invisible à l'œil.
  */
+// phpcs:disable Generic.Files.LineLength -- valeurs sizes : une condition par écran, sur une ligne
 const IMAGE_SIZES = [
     // Colonne col-lg-6 (accueil, en-tête de l'étude de cas)
     'half'  => '(max-width: 575.98px) and (min-resolution: 2.5dppx) calc((100vw - 24px) * 0.67), (min-width: 1400px) 612px, (min-width: 1200px) 522px, (min-width: 992px) 432px, (min-width: 768px) 696px, (min-width: 576px) 516px, calc(100vw - 24px)',
@@ -144,6 +147,7 @@ const IMAGE_SIZES = [
     // Colonne col-md-4 (étapes « De l'idée au site »)
     'step'  => '(max-width: 575.98px) and (min-resolution: 2.5dppx) calc((100vw - 24px) * 0.67), (min-width: 1400px) 392px, (min-width: 1200px) 332px, (min-width: 992px) 272px, (min-width: 768px) 216px, (min-width: 576px) 516px, calc(100vw - 24px)',
 ];
+// phpcs:enable Generic.Files.LineLength
 
 /**
  * Liste des tailles disponibles d'une image (attribut srcset) : les variantes
