@@ -709,8 +709,8 @@ code {
     --bs-table-border-color: var(--solvr-border-strong);
 }
 
-/* Page 404 */
-.page-404 .code-erreur {
+/* Pages d'erreur (404 et 500) */
+.page-erreur .code-erreur {
     margin-bottom: 1rem;
     color: var(--solvr-accent);
     font-family: var(--brand-font-heading);

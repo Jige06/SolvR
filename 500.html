@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr" data-bs-theme="light">
+
+<!--
+    Page d'erreur 500 (erreur technique du serveur).
+    Volontairement statique, sans PHP : elle doit s'afficher même quand le PHP est en panne.
+    Affichée par includes/bootstrap.php (erreurs PHP) et par Apache (ErrorDocument 500 dans .htaccess).
+    Pas de « ?v= » sur les fichiers CSS et JS : sans PHP, pas de fonction asset().
+-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="/assets/js/theme-init.js"></script>
+
+    <meta name="robots" content="noindex">
+    <title>Erreur technique | SolvR</title>
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="navbar">
+            <div class="container">
+                <a class="navbar-brand" href="/">SolvR</a>
+            </div>
+        </div>
+    </header>
+
+    <main id="contenu">
+        <section class="hero section page-erreur" aria-labelledby="page-titre">
+            <div class="container text-center">
+                <p class="code-erreur" aria-hidden="true">500</p>
+                <h1 id="page-titre" class="display-6">Un problème technique est survenu</h1>
+                <p class="lead mt-3">
+                    La page n'a pas pu s'afficher. Le problème vient du site, pas de vous :
+                    réessayez dans quelques instants.
+                </p>
+
+                <div class="d-flex justify-content-center mt-4">
+                    <a class="btn btn-primary btn-lg" href="/">Retour à l'accueil</a>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

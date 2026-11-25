@@ -5,8 +5,7 @@ declare(strict_types=1);
 /* ==========================================================
    1. TRAITEMENT : délégué au contrôleur (src/ContactController.php)
    ========================================================== */
-require_once __DIR__ . '/vendor/autoload.php';      // PHPMailer + nos classes (src/)
-require_once __DIR__ . '/includes/functions.php';
+require_once __DIR__ . '/includes/bootstrap.php';   // autoload (PHPMailer + nos classes) et fonctions
 require_once __DIR__ . '/includes/form-helpers.php';
 
 startSecureSession();   // nécessaire pour le jeton CSRF et le message de confirmation

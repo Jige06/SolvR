@@ -12,7 +12,7 @@ require __DIR__ . '/includes/header.php';
 ?>
 
 <main id="contenu">
-    <section class="hero section page-404" aria-labelledby="page-titre">
+    <section class="hero section page-erreur" aria-labelledby="page-titre">
         <div class="container text-center">
             <p class="code-erreur" aria-hidden="true">404</p>
             <h1 id="page-titre" class="display-6">Cette page est introuvable</h1>

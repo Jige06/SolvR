@@ -9,7 +9,7 @@ declare(strict_types=1);
  * Rappel : robots.txt est public et n'est pas une protection. Les dossiers
  * internes (includes/, src/, vendor/) sont protégés par .htaccess, pas ici.
  */
-require_once __DIR__ . '/includes/functions.php';
+require_once __DIR__ . '/includes/bootstrap.php';
 
 header('Content-Type: text/plain; charset=UTF-8');
 ?>

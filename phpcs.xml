@@ -6,6 +6,7 @@
          Les pages et les gabarits (index.php, head.php…) mêlent PHP et HTML :
          PSR-12 est une norme pour le code PHP, pas pour les gabarits. -->
     <file>src</file>
+    <file>includes/bootstrap.php</file>
     <file>includes/functions.php</file>
     <file>includes/form-helpers.php</file>
     <file>includes/structured-data.php</file>

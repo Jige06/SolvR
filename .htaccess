@@ -2,6 +2,8 @@
 # pour ne pas révéler qu'un fichier protégé existe
 ErrorDocument 404 /404.php
 ErrorDocument 403 /404.php
+# Erreur du serveur (500) : page statique, qui s'affiche même si PHP est en panne
+ErrorDocument 500 /500.html
 
 # Pas de liste des fichiers quand un dossier n'a pas de page d'index
 Options -Indexes

@@ -7,8 +7,9 @@ const SITE_URL = 'https://www.solvr.fr';
 
 /**
  * Configuration du site (coordonnées, informations légales, SMTP).
- * Lit includes/config.php (non versionné). S'il n'existe pas encore (dépôt tout juste cloné),
- * on utilise le modèle config.example.php : le site fonctionne, avec des valeurs à compléter.
+ * Lit includes/config.php (non versionné). S'il manque, on s'arrête net plutôt que
+ * d'utiliser le modèle config.example.php : en production, le site afficherait
+ * de fausses coordonnées et enverrait les mails nulle part, sans que personne ne s'en aperçoive.
  * « static » : le fichier n'est lu qu'une seule fois, même si la fonction est appelée plusieurs fois.
  */
 function config(): array
@@ -16,8 +17,15 @@ function config(): array
     static $config = null;
 
     if ($config === null) {
-        $file   = __DIR__ . '/config.php';
-        $config = require(is_file($file) ? $file : __DIR__ . '/config.example.php');
+        $file = __DIR__ . '/config.php';
+
+        if (!is_file($file)) {
+            throw new RuntimeException(
+                'includes/config.php introuvable : copier includes/config.example.php en config.php et le compléter.'
+            );
+        }
+
+        $config = require $file;
     }
 
     return $config;

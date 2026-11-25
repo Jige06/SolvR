@@ -11,7 +11,7 @@ declare(strict_types=1);
  * fichiers serait celle du déploiement pour toutes les pages. Une date fausse
  * est pire que pas de date : Google finit par ignorer celles qui ne sont pas fiables.
  */
-require_once __DIR__ . '/includes/functions.php';
+require_once __DIR__ . '/includes/bootstrap.php';
 $pages = require __DIR__ . '/includes/pages.php';
 
 header('Content-Type: application/xml; charset=UTF-8');

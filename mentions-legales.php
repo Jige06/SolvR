@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 $currentPage = 'mentions-legales';
-require_once __DIR__ . '/includes/functions.php';
+require_once __DIR__ . '/includes/bootstrap.php';
 
 $legal   = config()['legal'];
 $contact = config()['contact'];

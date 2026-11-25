@@ -24,6 +24,7 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 - **Accessibilité** : respect des recommandations WCAG / RGAA (balises sémantiques, contrastes AA vérifiés, navigation au clavier, lien d'évitement, focus visible, formulaires accessibles, respect de `prefers-reduced-motion`)
 - **Sécurité** : en-têtes HTTP de sécurité (Content-Security-Policy stricte, `nosniff`, `Referrer-Policy`, `Permissions-Policy`, protection contre l'affichage en iframe, HSTS en HTTPS, version de PHP masquée), échappement systématique des sorties, validation côté serveur, protection CSRF, honeypot et piège temporel anti-spam, limitation des envois (3 par heure, 30 s entre deux), sessions sécurisées, secrets hors du dépôt, fichiers internes inaccessibles depuis le web
 - **Référencement** : adresses propres sans extension (`/services`, les anciennes adresses en `.php` redirigent en 301), métadonnées uniques par page, Open Graph, URL canoniques, `robots.txt` et `sitemap.xml` générés depuis la configuration des pages, données structurées schema.org (`ProfessionalService`, `WebSite`) pour le référencement local
+- **Gestion des erreurs** : en production, toute erreur PHP affiche une page 500 statique avec le vrai code HTTP, sans aucun détail technique à l'écran ; les détails partent dans le journal d'erreurs du serveur. En développement, PHP affiche l'erreur détaillée. Une configuration manquante est signalée, jamais remplacée en silence par les valeurs d'exemple
 - **RGPD** : aucune ressource chargée depuis un serveur tiers (polices et Bootstrap hébergés localement), minimisation des données collectées, information sous le formulaire
 - **Thème clair / sombre** : suit le réglage du système, bascule manuelle mémorisée, sans flash au chargement
 - **Animations** : discrètes et accessibles. Désactivées si `prefers-reduced-motion` est activé, aucun contenu masqué sans JavaScript, aucune animation en boucle (RGAA 13.8). Transitions entre les pages avec la View Transitions API, en amélioration progressive
@@ -49,7 +50,7 @@ docker compose up -d --build
 docker compose exec web composer install
 ```
 
-**4. Configurer le site** : copier `includes/config.example.php` en `includes/config.php`, puis y renseigner les coordonnées, les informations légales et les identifiants SMTP de Mailtrap (*Sandboxes → Integration → SMTP*). Ce fichier est ignoré par Git : aucune donnée personnelle ni aucun secret ne part sur GitHub. Sans lui, le site fonctionne avec les valeurs d'exemple, surlignées.
+**4. Configurer le site** : copier `includes/config.example.php` en `includes/config.php`, puis y renseigner les coordonnées, les informations légales et les identifiants SMTP de Mailtrap (*Sandboxes → Integration → SMTP*). Ce fichier est ignoré par Git : aucune donnée personnelle ni aucun secret ne part sur GitHub. Il est obligatoire : sans lui, le site s'arrête avec un message qui le signale, plutôt que d'afficher de fausses coordonnées. Les valeurs encore à compléter (entre crochets) sont surlignées sur les pages légales.
 
 Le site est accessible sur **http://localhost:8080**.
 
@@ -72,6 +73,7 @@ Le site est accessible sur **http://localhost:8080**.
 ```
 solvr/
 ├── includes/
+│   ├── bootstrap.php       # Démarrage commun : mémoire tampon, page 500 en production, autoload, fonctions
 │   ├── functions.php       # Fonctions utilitaires (configuration, échappement, icônes…)
 │   ├── pages.php           # Configuration des pages (SEO, menu, liens)
 │   ├── technologies.php    # Logos des technologies (page À propos)
@@ -111,6 +113,7 @@ solvr/
 ├── mentions-legales.php    # Mentions légales
 ├── confidentialite.php     # Politique de confidentialité
 ├── 404.php                 # Page d'erreur 404
+├── 500.html                # Page d'erreur 500, statique pour s'afficher même si PHP est en panne
 ├── favicon.svg, favicon.ico, apple-touch-icon.png  # Icônes du site (provisoires, en attendant le logo)
 ├── robots.php              # Consignes aux robots, servies à l'adresse /robots.txt
 ├── sitemap.php             # Plan du site, servi à l'adresse /sitemap.xml
@@ -213,7 +216,7 @@ Les messages de commit suivent la convention [Conventional Commits](https://www.
 - [x] Page Réalisations
 - [x] Page Contact et formulaire
 - [x] Typographies
-- [x] Pages légales et page 404
+- [x] Pages légales et pages d'erreur (404, 500)
 - [ ] Informations légales définitives (SIREN, adresse, hébergeur)
 - [x] Animations et interactions
 - [x] Captures des réalisations et illustrations des services

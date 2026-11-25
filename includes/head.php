@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/bootstrap.php';
 $pages = $pages ?? require __DIR__ . '/pages.php';   // déjà chargé par la page ? on le réutilise
 
 // Chaque page définit $currentPage avant d'inclure ce fichier
