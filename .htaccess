@@ -1,14 +1,11 @@
 # Page d'erreur personnalisée
 ErrorDocument 404 /404.php
 
-# Réécriture d'adresses et protection des fichiers internes
 RewriteEngine On
 
-# Fichiers pour les moteurs de recherche, générés en PHP
-RewriteRule ^robots\.txt$ robots.php [L]
-RewriteRule ^sitemap\.xml$ sitemap.php [L]
-
-# Interdit l'accès direct aux dossiers et fichiers internes du projet
+# ----------------------------------------------------------
+# 1. Protection : accès direct interdit aux fichiers internes
+# ----------------------------------------------------------
 # Dossiers de code (inclusions, classes, dépendances)
 RewriteRule ^(includes|src|vendor)(/|$) - [R=404,L]
 
@@ -17,3 +14,27 @@ RewriteRule ^(composer\.(json|lock)|Dockerfile|docker-compose\.yml|README\.md)$ 
 
 # Fichiers et dossiers cachés (.git, .gitignore, .env…)
 RewriteRule (^|/)\. - [R=404,L]
+
+# ----------------------------------------------------------
+# 2. Fichiers pour les moteurs de recherche, générés en PHP
+# ----------------------------------------------------------
+RewriteRule ^robots\.txt$ robots.php [L]
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+# ----------------------------------------------------------
+# 3. Adresses sans extension
+# ----------------------------------------------------------
+# Les anciennes adresses en .php redirigent (301 : déplacement définitif)
+# vers l'adresse propre, pour que Google n'indexe qu'une seule version.
+# THE_REQUEST = la requête d'origine du navigateur : on ne redirige que
+# ce que le visiteur a demandé, jamais nos propres réécritures (pas de boucle).
+RewriteCond %{THE_REQUEST} \s/index\.php[\s?] [NC]
+RewriteRule ^ / [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/([a-z0-9-]+)\.php[\s?] [NC]
+RewriteCond %1 !^(robots|sitemap|404)$
+RewriteRule ^ /%1 [R=301,L]
+
+# /services → services.php, si ce fichier existe
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([a-z0-9-]+)$ $1.php [L]
