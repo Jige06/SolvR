@@ -23,7 +23,7 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 - **Mobile first** et responsive
 - **Accessibilité** : respect des recommandations WCAG / RGAA (balises sémantiques, contrastes AA vérifiés, navigation au clavier, lien d'évitement, focus visible, formulaires accessibles, respect de `prefers-reduced-motion`)
 - **Sécurité** : échappement systématique des sorties, validation côté serveur, protection CSRF, honeypot anti-spam, sessions sécurisées, secrets hors du dépôt, fichiers internes inaccessibles depuis le web
-- **Référencement** : métadonnées uniques par page, Open Graph, URL canoniques, référencement local
+- **Référencement** : métadonnées uniques par page, Open Graph, URL canoniques, `robots.txt` et `sitemap.xml` générés depuis la configuration des pages, données structurées schema.org (`ProfessionalService`, `WebSite`) pour le référencement local
 - **RGPD** : aucune ressource chargée depuis un serveur tiers (polices et Bootstrap hébergés localement), minimisation des données collectées, information sous le formulaire
 - **Thème clair / sombre** : suit le réglage du système, bascule manuelle mémorisée, sans flash au chargement
 - **Animations** : discrètes et accessibles. Désactivées si `prefers-reduced-motion` est activé, aucun contenu masqué sans JavaScript, aucune animation en boucle (RGAA 13.8). Transitions entre les pages avec la View Transitions API, en amélioration progressive
@@ -75,6 +75,7 @@ solvr/
 │   ├── head.php            # <head> : thème initial, métadonnées SEO, Open Graph, CSS
 │   ├── header.php          # Lien d'évitement, en-tête, navigation, bouton de thème
 │   ├── cta.php             # Bloc d'appel à l'action partagé entre les pages
+│   ├── structured-data.php # Données structurées schema.org (JSON-LD) de la page d'accueil
 │   ├── form-helpers.php    # Aides d'affichage des formulaires (attributs ARIA, messages d'erreur)
 │   ├── footer.php          # Pied de page et scripts
 │   └── config.example.php  # Modèle de configuration (coordonnées, infos légales, SMTP)
@@ -101,7 +102,9 @@ solvr/
 ├── mentions-legales.php    # Mentions légales
 ├── confidentialite.php     # Politique de confidentialité
 ├── 404.php                 # Page d'erreur 404
-├── .htaccess               # Page 404 et protection des fichiers internes
+├── robots.php              # Consignes aux robots, servies à l'adresse /robots.txt
+├── sitemap.php             # Plan du site, servi à l'adresse /sitemap.xml
+├── .htaccess               # Page 404, adresses robots.txt / sitemap.xml, protection des fichiers internes
 ├── .gitattributes          # Fins de ligne LF pour tous les fichiers texte
 ├── composer.json           # Dépendances PHP et autoload
 ├── Dockerfile              # Image PHP 8.5 + Apache + Composer
@@ -110,7 +113,7 @@ solvr/
 
 ### Ajouter une page
 
-1. Déclarer la page dans `includes/pages.php` (chemin, libellé, title, description, présence dans le menu)
+1. Déclarer la page dans `includes/pages.php` (chemin, libellé, title, description, présence dans le menu). Elle apparaît automatiquement dans le sitemap, sauf avec `'noindex' => true`
 2. Créer le fichier `.php` à la racine en définissant `$currentPage` avec la clé correspondante
 3. Inclure `head.php` et `header.php`, écrire le contenu dans `<main id="contenu">`, puis inclure `footer.php`
 
@@ -184,7 +187,8 @@ Les messages de commit suivent la convention [Conventional Commits](https://www.
 - [x] Captures des réalisations et illustrations des services
 - [ ] Portrait
 - [x] Page À propos
-- [ ] Audit accessibilité, SEO et sécurité
+- [x] SEO technique (robots.txt, sitemap.xml, données structurées)
+- [ ] Audit complet (code, sécurité, accessibilité, SEO, performance, validation, tests)
 - [ ] Mise en ligne
 
 ## Auteur
