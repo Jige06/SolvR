@@ -1,5 +1,42 @@
-# Page d'erreur personnalisée
+# Pages d'erreur : un accès interdit (403) affiche la page 404,
+# pour ne pas révéler qu'un fichier protégé existe
 ErrorDocument 404 /404.php
+ErrorDocument 403 /404.php
+
+# Pas de liste des fichiers quand un dossier n'a pas de page d'index
+Options -Indexes
+
+# ----------------------------------------------------------
+# En-têtes de sécurité HTTP
+# ----------------------------------------------------------
+<IfModule mod_headers.c>
+    # Liste blanche des ressources : uniquement celles du site.
+    # data: pour les petites icônes SVG intégrées au CSS de Bootstrap (menu burger, listes).
+    # Aucun script ni style en ligne : tout est dans des fichiers.
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
+
+    # Le navigateur ne devine pas le type des fichiers
+    Header always set X-Content-Type-Options "nosniff"
+
+    # Vers les autres sites, on n'envoie que le domaine, pas l'adresse complète de la page
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Fonctions du navigateur dont le site n'a pas besoin : coupées
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+
+    # Le site ne peut pas être affiché dans une iframe (anciens navigateurs ; frame-ancestors pour les récents)
+    Header always set X-Frame-Options "DENY"
+
+    # Une page ouverte depuis le site ne peut pas manipuler son onglet
+    Header always set Cross-Origin-Opener-Policy "same-origin"
+
+    # HTTPS obligatoire pendant un an, envoyé seulement quand le site est en HTTPS
+    Header always set Strict-Transport-Security "max-age=31536000" "expr=%{HTTPS} == 'on'"
+
+    # Ne révèle pas la version de PHP
+    Header always unset X-Powered-By
+    Header unset X-Powered-By
+</IfModule>
 
 RewriteEngine On
 

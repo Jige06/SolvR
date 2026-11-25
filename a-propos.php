@@ -32,7 +32,7 @@ require __DIR__ . '/includes/header.php';
                          alt="Portrait du fondateur de SolvR, développeur web à Nice"
                          width="800" height="1000" class="img-fluid portrait">
                     -->
-                    <div class="ratio media-placeholder" style="--bs-aspect-ratio: 125%;">
+                    <div class="ratio ratio-4x5 media-placeholder">
                         <div class="d-flex align-items-center justify-content-center">Photo à venir</div>
                     </div>
                 </div>

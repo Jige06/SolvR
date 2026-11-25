@@ -314,6 +314,11 @@
     color: var(--solvr-text-muted);
 }
 
+/* Proportions 4:5 (portrait), en complément des .ratio-* de Bootstrap */
+.ratio-4x5 {
+    --bs-aspect-ratio: 125%;
+}
+
 /* ==========================================================
    7. Hero
    ========================================================== */

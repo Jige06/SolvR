@@ -14,24 +14,11 @@ $canonicalUrl    = SITE_URL . ($page['path'] ?? '/');
 <html lang="fr" data-bs-theme="light">
 
 <head>
-    <!-- Thème appliqué AVANT l'affichage, pour éviter un flash de couleur au chargement -->
-    <script>
-        document.documentElement.classList.add('js');
-        (function() {
-            let theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-            try {
-                const saved = localStorage.getItem('solvr-theme');
-                if (saved === 'light' || saved === 'dark') {
-                    theme = saved;
-                }
-            } catch (error) {
-                /* localStorage indisponible (navigation privée stricte…) : on garde le thème du système */
-            }
-            document.documentElement.setAttribute('data-bs-theme', theme);
-        })();
-    </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Thème appliqué AVANT l'affichage (pas de defer), pour éviter un flash de couleur -->
+    <script src="<?= asset('/assets/js/theme-init.js') ?>"></script>
 
     <?php if (!empty($page['noindex'])): ?>
         <meta name="robots" content="noindex">
