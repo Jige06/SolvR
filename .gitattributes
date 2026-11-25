@@ -1,0 +1,10 @@
+# Fins de ligne : LF dans le dépôt et dans les fichiers de travail,
+# quel que soit le système (Windows, conteneur Docker Linux…)
+* text=auto eol=lf
+
+# Fichiers binaires : jamais convertis
+*.webp  binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.woff2 binary
