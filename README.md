@@ -8,7 +8,7 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 ## Technologies
 
 - **HTML5** sémantique
-- **CSS3** et **Bootstrap 5.3** (auto-hébergé)
+- **CSS3** et **Bootstrap 5.3** (auto-hébergé ; JavaScript sans Popper, seul le menu burger l'utilise)
 - **Polices** : [Heebo](https://fonts.google.com/specimen/Heebo) (titres) et [Inter](https://rsms.me/inter/) (texte), auto-hébergées en woff2 (licence SIL Open Font License)
 - **JavaScript** (amélioration progressive : le site reste utilisable sans JS) : bascule clair / sombre mémorisée, apparition des blocs au défilement, onde au clic, halo du bouton Contact, visionneuse d'images
 - **PHP 8.5** : inclusions communes, formulaire de contact en POO (classes chargées par l'autoload de Composer)
