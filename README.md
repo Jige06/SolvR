@@ -111,6 +111,7 @@ solvr/
 ├── mentions-legales.php    # Mentions légales
 ├── confidentialite.php     # Politique de confidentialité
 ├── 404.php                 # Page d'erreur 404
+├── favicon.svg, favicon.ico, apple-touch-icon.png  # Icônes du site (provisoires, en attendant le logo)
 ├── robots.php              # Consignes aux robots, servies à l'adresse /robots.txt
 ├── sitemap.php             # Plan du site, servi à l'adresse /sitemap.xml
 ├── .htaccess               # Pages d'erreur, en-têtes de sécurité, cache navigateur, protection des fichiers internes, robots.txt / sitemap.xml, adresses sans .php
