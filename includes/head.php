@@ -49,6 +49,8 @@ $canonicalUrl    = SITE_URL . ($page['path'] ?? '/');
     <meta property="og:description" content="<?= e($pageDescription) ?>">
     <meta property="og:url" content="<?= e($canonicalUrl) ?>">
 
+    <?php if ($currentPage === 'accueil') require __DIR__ . '/structured-data.php'; ?>
+
     <!-- Préchargement des polices principales (texte et titres) -->
     <link rel="preload" href="/assets/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/assets/fonts/heebo-variable.woff2" as="font" type="font/woff2" crossorigin>
