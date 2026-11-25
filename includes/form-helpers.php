@@ -11,8 +11,12 @@ declare(strict_types=1);
  * Attributs d'accessibilité d'un champ selon qu'il est en erreur ou non.
  * Retourne par exemple : class="form-control is-invalid" aria-invalid="true" aria-describedby="nom-erreur"
  */
-function fieldAttributes(ContactForm $form, string $field, string $baseClass = 'form-control', string $describedBy = ''): string
-{
+function fieldAttributes(
+    ContactForm $form,
+    string $field,
+    string $baseClass = 'form-control',
+    string $describedBy = '',
+): string {
     $hasError = $form->getError($field) !== null;
     $ids = trim($describedBy . ($hasError ? ' ' . $field . '-erreur' : ''));
 

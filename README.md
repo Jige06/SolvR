@@ -8,7 +8,7 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 ## Technologies
 
 - **HTML5** sémantique
-- **CSS3** et **Bootstrap 5.3** (auto-hébergé)
+- **CSS3** et **Bootstrap 5.3** (auto-hébergé ; JavaScript sans Popper, seul le menu burger l'utilise)
 - **Polices** : [Heebo](https://fonts.google.com/specimen/Heebo) (titres) et [Inter](https://rsms.me/inter/) (texte), auto-hébergées en woff2 (licence SIL Open Font License)
 - **JavaScript** (amélioration progressive : le site reste utilisable sans JS) : bascule clair / sombre mémorisée, apparition des blocs au défilement, onde au clic, halo du bouton Contact, visionneuse d'images
 - **PHP 8.5** : inclusions communes, formulaire de contact en POO (classes chargées par l'autoload de Composer)
@@ -27,7 +27,7 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 - **RGPD** : aucune ressource chargée depuis un serveur tiers (polices et Bootstrap hébergés localement), minimisation des données collectées, information sous le formulaire
 - **Thème clair / sombre** : suit le réglage du système, bascule manuelle mémorisée, sans flash au chargement
 - **Animations** : discrètes et accessibles. Désactivées si `prefers-reduced-motion` est activé, aucun contenu masqué sans JavaScript, aucune animation en boucle (RGAA 13.8). Transitions entre les pages avec la View Transitions API, en amélioration progressive
-- **Performance** : polices variables légères (78 Ko au total) et préchargées, images WebP optimisées et chargées à la demande (`loading="lazy"`), scripts en `defer`, fichiers CSS et JS versionnés (`?v=`) pour que le navigateur recharge toujours la dernière version
+- **Performance** : polices variables légères (78 Ko au total) et préchargées, images WebP optimisées, responsives (`srcset` / `sizes`, variantes de 480 et 800 px) et chargées à la demande (`loading="lazy"`), scripts en `defer`, fichiers CSS et JS versionnés (`?v=`) et gardés un an en cache par le navigateur, polices un an, images un mois, compression gzip des fichiers texte
 
 ## Prérequis
 
@@ -62,6 +62,9 @@ Le site est accessible sur **http://localhost:8080**.
 | `docker compose ps` | Vérifier que le conteneur tourne |
 | `docker compose logs -f web` | Afficher les logs Apache / PHP en direct |
 | `docker compose exec web composer dump-autoload` | Régénérer l'autoload après l'ajout d'une classe dans `src/` |
+| `docker compose exec web composer test` | Lancer les tests automatisés (PHPUnit) |
+| `docker compose exec web composer lint` | Vérifier le style du code PHP (PSR-12) |
+| `docker compose exec web composer lint:fix` | Corriger automatiquement les écarts de style |
 | `docker compose down` | Arrêter le conteneur |
 
 ## Structure du projet
@@ -86,6 +89,11 @@ solvr/
 │   ├── ContactForm.php     # Données, libellés et validation du formulaire
 │   ├── ContactMailer.php   # Envoi de l'e-mail via PHPMailer
 │   └── CsrfToken.php       # Jeton anti-CSRF
+├── tests/                  # Tests automatisés (PHPUnit)
+│   ├── ContactFormTest.php       # Validation des champs
+│   ├── ContactControllerTest.php # Traitement complet : envoi, erreurs, CSRF, robots, limites
+│   ├── SubmissionLimiterTest.php # Piège temporel, délai et quota (avec une fausse horloge)
+│   └── Doubles/FakeMailer.php    # Faux expéditeur : compte les envois sans rien envoyer
 ├── assets/
 │   ├── css/                # Styles personnalisés (style.css)
 │   ├── fonts/              # Polices Heebo et Inter (woff2) et leurs licences
@@ -103,10 +111,14 @@ solvr/
 ├── mentions-legales.php    # Mentions légales
 ├── confidentialite.php     # Politique de confidentialité
 ├── 404.php                 # Page d'erreur 404
+├── favicon.svg, favicon.ico, apple-touch-icon.png  # Icônes du site (provisoires, en attendant le logo)
 ├── robots.php              # Consignes aux robots, servies à l'adresse /robots.txt
 ├── sitemap.php             # Plan du site, servi à l'adresse /sitemap.xml
-├── .htaccess               # Pages d'erreur, en-têtes de sécurité, protection des fichiers internes, robots.txt / sitemap.xml, adresses sans .php
+├── .htaccess               # Pages d'erreur, en-têtes de sécurité, cache navigateur, protection des fichiers internes, robots.txt / sitemap.xml, adresses sans .php
 ├── .gitattributes          # Fins de ligne LF pour tous les fichiers texte
+├── .editorconfig           # Réglages communs aux éditeurs (indentation, encodage, fins de ligne)
+├── phpcs.xml               # Règles de style du code PHP (PSR-12, sans namespaces)
+├── phpunit.xml             # Configuration des tests automatisés
 ├── composer.json           # Dépendances PHP et autoload
 ├── Dockerfile              # Image PHP 8.5 + Apache + Composer
 └── docker-compose.yml      # Lancement de l'environnement local
@@ -131,13 +143,27 @@ Ne pas placer de `data-reveal` à l'intérieur d'un élément déjà animé : il
 
 ### Ajouter une image agrandissable
 
+1. Placer l'originale en WebP (`image.webp`, 1200 px de large) et ses deux variantes `image-480.webp` et `image-800.webp` dans le même dossier
+2. L'afficher avec :
+
 ```php
-<?= zoomableImage('/assets/img/dossier/image.webp', "Texte alternatif en clair", 1200, 900) ?>
+<?= zoomableImage('/assets/img/dossier/image.webp', "Texte alternatif en clair", 1200, 900, sizes: 'card') ?>
 ```
+
+`sizes` indique la colonne où l'image est affichée : `half` (col-lg-6), `offer` (col-lg-5), `card` (encart en col-lg-4) ou `step` (col-md-4), voir `IMAGE_SIZES` dans `functions.php`. Le navigateur télécharge alors la plus petite variante assez nette. Les variantes absentes sont simplement ignorées.
 
 La fonction génère un lien vers l'image, qui s'ouvre dans la visionneuse au clic (ou seule, sans JavaScript). Paramètres facultatifs : la classe CSS de l'image (`img-fluid` par défaut) et `false` pour désactiver le chargement différé d'une image visible dès l'arrivée sur la page.
 
 ## Conventions
+
+### Tests
+
+Le formulaire de contact (validation, sécurité, limitation des envois) est couvert par des tests PHPUnit. Les lancer avec `composer test` avant chaque commit qui touche à `src/`. Les tests utilisent un faux expéditeur et une fausse horloge : aucun e-mail n'est envoyé, aucune attente réelle.
+
+### Style du code
+
+- **Indentation de 4 espaces, UTF-8, fins de ligne LF**, saut de ligne final : réglés par `.editorconfig` (dans VS Code, installer l'extension *EditorConfig for VS Code*)
+- **PHP** : norme [PSR-12](https://www.php-fig.org/psr/psr-12/), vérifiée par PHP_CodeSniffer avec `composer lint` sur les classes (`src/`) et les fichiers de logique. Les pages et les gabarits, qui mêlent PHP et HTML, ne sont pas concernés. Seule exception à la norme : les classes n'ont pas de namespace (choix du projet, autoload classmap)
 
 ### Sécurité du code
 
@@ -172,6 +198,7 @@ Les messages de commit suivent la convention [Conventional Commits](https://www.
 | `docs:` | Documentation |
 | `chore:` | Configuration, outillage |
 | `perf:` | Amélioration des performances |
+| `test:` | Ajout ou modification de tests |
 
 ## Feuille de route
 
@@ -193,6 +220,7 @@ Les messages de commit suivent la convention [Conventional Commits](https://www.
 - [ ] Portrait
 - [x] Page À propos
 - [x] SEO technique (robots.txt, sitemap.xml, données structurées)
+- [x] Tests automatisés du formulaire de contact
 - [ ] Audit complet (code, sécurité, accessibilité, SEO, performance, validation, tests)
 - [ ] Mise en ligne
 

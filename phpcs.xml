@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<ruleset name="SolvR">
+    <description>Style du code PHP de SolvR : norme PSR-12, adaptée aux choix du projet.</description>
+
+    <!-- Code vérifié : les classes et les fichiers de logique.
+         Les pages et les gabarits (index.php, head.php…) mêlent PHP et HTML :
+         PSR-12 est une norme pour le code PHP, pas pour les gabarits. -->
+    <file>src</file>
+    <file>includes/functions.php</file>
+    <file>includes/form-helpers.php</file>
+    <file>includes/structured-data.php</file>
+    <file>tests</file>
+
+    <arg name="extensions" value="php"/>
+    <arg name="colors"/>
+    <arg value="s"/>
+
+    <rule ref="PSR12">
+        <!-- Choix du projet : classes sans namespace, chargées par l'autoload classmap de Composer -->
+        <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>
+    </rule>
+</ruleset>

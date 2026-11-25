@@ -60,7 +60,8 @@ require __DIR__ . '/includes/header.php';
                         <?= zoomableImage(
                             '/assets/img/services/vitrine-etre-trouve.webp',
                             "Recherche « plombier Nice » sur un téléphone : la fiche « Votre entreprise » apparaît en premier résultat, avec ses avis et un bouton Appeler, et un client appelle",
-                            1200, 900
+                            1200, 900,
+                            sizes: 'offer'
                         ) ?>
                     </div>
                     <div class="encart carte-survol">
@@ -103,7 +104,8 @@ require __DIR__ . '/includes/header.php';
                         <?= zoomableImage(
                             '/assets/img/services/ecommerce-commande-nuit.webp',
                             "Page produit d'une boutique en ligne avec le bouton « Ajouter au panier », et une notification de nouvelle commande reçue à 23 h 47",
-                            1200, 900
+                            1200, 900,
+                            sizes: 'offer'
                         ) ?>
                     </div>
                     <div class="encart carte-survol">
@@ -146,7 +148,8 @@ require __DIR__ . '/includes/header.php';
                         <?= zoomableImage(
                             '/assets/img/realisations/traiteur/gerants-statistiques.webp',
                             "Tableau de bord de l'application Vite & Gourmand sur ordinateur et téléphone : graphiques des commandes et du chiffre d'affaires par menu",
-                            1200, 900
+                            1200, 900,
+                            sizes: 'offer'
                         ) ?>
                     </div>
                     <div class="encart carte-survol">
@@ -178,7 +181,8 @@ require __DIR__ . '/includes/header.php';
                         <?= zoomableImage(
                             '/assets/img/de-l-idee-au-site/1-croquis.webp',
                             "Croquis au crayon de la page d'accueil de SolvR : l'emplacement du titre, du texte, des boutons et de l'illustration",
-                            1200, 900
+                            1200, 900,
+                            sizes: 'step'
                         ) ?>
                         <figcaption>
                             <h3 class="h5 d-flex align-items-center gap-2"><span class="etape-numero" aria-hidden="true">1</span> Le croquis</h3>
@@ -191,7 +195,8 @@ require __DIR__ . '/includes/header.php';
                         <?= zoomableImage(
                             '/assets/img/de-l-idee-au-site/2-maquette.webp',
                             "Maquette de la page d'accueil de SolvR dans un logiciel de design, avec les couleurs, les typographies et les boutons du site",
-                            1200, 900
+                            1200, 900,
+                            sizes: 'step'
                         ) ?>
                         <figcaption>
                             <h3 class="h5 d-flex align-items-center gap-2"><span class="etape-numero" aria-hidden="true">2</span> La maquette</h3>
@@ -204,7 +209,8 @@ require __DIR__ . '/includes/header.php';
                         <?= zoomableImage(
                             '/assets/img/de-l-idee-au-site/3-site-en-ligne.webp',
                             "La page d'accueil de SolvR en ligne, affichée sur un ordinateur et sur un téléphone",
-                            1200, 900
+                            1200, 900,
+                            sizes: 'step'
                         ) ?>
                         <figcaption>
                             <h3 class="h5 d-flex align-items-center gap-2"><span class="etape-numero" aria-hidden="true">3</span> Le site en ligne</h3>

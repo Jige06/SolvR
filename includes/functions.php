@@ -17,7 +17,7 @@ function config(): array
 
     if ($config === null) {
         $file   = __DIR__ . '/config.php';
-        $config = require (is_file($file) ? $file : __DIR__ . '/config.example.php');
+        $config = require(is_file($file) ? $file : __DIR__ . '/config.example.php');
     }
 
     return $config;
@@ -57,6 +57,7 @@ function e(string $value): string
  */
 function icon(string $name, string $class = ''): string
 {
+    // phpcs:disable Generic.Files.LineLength -- tracés SVG : des données, longues par nature
     $paths = [
         'laptop'       => '<path d="M13.5 3a.5.5 0 0 1 .5.5V11H2V3.5a.5.5 0 0 1 .5-.5zm-11-1A1.5 1.5 0 0 0 1 3.5V12h14V3.5A1.5 1.5 0 0 0 13.5 2zM0 12.5h16a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5"/>',
         'cart'         => '<path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>',
@@ -87,6 +88,7 @@ function icon(string $name, string $class = ''): string
         'clipboard'    => '<path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>',
         'person-check' => '<path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/><path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"/>',
     ];
+    // phpcs:enable Generic.Files.LineLength
 
     if (!isset($paths[$name])) {
         return '';
@@ -122,15 +124,76 @@ function asset(string $path): string
     return $path . '?v=' . $version;
 }
 
+/** Largeurs des variantes d'images (nom-480.webp, nom-800.webp), en plus de l'originale */
+const IMAGE_WIDTHS = [480, 800];
+
 /**
- * Image qui s'ouvre en grand au clic, dans la visionneuse (voir animations.js).
- * Sans JavaScript, le lien ouvre simplement l'image seule : rien n'est perdu.
- * Le texte alternatif est passé en clair : il est échappé ici avec e().
+ * Largeur d'affichage des images selon leur colonne Bootstrap (attribut sizes).
+ * Calculée à partir des conteneurs Bootstrap (540, 720, 960, 1140, 1320 px) et des gouttières :
+ * le navigateur s'en sert pour choisir la plus petite variante assez nette.
+ *
+ * Première valeur : sur un téléphone de densité ×3, la largeur annoncée est multipliée par 0,67.
+ * Il prend ainsi la variante de 800 px au lieu de l'originale : une densité ×2 suffit largement
+ * pour des captures de cette taille, et la différence est invisible à l'œil.
  */
-function zoomableImage(string $src, string $alt, int $width, int $height, string $class = 'img-fluid', bool $lazy = true): string
+// phpcs:disable Generic.Files.LineLength -- valeurs sizes : une condition par écran, sur une ligne
+const IMAGE_SIZES = [
+    // Colonne col-lg-6 (accueil, en-tête de l'étude de cas)
+    'half'  => '(max-width: 575.98px) and (min-resolution: 2.5dppx) calc((100vw - 24px) * 0.67), (min-width: 1400px) 612px, (min-width: 1200px) 522px, (min-width: 992px) 432px, (min-width: 768px) 696px, (min-width: 576px) 516px, calc(100vw - 24px)',
+    // Colonne col-lg-5 (illustrations des offres, page Services)
+    'offer' => '(max-width: 575.98px) and (min-resolution: 2.5dppx) calc((100vw - 24px) * 0.67), (min-width: 1400px) 502px, (min-width: 1200px) 427px, (min-width: 992px) 352px, (min-width: 768px) 696px, (min-width: 576px) 516px, calc(100vw - 24px)',
+    // Encart dans une colonne col-lg-4 (captures « Un espace pour chacun »)
+    'card'  => '(max-width: 575.98px) and (min-resolution: 2.5dppx) calc((100vw - 74px) * 0.67), (min-width: 1400px) 366px, (min-width: 1200px) 306px, (min-width: 992px) 246px, (min-width: 768px) 646px, (min-width: 576px) 466px, calc(100vw - 74px)',
+    // Colonne col-md-4 (étapes « De l'idée au site »)
+    'step'  => '(max-width: 575.98px) and (min-resolution: 2.5dppx) calc((100vw - 24px) * 0.67), (min-width: 1400px) 392px, (min-width: 1200px) 332px, (min-width: 992px) 272px, (min-width: 768px) 216px, (min-width: 576px) 516px, calc(100vw - 24px)',
+];
+// phpcs:enable Generic.Files.LineLength
+
+/**
+ * Liste des tailles disponibles d'une image (attribut srcset) : les variantes
+ * présentes sur le disque, puis l'originale. Une variante absente est ignorée.
+ * Exemple : /img/a-480.webp 480w, /img/a-800.webp 800w, /img/a.webp 1200w
+ */
+function responsiveSrcset(string $src, int $width): string
 {
+    $info    = pathinfo($src);
+    $sources = [];
+
+    foreach (IMAGE_WIDTHS as $variantWidth) {
+        $variant = $info['dirname'] . '/' . $info['filename'] . '-' . $variantWidth . '.' . $info['extension'];
+
+        if ($variantWidth < $width && is_file(__DIR__ . '/..' . $variant)) {
+            $sources[] = $variant . ' ' . $variantWidth . 'w';
+        }
+    }
+
+    $sources[] = $src . ' ' . $width . 'w';
+
+    return implode(', ', $sources);
+}
+
+/**
+ * Image responsive qui s'ouvre en grand au clic, dans la visionneuse (voir animations.js).
+ * Le navigateur télécharge la variante adaptée à l'écran (srcset + sizes) ;
+ * la visionneuse et le lien sans JavaScript ouvrent l'originale en pleine taille.
+ * Le texte alternatif est passé en clair : il est échappé ici avec e().
+ *
+ * @param string $sizes Largeur d'affichage : une clé de IMAGE_SIZES ou une valeur sizes complète
+ */
+function zoomableImage(
+    string $src,
+    string $alt,
+    int $width,
+    int $height,
+    string $class = 'img-fluid',
+    bool $lazy = true,
+    string $sizes = '100vw',
+): string {
+    $sizes = IMAGE_SIZES[$sizes] ?? $sizes;
+
     return '<a class="agrandir" href="' . e($src) . '" data-agrandir>'
-        . '<img src="' . e($src) . '" alt="' . e($alt) . '" width="' . $width . '" height="' . $height . '"'
+        . '<img src="' . e($src) . '" srcset="' . e(responsiveSrcset($src, $width)) . '" sizes="' . e($sizes) . '"'
+        . ' alt="' . e($alt) . '" width="' . $width . '" height="' . $height . '"'
         . ' class="' . e($class) . '"' . ($lazy ? ' loading="lazy"' : '') . '>'
         . '<span class="visually-hidden"> (agrandir l\'image)</span>'
         . '<span class="agrandir-badge" aria-hidden="true">' . icon('zoom') . '</span>'

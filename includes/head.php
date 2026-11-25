@@ -36,6 +36,11 @@ $canonicalUrl    = SITE_URL . ($page['path'] ?? '/');
     <meta property="og:description" content="<?= e($pageDescription) ?>">
     <meta property="og:url" content="<?= e($canonicalUrl) ?>">
 
+    <!-- Icônes du site (onglet, favoris, écran d'accueil du téléphone) -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
     <?php if ($currentPage === 'accueil') require __DIR__ . '/structured-data.php'; ?>
 
     <!-- Préchargement des polices principales (texte et titres) -->
@@ -43,11 +48,6 @@ $canonicalUrl    = SITE_URL . ($page['path'] ?? '/');
     <link rel="preload" href="/assets/fonts/heebo-variable.woff2" as="font" type="font/woff2" crossorigin>
 
     <!-- Bootstrap d'abord, nos styles ensuite pour pouvoir le surcharger -->
-    <link rel="stylesheet" href="/assets/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= asset('/assets/vendor/bootstrap/bootstrap.min.css') ?>">
     <link rel="stylesheet" href="<?= asset('/assets/css/style.css') ?>">
-
-    <!-- N'affiche la page qu'une fois le HTML lu jusqu'au pied de page :
-         en arrivant sur une ancre (services.php#site-vitrine), la section visée
-         existe déjà au premier affichage, la page s'ouvre donc directement dessus. -->
-    <link rel="expect" href="#pied-de-page" blocking="render">
 </head>
