@@ -70,11 +70,11 @@ RewriteEngine On
 # ----------------------------------------------------------
 # 1. Protection : accès direct interdit aux fichiers internes
 # ----------------------------------------------------------
-# Dossiers de code (inclusions, classes, dépendances)
-RewriteRule ^(includes|src|vendor)(/|$) - [R=404,L]
+# Dossiers de code (inclusions, classes, tests, dépendances)
+RewriteRule ^(includes|src|tests|vendor)(/|$) - [R=404,L]
 
 # Fichiers de configuration et de documentation
-RewriteRule ^(composer\.(json|lock)|phpcs\.xml|Dockerfile|docker-compose\.yml|README\.md)$ - [R=404,L]
+RewriteRule ^(composer\.(json|lock)|phpcs\.xml|phpunit\.xml|Dockerfile|docker-compose\.yml|README\.md)$ - [R=404,L]
 
 # Fichiers et dossiers cachés (.git, .gitignore, .env…)
 RewriteRule (^|/)\. - [R=404,L]

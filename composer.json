@@ -6,15 +6,21 @@
     "autoload": {
         "classmap": ["src/"]
     },
+    "autoload-dev": {
+        "classmap": ["tests/"]
+    },
     "scripts": {
         "lint": "phpcs",
-        "lint:fix": "phpcbf"
+        "lint:fix": "phpcbf",
+        "test": "phpunit"
     },
     "scripts-descriptions": {
         "lint": "Vérifie le style du code PHP (norme PSR-12, voir phpcs.xml)",
-        "lint:fix": "Corrige automatiquement les écarts de style qui peuvent l'être"
+        "lint:fix": "Corrige automatiquement les écarts de style qui peuvent l'être",
+        "test": "Lance les tests automatisés (PHPUnit, voir phpunit.xml)"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "^4.0"
+        "squizlabs/php_codesniffer": "^4.0",
+        "phpunit/phpunit": "^13.4"
     }
 }

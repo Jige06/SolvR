@@ -9,6 +9,7 @@
     <file>includes/functions.php</file>
     <file>includes/form-helpers.php</file>
     <file>includes/structured-data.php</file>
+    <file>tests</file>
 
     <arg name="extensions" value="php"/>
     <arg name="colors"/>
