@@ -13,21 +13,21 @@ require __DIR__ . '/includes/header.php';
             <div class="row align-items-center gy-5">
                 <div class="col-12 col-lg-7">
                     <p class="hero-surtitre">Développeur web freelance · Nice et Alpes-Maritimes</p>
-                    <h1 id="hero-titre" class="display-5 fw-bold">
+                    <h1 id="hero-titre" class="display-5 fw-bold" data-entree="1">
                         Des sites internet qui font grandir votre activité à Nice et dans les Alpes-Maritimes
                     </h1>
-                    <p class="lead mt-3">
+                    <p class="lead mt-3" data-entree="2">
                         Artisans, commerçants, PME : je crée votre site vitrine, votre boutique en ligne
                         ou votre application sur mesure. Un seul interlocuteur, des explications claires,
                         un résultat à votre image.
                     </p>
 
-                    <div class="d-flex flex-column flex-sm-row gap-3 mt-4">
+                    <div class="d-flex flex-column flex-sm-row gap-3 mt-4" data-entree="3">
                         <a class="btn btn-primary btn-lg" href="<?= e($pages['contact']['path']) ?>">Parlons de votre projet</a>
                         <a class="btn btn-outline-primary btn-lg" href="<?= e($pages['services']['path']) ?>">Découvrir mes services</a>
                     </div>
 
-                    <ul class="hero-atouts list-unstyled d-flex flex-wrap gap-3 gap-md-4 mt-4 mb-0">
+                    <ul class="hero-atouts list-unstyled d-flex flex-wrap gap-3 gap-md-4 mt-4 mb-0" data-entree="4">
                         <li><?= icon('check', 'icon-accent') ?> Devis gratuit</li>
                         <li><?= icon('check', 'icon-accent') ?> Réponse sous 48 h</li>
                         <li><?= icon('check', 'icon-accent') ?> Sites pensés pour le mobile</li>
@@ -35,7 +35,7 @@ require __DIR__ . '/includes/header.php';
                 </div>
 
                 <!-- Illustration décorative : affichée à partir du desktop uniquement -->
-                <div class="col-lg-5 d-none d-lg-block">
+                <div class="col-lg-5 d-none d-lg-block" data-entree="5">
                     <img src="/assets/img/hero-creation-site-internet.svg"
                         alt="" width="805" height="745" class="img-fluid">
                 </div>
@@ -46,11 +46,11 @@ require __DIR__ . '/includes/header.php';
     <!-- ========== SERVICES ========== -->
     <section class="section section-alt" aria-labelledby="services-titre">
         <div class="container">
-            <h2 id="services-titre" class="section-titre">Ce que je peux faire pour vous</h2>
+            <h2 id="services-titre" class="section-titre" data-reveal>Ce que je peux faire pour vous</h2>
 
-            <div class="row g-4">
+            <div class="row g-4" data-reveal-groupe>
                 <div class="col-12 col-lg-4">
-                    <article class="service-card h-100">
+                    <article class="service-card carte-survol h-100">
                         <span class="service-icon"><?= icon('laptop') ?></span>
                         <h3 class="h4">Site vitrine</h3>
                         <p>Présentez votre activité, vos horaires et vos réalisations, et soyez trouvé sur Google par les clients de votre secteur.</p>
@@ -61,7 +61,7 @@ require __DIR__ . '/includes/header.php';
                 </div>
 
                 <div class="col-12 col-lg-4">
-                    <article class="service-card h-100">
+                    <article class="service-card carte-survol h-100">
                         <span class="service-icon"><?= icon('cart') ?></span>
                         <h3 class="h4">Site e-commerce</h3>
                         <p>Vendez vos produits en ligne, jour et nuit, avec un paiement sécurisé et une gestion simple de vos commandes.</p>
@@ -72,7 +72,7 @@ require __DIR__ . '/includes/header.php';
                 </div>
 
                 <div class="col-12 col-lg-4">
-                    <article class="service-card h-100">
+                    <article class="service-card carte-survol h-100">
                         <span class="service-icon"><?= icon('phone') ?></span>
                         <h3 class="h4">Application sur mesure</h3>
                         <p>Prise de commande, réservation, espace client… Un outil pensé pour votre façon de travailler, qui vous fait gagner du temps.</p>
@@ -88,16 +88,13 @@ require __DIR__ . '/includes/header.php';
     <!-- ========== RÉALISATION ========== -->
     <section class="section" aria-labelledby="realisation-titre">
         <div class="container">
-            <div class="row align-items-center gy-4 gx-lg-5">
+            <div class="row align-items-center gy-4 gx-lg-5" data-reveal-groupe>
                 <div class="col-12 col-lg-6">
-                    <!-- À remplacer par la capture quand elle sera prête :
-                    <img src="/assets/img/realisations/traiteur/traiteur-menus-mobile.webp"
-                         alt="Capture de l'application traiteur : liste des menus sur mobile"
-                         width="800" height="600" class="img-fluid rounded-4" loading="lazy">
-                    -->
-                    <div class="ratio ratio-4x3 media-placeholder">
-                        <div class="d-flex align-items-center justify-content-center">Capture à venir</div>
-                    </div>
+                    <?= zoomableImage(
+                        '/assets/img/realisations/traiteur/traiteur-menus.webp',
+                        "Page des menus de l'application Vite & Gourmand : filtres par thème, régime, prix et nombre de personnes, puis les menus avec photo et prix par personne",
+                        1280, 960, 'img-fluid rounded-4 border shadow-sm'
+                    ) ?>
                 </div>
 
                 <div class="col-12 col-lg-6">
@@ -119,9 +116,9 @@ require __DIR__ . '/includes/header.php';
     <!-- ========== MÉTHODE ========== -->
     <section class="section section-alt" aria-labelledby="methode-titre">
         <div class="container">
-            <h2 id="methode-titre" class="section-titre">Comment ça se passe ?</h2>
+            <h2 id="methode-titre" class="section-titre" data-reveal>Comment ça se passe ?</h2>
 
-            <ol class="list-unstyled row g-4 mb-0">
+            <ol class="list-unstyled row g-4 mb-0" data-reveal-groupe>
                 <li class="col-12 col-sm-6 col-lg-3 methode-etape">
                     <div class="methode-visuel" aria-hidden="true">
                         <?= icon('chat') ?>
@@ -161,7 +158,7 @@ require __DIR__ . '/includes/header.php';
     <!-- ========== ZONE ========== -->
     <section class="section" aria-labelledby="zone-titre">
         <div class="container">
-            <div class="row align-items-center gy-4 gx-lg-5">
+            <div class="row align-items-center gy-4 gx-lg-5" data-reveal-groupe>
                 <div class="col-8 col-sm-6 col-md-5 col-lg-4 mx-auto mx-md-0">
                     <!-- À remplacer par ta photo quand elle sera prête :
                     <img src="/assets/img/portrait-developpeur-web-nice.webp"

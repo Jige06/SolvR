@@ -118,8 +118,8 @@ require __DIR__ . '/includes/header.php';
         <div class="container">
             <div class="col-lg-9">
                 <p class="hero-surtitre">Contact</p>
-                <h1 id="page-titre" class="display-5 fw-bold">Parlons de votre projet</h1>
-                <p class="lead mt-3 mb-0">
+                <h1 id="page-titre" class="display-5 fw-bold" data-entree="1">Parlons de votre projet</h1>
+                <p class="lead mt-3 mb-0" data-entree="2">
                     Décrivez-moi votre besoin en quelques lignes : je vous réponds sous 48 h.
                     Le devis est gratuit et sans engagement.
                 </p>
@@ -133,15 +133,21 @@ require __DIR__ . '/includes/header.php';
             <div class="row gy-5 gx-lg-5">
 
                 <!-- Formulaire -->
-                <div class="col-12 col-lg-8">
+                <div class="col-12 col-lg-8" data-entree="3">
                     <h2 id="formulaire-titre" class="visually-hidden">Formulaire de contact</h2>
 
                     <!-- Zone de messages : annoncée par les lecteurs d'écran -->
                     <div aria-live="polite">
                         <?php if ($status === 'success'): ?>
-                            <div class="alert alert-success" role="status">
-                                <p class="fw-bold mb-1">Merci, votre message a bien été envoyé !</p>
-                                <p class="mb-0">Je vous réponds sous 48 h à l'adresse e-mail indiquée.</p>
+                            <div class="alert alert-success d-flex align-items-center gap-3" role="status">
+                                <svg class="coche-animee" viewBox="0 0 52 52" aria-hidden="true" focusable="false">
+                                    <circle cx="26" cy="26" r="24" pathLength="1" />
+                                    <path d="M15 27l7 7 15-15" pathLength="1" />
+                                </svg>
+                                <div>
+                                    <p class="fw-bold mb-1">Merci, votre message a bien été envoyé !</p>
+                                    <p class="mb-0">Je vous réponds sous 48 h à l'adresse e-mail indiquée.</p>
+                                </div>
                             </div>
 
                         <?php elseif ($status === 'invalid'): ?>
@@ -172,7 +178,7 @@ require __DIR__ . '/includes/header.php';
 
                     <p>Les champs marqués d'un astérisque (<span class="champ-requis">*</span>) sont obligatoires.</p>
 
-                    <form action="<?= e($pages['contact']['path']) ?>" method="post" class="formulaire-contact">
+                    <form action="<?= e($pages['contact']['path']) ?>" method="post" class="formulaire-contact" data-formulaire-contact>
                         <input type="hidden" name="csrf_token" value="<?= e(CsrfToken::get()) ?>">
 
                         <div class="row g-3">
@@ -241,7 +247,14 @@ require __DIR__ . '/includes/header.php';
                                     <a href="<?= e($pages['confidentialite']['path']) ?>">En savoir plus sur la gestion de vos données</a>.
                                 </p>
 
-                                <button type="submit" class="btn btn-primary btn-lg">Envoyer ma demande</button>
+                                <button type="submit" class="btn btn-primary btn-lg btn-envoi">
+                                    <span class="btn-envoi-texte">Envoyer ma demande <?= icon('arrow-right', 'icone-fleche') ?></span>
+                                    <span class="btn-envoi-chargement">
+                                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                        Envoi…
+                                    </span>
+                                </button>
+                                <p class="visually-hidden" role="status" data-statut-envoi></p>
                             </div>
                         </div>
                     </form>
@@ -249,7 +262,7 @@ require __DIR__ . '/includes/header.php';
 
                 <!-- Coordonnées -->
                 <div class="col-12 col-lg-4">
-                    <aside class="encart" aria-labelledby="coordonnees-titre">
+                    <aside class="encart" aria-labelledby="coordonnees-titre" data-reveal>
                         <h2 id="coordonnees-titre" class="h5">Me contacter directement</h2>
                         <ul class="list-unstyled atouts mt-3">
                             <li><?= icon('phone', 'icon-accent') ?> <a href="tel:<?= e($contact['phone_link']) ?>"><?= e($contact['phone']) ?></a></li>

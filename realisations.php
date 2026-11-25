@@ -16,10 +16,10 @@ require __DIR__ . '/includes/header.php';
         <div class="container">
             <div class="col-lg-9">
                 <p class="hero-surtitre">Réalisations</p>
-                <h1 id="page-titre" class="display-5 fw-bold">
+                <h1 id="page-titre" class="display-5 fw-bold" data-entree="1">
                     Des projets concrets, de la conception à la mise en ligne
                 </h1>
-                <p class="lead mt-3">
+                <p class="lead mt-3" data-entree="2">
                     Je lance mon activité freelance. Voici un projet complet que j'ai conçu et développé seul
                     pendant ma formation de développeur web et web mobile : il montre ce que je peux
                     réaliser pour votre entreprise.
@@ -34,7 +34,7 @@ require __DIR__ . '/includes/header.php';
         <!-- Présentation -->
         <section class="section section-alt" aria-label="Présentation du projet">
             <div class="container">
-                <div class="row align-items-center gy-5 gx-lg-5">
+                <div class="row align-items-center gy-5 gx-lg-5" data-reveal-groupe>
                     <div class="col-12 col-lg-6">
                         <ul class="tags mb-3">
                             <li>Projet de formation</li>
@@ -49,13 +49,13 @@ require __DIR__ . '/includes/header.php';
                         </p>
 
                         <div class="d-flex flex-column flex-sm-row gap-3 mt-4">
-                            <a class="btn btn-primary" href="<?= e($demoUrl) ?>">
+                            <a class="btn btn-primary" href="<?= e($demoUrl) ?>" target="_blank" rel="noopener">
                                 Voir l'application en ligne <?= icon('external') ?>
-                                <span class="visually-hidden">(site externe)</span>
+                                <span class="visually-hidden">(site externe, nouvel onglet)</span>
                             </a>
-                            <a class="btn btn-outline-primary" href="<?= e($githubUrl) ?>">
-                                <?= icon('github') ?> Voir le code sur GitHub
-                                <span class="visually-hidden">(site externe)</span>
+                            <a class="btn btn-outline-primary" href="<?= e($githubUrl) ?>" target="_blank" rel="noopener">
+                                <?= icon('github') ?> Voir le code sur GitHub <?= icon('external') ?>
+                                <span class="visually-hidden">(site externe, nouvel onglet)</span>
                             </a>
                         </div>
 
@@ -65,14 +65,11 @@ require __DIR__ . '/includes/header.php';
                     </div>
 
                     <div class="col-12 col-lg-6">
-                        <!-- À remplacer par une capture quand elle sera prête :
-                        <img src="/assets/img/realisations/traiteur/vite-et-gourmand-accueil.webp"
-                             alt="Page d'accueil de l'application Vite & Gourmand sur ordinateur et mobile"
-                             width="1200" height="900" class="img-fluid rounded-4">
-                        -->
-                        <div class="ratio ratio-4x3 media-placeholder">
-                            <div class="d-flex align-items-center justify-content-center">Capture à venir</div>
-                        </div>
+                        <?= zoomableImage(
+                            '/assets/img/realisations/traiteur/vite-et-gourmand-accueil.webp',
+                            "Page d'accueil de l'application Vite & Gourmand affichée sur ordinateur et sur téléphone : la photo d'un buffet, le bouton « passer une commande » et les filtres des menus",
+                            1280, 960, 'img-fluid', false
+                        ) ?>
                     </div>
                 </div>
             </div>
@@ -82,7 +79,7 @@ require __DIR__ . '/includes/header.php';
         <section class="section" aria-labelledby="besoin-titre">
             <div class="container">
                 <h3 id="besoin-titre" class="visually-hidden">Le besoin et la solution</h3>
-                <div class="row gy-4 gx-lg-5">
+                <div class="row gy-4 gx-lg-5" data-reveal-groupe>
                     <div class="col-12 col-lg-6">
                         <h4 class="h3">Le besoin</h4>
                         <p class="mb-0">
@@ -104,10 +101,17 @@ require __DIR__ . '/includes/header.php';
                 </div>
 
                 <!-- Un espace pour chacun -->
-                <h3 class="h2 section-titre mt-5 pt-lg-4">Un espace pour chacun</h3>
-                <div class="row g-4">
+                <h3 class="h2 section-titre mt-5 pt-lg-4" data-reveal>Un espace pour chacun</h3>
+                <div class="row g-4" data-reveal-groupe>
                     <div class="col-12 col-lg-4">
-                        <div class="encart h-100">
+                        <div class="encart carte-survol h-100">
+                            <div class="mb-3">
+                                <?= zoomableImage(
+                                    '/assets/img/realisations/traiteur/clients-commande.webp',
+                                    "Étape 1 de la commande dans l'application Vite & Gourmand : formulaire avec les coordonnées du client, le type de livraison et l'adresse",
+                                    1200, 900
+                                ) ?>
+                            </div>
                             <span class="service-icon"><?= icon('people') ?></span>
                             <h4 class="h5">Pour les clients</h4>
                             <ul class="list-unstyled atouts mt-3 mb-0">
@@ -120,7 +124,14 @@ require __DIR__ . '/includes/header.php';
                         </div>
                     </div>
                     <div class="col-12 col-lg-4">
-                        <div class="encart h-100">
+                        <div class="encart carte-survol h-100">
+                            <div class="mb-3">
+                                <?= zoomableImage(
+                                    '/assets/img/realisations/traiteur/equipe-commandes.webp',
+                                    "Espace employé de Vite & Gourmand : tableau des commandes avec leur statut actuel et, pour chacune, un menu pour changer de statut",
+                                    1200, 900
+                                ) ?>
+                            </div>
                             <span class="service-icon"><?= icon('team') ?></span>
                             <h4 class="h5">Pour l'équipe</h4>
                             <ul class="list-unstyled atouts mt-3 mb-0">
@@ -132,7 +143,14 @@ require __DIR__ . '/includes/header.php';
                         </div>
                     </div>
                     <div class="col-12 col-lg-4">
-                        <div class="encart h-100">
+                        <div class="encart carte-survol h-100">
+                            <div class="mb-3">
+                                <?= zoomableImage(
+                                    '/assets/img/realisations/traiteur/gerants-statistiques.webp',
+                                    "Statistiques de Vite & Gourmand sur ordinateur et sur téléphone : graphiques du nombre de commandes et du chiffre d'affaires par menu",
+                                    1200, 900
+                                ) ?>
+                            </div>
                             <span class="service-icon"><?= icon('chart') ?></span>
                             <h4 class="h5">Pour les gérants</h4>
                             <ul class="list-unstyled atouts mt-3 mb-0">
@@ -148,10 +166,10 @@ require __DIR__ . '/includes/header.php';
         <!-- Sous le capot -->
         <section class="section section-alt" aria-labelledby="capot-titre">
             <div class="container">
-                <h3 id="capot-titre" class="h2 section-titre mb-3">Sous le capot</h3>
-                <p class="mb-5">Pour les plus curieux : les choix techniques du projet.</p>
+                <h3 id="capot-titre" class="h2 section-titre mb-3" data-reveal>Sous le capot</h3>
+                <p class="mb-5" data-reveal>Pour les plus curieux : les choix techniques du projet.</p>
 
-                <div class="row gy-5 gx-lg-5">
+                <div class="row gy-5 gx-lg-5" data-reveal-groupe>
                     <div class="col-12 col-lg-6">
                         <h4 class="h5">Technologies</h4>
                         <ul class="tags mt-3">
