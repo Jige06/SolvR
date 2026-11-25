@@ -27,7 +27,7 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 - **RGPD** : aucune ressource chargée depuis un serveur tiers (polices et Bootstrap hébergés localement), minimisation des données collectées, information sous le formulaire
 - **Thème clair / sombre** : suit le réglage du système, bascule manuelle mémorisée, sans flash au chargement
 - **Animations** : discrètes et accessibles. Désactivées si `prefers-reduced-motion` est activé, aucun contenu masqué sans JavaScript, aucune animation en boucle (RGAA 13.8). Transitions entre les pages avec la View Transitions API, en amélioration progressive
-- **Performance** : polices variables légères (78 Ko au total) et préchargées, images WebP optimisées et chargées à la demande (`loading="lazy"`), scripts en `defer`, fichiers CSS et JS versionnés (`?v=`) et gardés un an en cache par le navigateur, polices un an, images un mois, compression gzip des fichiers texte
+- **Performance** : polices variables légères (78 Ko au total) et préchargées, images WebP optimisées, responsives (`srcset` / `sizes`, variantes de 480 et 800 px) et chargées à la demande (`loading="lazy"`), scripts en `defer`, fichiers CSS et JS versionnés (`?v=`) et gardés un an en cache par le navigateur, polices un an, images un mois, compression gzip des fichiers texte
 
 ## Prérequis
 
@@ -131,9 +131,14 @@ Ne pas placer de `data-reveal` à l'intérieur d'un élément déjà animé : il
 
 ### Ajouter une image agrandissable
 
+1. Placer l'originale en WebP (`image.webp`, 1200 px de large) et ses deux variantes `image-480.webp` et `image-800.webp` dans le même dossier
+2. L'afficher avec :
+
 ```php
-<?= zoomableImage('/assets/img/dossier/image.webp', "Texte alternatif en clair", 1200, 900) ?>
+<?= zoomableImage('/assets/img/dossier/image.webp', "Texte alternatif en clair", 1200, 900, sizes: 'card') ?>
 ```
+
+`sizes` indique la colonne où l'image est affichée : `half` (col-lg-6), `offer` (col-lg-5), `card` (encart en col-lg-4) ou `step` (col-md-4), voir `IMAGE_SIZES` dans `functions.php`. Le navigateur télécharge alors la plus petite variante assez nette. Les variantes absentes sont simplement ignorées.
 
 La fonction génère un lien vers l'image, qui s'ouvre dans la visionneuse au clic (ou seule, sans JavaScript). Paramètres facultatifs : la classe CSS de l'image (`img-fluid` par défaut) et `false` pour désactiver le chargement différé d'une image visible dès l'arrivée sur la page.
 
