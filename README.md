@@ -62,6 +62,7 @@ Le site est accessible sur **http://localhost:8080**.
 | `docker compose ps` | Vérifier que le conteneur tourne |
 | `docker compose logs -f web` | Afficher les logs Apache / PHP en direct |
 | `docker compose exec web composer dump-autoload` | Régénérer l'autoload après l'ajout d'une classe dans `src/` |
+| `docker compose exec web composer test` | Lancer les tests automatisés (PHPUnit) |
 | `docker compose exec web composer lint` | Vérifier le style du code PHP (PSR-12) |
 | `docker compose exec web composer lint:fix` | Corriger automatiquement les écarts de style |
 | `docker compose down` | Arrêter le conteneur |
@@ -88,6 +89,11 @@ solvr/
 │   ├── ContactForm.php     # Données, libellés et validation du formulaire
 │   ├── ContactMailer.php   # Envoi de l'e-mail via PHPMailer
 │   └── CsrfToken.php       # Jeton anti-CSRF
+├── tests/                  # Tests automatisés (PHPUnit)
+│   ├── ContactFormTest.php       # Validation des champs
+│   ├── ContactControllerTest.php # Traitement complet : envoi, erreurs, CSRF, robots, limites
+│   ├── SubmissionLimiterTest.php # Piège temporel, délai et quota (avec une fausse horloge)
+│   └── Doubles/FakeMailer.php    # Faux expéditeur : compte les envois sans rien envoyer
 ├── assets/
 │   ├── css/                # Styles personnalisés (style.css)
 │   ├── fonts/              # Polices Heebo et Inter (woff2) et leurs licences
@@ -111,6 +117,7 @@ solvr/
 ├── .gitattributes          # Fins de ligne LF pour tous les fichiers texte
 ├── .editorconfig           # Réglages communs aux éditeurs (indentation, encodage, fins de ligne)
 ├── phpcs.xml               # Règles de style du code PHP (PSR-12, sans namespaces)
+├── phpunit.xml             # Configuration des tests automatisés
 ├── composer.json           # Dépendances PHP et autoload
 ├── Dockerfile              # Image PHP 8.5 + Apache + Composer
 └── docker-compose.yml      # Lancement de l'environnement local
@@ -147,6 +154,10 @@ Ne pas placer de `data-reveal` à l'intérieur d'un élément déjà animé : il
 La fonction génère un lien vers l'image, qui s'ouvre dans la visionneuse au clic (ou seule, sans JavaScript). Paramètres facultatifs : la classe CSS de l'image (`img-fluid` par défaut) et `false` pour désactiver le chargement différé d'une image visible dès l'arrivée sur la page.
 
 ## Conventions
+
+### Tests
+
+Le formulaire de contact (validation, sécurité, limitation des envois) est couvert par des tests PHPUnit. Les lancer avec `composer test` avant chaque commit qui touche à `src/`. Les tests utilisent un faux expéditeur et une fausse horloge : aucun e-mail n'est envoyé, aucune attente réelle.
 
 ### Style du code
 
@@ -186,6 +197,7 @@ Les messages de commit suivent la convention [Conventional Commits](https://www.
 | `docs:` | Documentation |
 | `chore:` | Configuration, outillage |
 | `perf:` | Amélioration des performances |
+| `test:` | Ajout ou modification de tests |
 
 ## Feuille de route
 
@@ -207,6 +219,7 @@ Les messages de commit suivent la convention [Conventional Commits](https://www.
 - [ ] Portrait
 - [x] Page À propos
 - [x] SEO technique (robots.txt, sitemap.xml, données structurées)
+- [x] Tests automatisés du formulaire de contact
 - [ ] Audit complet (code, sécurité, accessibilité, SEO, performance, validation, tests)
 - [ ] Mise en ligne
 
