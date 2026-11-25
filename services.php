@@ -63,12 +63,12 @@ require __DIR__ . '/includes/header.php';
                             1200, 900
                         ) ?>
                     </div>
-                    <aside class="encart carte-survol" aria-labelledby="vitrine-ideal">
-                        <h3 id="vitrine-ideal" class="h5 d-flex align-items-center gap-2">
-                            <?= icon('people', 'icon-accent') ?> Idéal pour
+                    <div class="encart carte-survol">
+                        <h3 class="h5 d-flex align-items-center gap-2">
+                            <?= icon('people', 'icon-accent') ?> Idéal pour<span class="visually-hidden"> un site vitrine</span>
                         </h3>
                         <p class="mb-0">Artisans, commerçants, professions libérales, restaurants, associations… toute activité qui veut être trouvée et contactée facilement.</p>
-                    </aside>
+                    </div>
                 </div>
             </div>
         </div>
@@ -106,12 +106,12 @@ require __DIR__ . '/includes/header.php';
                             1200, 900
                         ) ?>
                     </div>
-                    <aside class="encart carte-survol" aria-labelledby="ecommerce-ideal">
-                        <h3 id="ecommerce-ideal" class="h5 d-flex align-items-center gap-2">
-                            <?= icon('people', 'icon-accent') ?> Idéal pour
+                    <div class="encart carte-survol">
+                        <h3 class="h5 d-flex align-items-center gap-2">
+                            <?= icon('people', 'icon-accent') ?> Idéal pour<span class="visually-hidden"> un site e-commerce</span>
                         </h3>
                         <p class="mb-0">Commerçants, créateurs, producteurs locaux… toute activité qui veut vendre au-delà de sa boutique physique.</p>
-                    </aside>
+                    </div>
                 </div>
             </div>
         </div>
@@ -149,15 +149,15 @@ require __DIR__ . '/includes/header.php';
                             1200, 900
                         ) ?>
                     </div>
-                    <aside class="encart carte-survol" aria-labelledby="app-ideal">
-                        <h3 id="app-ideal" class="h5 d-flex align-items-center gap-2">
-                            <?= icon('people', 'icon-accent') ?> Idéal pour
+                    <div class="encart carte-survol">
+                        <h3 class="h5 d-flex align-items-center gap-2">
+                            <?= icon('people', 'icon-accent') ?> Idéal pour<span class="visually-hidden"> une application sur mesure</span>
                         </h3>
                         <p>PME, restaurateurs, traiteurs, prestataires de services… toute entreprise qui perd du temps sur des tâches répétitives.</p>
                         <a class="link-fleche" href="<?= e($pages['realisations']['path']) ?>#traiteur">
                             Voir un exemple : l'application traiteur <?= icon('arrow-right') ?>
                         </a>
-                    </aside>
+                    </div>
                 </div>
             </div>
         </div>

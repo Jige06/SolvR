@@ -649,13 +649,22 @@
    14. Typographie
    ========================================================== */
 
-/* Titres : Lexend */
+/* Titres : Heebo */
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6,
 .display-5,
 .navbar-brand {
     font-family: var(--brand-font-heading);
     font-weight: 600;
+}
+
+/* Code (noms de cookies, de fichiers…) : texte de la page sur une pastille teintée.
+   Remplace le rose de Bootstrap, trop peu contrasté sur le fond beige (4,43:1). */
+code {
+    padding: 0.1em 0.35em;
+    border-radius: 0.3em;
+    background-color: var(--solvr-accent-soft);
+    color: var(--solvr-text);
 }
 
 /* ==========================================================
