@@ -76,6 +76,7 @@ solvr/
 │   ├── bootstrap.php       # Démarrage commun : mémoire tampon, page 500 en production, autoload, fonctions
 │   ├── functions.php       # Fonctions utilitaires (configuration, échappement, icônes…)
 │   ├── pages.php           # Configuration des pages (SEO, menu, liens)
+│   ├── icons.php           # Tracés des icônes de l'interface (Bootstrap Icons), utilisés par icon()
 │   ├── technologies.php    # Logos des technologies (page À propos)
 │   ├── head.php            # <head> : thème initial, métadonnées SEO, Open Graph, CSS
 │   ├── header.php          # Lien d'évitement, en-tête, navigation, bouton de thème
