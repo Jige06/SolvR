@@ -62,6 +62,8 @@ Le site est accessible sur **http://localhost:8080**.
 | `docker compose ps` | Vérifier que le conteneur tourne |
 | `docker compose logs -f web` | Afficher les logs Apache / PHP en direct |
 | `docker compose exec web composer dump-autoload` | Régénérer l'autoload après l'ajout d'une classe dans `src/` |
+| `docker compose exec web composer lint` | Vérifier le style du code PHP (PSR-12) |
+| `docker compose exec web composer lint:fix` | Corriger automatiquement les écarts de style |
 | `docker compose down` | Arrêter le conteneur |
 
 ## Structure du projet
@@ -107,6 +109,8 @@ solvr/
 ├── sitemap.php             # Plan du site, servi à l'adresse /sitemap.xml
 ├── .htaccess               # Pages d'erreur, en-têtes de sécurité, cache navigateur, protection des fichiers internes, robots.txt / sitemap.xml, adresses sans .php
 ├── .gitattributes          # Fins de ligne LF pour tous les fichiers texte
+├── .editorconfig           # Réglages communs aux éditeurs (indentation, encodage, fins de ligne)
+├── phpcs.xml               # Règles de style du code PHP (PSR-12, sans namespaces)
 ├── composer.json           # Dépendances PHP et autoload
 ├── Dockerfile              # Image PHP 8.5 + Apache + Composer
 └── docker-compose.yml      # Lancement de l'environnement local
@@ -143,6 +147,11 @@ Ne pas placer de `data-reveal` à l'intérieur d'un élément déjà animé : il
 La fonction génère un lien vers l'image, qui s'ouvre dans la visionneuse au clic (ou seule, sans JavaScript). Paramètres facultatifs : la classe CSS de l'image (`img-fluid` par défaut) et `false` pour désactiver le chargement différé d'une image visible dès l'arrivée sur la page.
 
 ## Conventions
+
+### Style du code
+
+- **Indentation de 4 espaces, UTF-8, fins de ligne LF**, saut de ligne final : réglés par `.editorconfig` (dans VS Code, installer l'extension *EditorConfig for VS Code*)
+- **PHP** : norme [PSR-12](https://www.php-fig.org/psr/psr-12/), vérifiée par PHP_CodeSniffer avec `composer lint` sur les classes (`src/`) et les fichiers de logique. Les pages et les gabarits, qui mêlent PHP et HTML, ne sont pas concernés. Seule exception à la norme : les classes n'ont pas de namespace (choix du projet, autoload classmap)
 
 ### Sécurité du code
 
