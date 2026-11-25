@@ -1,7 +1,7 @@
 <?php
 /**
  * Configuration des pages du site.
- * Source unique pour : le <head> (SEO), le menu, les liens du footer, et plus tard le sitemap.
+ * Source unique pour : le <head> (SEO), le menu, les liens du footer et le sitemap (sitemap.php).
  *
  * nav = true : la page apparaît dans le menu principal
  * (Contact est à false car il est affiché à part, sous forme de bouton)

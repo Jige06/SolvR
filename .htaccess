@@ -1,9 +1,14 @@
 # Page d'erreur personnalisée
 ErrorDocument 404 /404.php
 
-# Interdit l'accès direct aux dossiers et fichiers internes du projet
+# Réécriture d'adresses et protection des fichiers internes
 RewriteEngine On
 
+# Fichiers pour les moteurs de recherche, générés en PHP
+RewriteRule ^robots\.txt$ robots.php [L]
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+# Interdit l'accès direct aux dossiers et fichiers internes du projet
 # Dossiers de code (inclusions, classes, dépendances)
 RewriteRule ^(includes|src|vendor)(/|$) - [R=404,L]
 
