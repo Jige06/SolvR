@@ -23,7 +23,7 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 - **Mobile first** et responsive
 - **Accessibilité** : respect des recommandations WCAG / RGAA (balises sémantiques, contrastes AA vérifiés, navigation au clavier, lien d'évitement, focus visible, formulaires accessibles, respect de `prefers-reduced-motion`)
 - **Sécurité** : échappement systématique des sorties, validation côté serveur, protection CSRF, honeypot anti-spam, sessions sécurisées, secrets hors du dépôt, fichiers internes inaccessibles depuis le web
-- **Référencement** : métadonnées uniques par page, Open Graph, URL canoniques, `robots.txt` et `sitemap.xml` générés depuis la configuration des pages, données structurées schema.org (`ProfessionalService`, `WebSite`) pour le référencement local
+- **Référencement** : adresses propres sans extension (`/services`, les anciennes adresses en `.php` redirigent en 301), métadonnées uniques par page, Open Graph, URL canoniques, `robots.txt` et `sitemap.xml` générés depuis la configuration des pages, données structurées schema.org (`ProfessionalService`, `WebSite`) pour le référencement local
 - **RGPD** : aucune ressource chargée depuis un serveur tiers (polices et Bootstrap hébergés localement), minimisation des données collectées, information sous le formulaire
 - **Thème clair / sombre** : suit le réglage du système, bascule manuelle mémorisée, sans flash au chargement
 - **Animations** : discrètes et accessibles. Désactivées si `prefers-reduced-motion` est activé, aucun contenu masqué sans JavaScript, aucune animation en boucle (RGAA 13.8). Transitions entre les pages avec la View Transitions API, en amélioration progressive
@@ -104,7 +104,7 @@ solvr/
 ├── 404.php                 # Page d'erreur 404
 ├── robots.php              # Consignes aux robots, servies à l'adresse /robots.txt
 ├── sitemap.php             # Plan du site, servi à l'adresse /sitemap.xml
-├── .htaccess               # Page 404, adresses robots.txt / sitemap.xml, protection des fichiers internes
+├── .htaccess               # Page 404, protection des fichiers internes, robots.txt / sitemap.xml, adresses sans .php
 ├── .gitattributes          # Fins de ligne LF pour tous les fichiers texte
 ├── composer.json           # Dépendances PHP et autoload
 ├── Dockerfile              # Image PHP 8.5 + Apache + Composer
@@ -113,8 +113,8 @@ solvr/
 
 ### Ajouter une page
 
-1. Déclarer la page dans `includes/pages.php` (chemin, libellé, title, description, présence dans le menu). Elle apparaît automatiquement dans le sitemap, sauf avec `'noindex' => true`
-2. Créer le fichier `.php` à la racine en définissant `$currentPage` avec la clé correspondante
+1. Déclarer la page dans `includes/pages.php` (chemin **sans extension**, par exemple `/tarifs` pour `tarifs.php`, libellé, title, description, présence dans le menu). Elle apparaît automatiquement dans le sitemap, sauf avec `'noindex' => true`
+2. Créer le fichier `.php` à la racine, du même nom que le chemin, en définissant `$currentPage` avec la clé correspondante
 3. Inclure `head.php` et `header.php`, écrire le contenu dans `<main id="contenu">`, puis inclure `footer.php`
 
 ### Animer un élément
