@@ -10,7 +10,7 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 - **HTML5** sémantique
 - **CSS3** et **Bootstrap 5.3** (auto-hébergé)
 - **Polices** : [Heebo](https://fonts.google.com/specimen/Heebo) (titres) et [Inter](https://rsms.me/inter/) (texte), auto-hébergées en woff2 (licence SIL Open Font License)
-- **JavaScript** (amélioration progressive : le site reste utilisable sans JS) : bascule clair / sombre mémorisée
+- **JavaScript** (amélioration progressive : le site reste utilisable sans JS) : bascule clair / sombre mémorisée, apparition des blocs au défilement, onde au clic, halo du bouton Contact, visionneuse d'images
 - **PHP 8.5** : inclusions communes, formulaire de contact en POO (classes chargées par l'autoload de Composer)
 - **PHPMailer** : envoi des e-mails en SMTP (tests avec Mailtrap)
 - **Composer** : gestion des dépendances PHP
@@ -26,7 +26,8 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 - **Référencement** : métadonnées uniques par page, Open Graph, URL canoniques, référencement local
 - **RGPD** : aucune ressource chargée depuis un serveur tiers (polices et Bootstrap hébergés localement), minimisation des données collectées, information sous le formulaire
 - **Thème clair / sombre** : suit le réglage du système, bascule manuelle mémorisée, sans flash au chargement
-- **Performance** : polices variables légères (78 Ko au total) et préchargées, images optimisées, scripts en `defer`
+- **Animations** : discrètes et accessibles. Désactivées si `prefers-reduced-motion` est activé, aucun contenu masqué sans JavaScript, aucune animation en boucle (RGAA 13.8). Transitions entre les pages avec la View Transitions API, en amélioration progressive
+- **Performance** : polices variables légères (78 Ko au total) et préchargées, images WebP optimisées et chargées à la demande (`loading="lazy"`), scripts en `defer`, fichiers CSS et JS versionnés (`?v=`) pour que le navigateur recharge toujours la dernière version
 
 ## Prérequis
 
@@ -83,8 +84,11 @@ solvr/
 ├── assets/
 │   ├── css/                # Styles personnalisés (style.css)
 │   ├── fonts/              # Polices Heebo et Inter (woff2) et leurs licences
-│   ├── js/                 # Scripts (main.js : bascule de thème)
+│   ├── js/                 # Scripts : main.js (bascule de thème), animations.js (animations, halo, visionneuse)
 │   ├── img/                # Images et illustrations
+│   │   ├── de-l-idee-au-site/  # Croquis, maquette et site en ligne (page Services)
+│   │   ├── realisations/       # Captures de l'étude de cas Vite & Gourmand
+│   │   └── services/           # Illustrations des offres (page Services)
 │   └── vendor/             # Bibliothèques tierces (Bootstrap)
 ├── index.php               # Page d'accueil
 ├── services.php            # Page Services
@@ -95,6 +99,7 @@ solvr/
 ├── confidentialite.php     # Politique de confidentialité
 ├── 404.php                 # Page d'erreur 404
 ├── .htaccess               # Page 404 et protection des fichiers internes
+├── .gitattributes          # Fins de ligne LF pour tous les fichiers texte
 ├── composer.json           # Dépendances PHP et autoload
 ├── Dockerfile              # Image PHP 8.5 + Apache + Composer
 └── docker-compose.yml      # Lancement de l'environnement local
@@ -105,6 +110,25 @@ solvr/
 1. Déclarer la page dans `includes/pages.php` (chemin, libellé, title, description, présence dans le menu)
 2. Créer le fichier `.php` à la racine en définissant `$currentPage` avec la clé correspondante
 3. Inclure `head.php` et `header.php`, écrire le contenu dans `<main id="contenu">`, puis inclure `footer.php`
+
+### Animer un élément
+
+| Attribut | Effet |
+|---|---|
+| `data-entree="1"` à `"5"` | Entrée en cascade au chargement (hero), sans JavaScript |
+| `data-reveal` | Apparition de l'élément quand il arrive à l'écran |
+| `data-reveal-groupe` | Sur un parent : ses enfants directs apparaissent l'un après l'autre |
+| classe `carte-survol` | La carte se soulève au survol et son icône pivote |
+
+Ne pas placer de `data-reveal` à l'intérieur d'un élément déjà animé : il bougerait deux fois.
+
+### Ajouter une image agrandissable
+
+```php
+<?= zoomableImage('/assets/img/dossier/image.webp', "Texte alternatif en clair", 1200, 900) ?>
+```
+
+La fonction génère un lien vers l'image, qui s'ouvre dans la visionneuse au clic (ou seule, sans JavaScript). Paramètres facultatifs : la classe CSS de l'image (`img-fluid` par défaut) et `false` pour désactiver le chargement différé d'une image visible dès l'arrivée sur la page.
 
 ## Conventions
 
@@ -152,7 +176,9 @@ Les messages de commit suivent la convention [Conventional Commits](https://www.
 - [x] Typographies
 - [x] Pages légales et page 404
 - [ ] Informations légales définitives (SIREN, adresse, hébergeur)
-- [ ] Images : portrait et captures des réalisations
+- [x] Animations et interactions
+- [x] Captures des réalisations et illustrations des services
+- [ ] Portrait
 - [x] Page À propos
 - [ ] Audit accessibilité, SEO et sécurité
 - [ ] Mise en ligne
