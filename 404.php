@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 // Envoie le vrai code HTTP 404 : les moteurs de recherche n'indexent pas cette page
 http_response_code(404);
 

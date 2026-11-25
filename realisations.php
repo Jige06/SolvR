@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 $currentPage = 'realisations';
 
 // Liens externes du projet (un seul endroit à modifier si une URL change)
@@ -32,7 +35,7 @@ require __DIR__ . '/includes/header.php';
     <article id="traiteur" aria-labelledby="traiteur-titre">
 
         <!-- Présentation -->
-        <section class="section section-alt" aria-label="Présentation du projet">
+        <div class="section section-alt">
             <div class="container">
                 <div class="row align-items-center gy-5 gx-lg-5" data-reveal-groupe>
                     <div class="col-12 col-lg-6">
@@ -74,7 +77,7 @@ require __DIR__ . '/includes/header.php';
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
         <!-- Besoin et solution -->
         <section class="section" aria-labelledby="besoin-titre">

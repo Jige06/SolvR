@@ -1,4 +1,4 @@
-# Image officielle : PHP 8.3 + Apache
+# Image officielle : PHP 8.5 + Apache
 FROM php:8.5-apache
 
 # Modules Apache présents chez la plupart des hébergeurs mutualisés

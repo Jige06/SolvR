@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 $currentPage = 'confidentialite';
 require_once __DIR__ . '/includes/functions.php';
 

@@ -1,3 +1,4 @@
+<?php declare(strict_types=1); ?>
 <!-- ========== APPEL À L'ACTION (commun à plusieurs pages) ========== -->
 <section class="section cta-final text-center" aria-labelledby="cta-titre" data-reveal>
     <div class="container">

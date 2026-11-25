@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 // Pages à afficher dans le menu principal
 $navItems = array_filter($pages, fn(array $p): bool => $p['nav']);
 ?>

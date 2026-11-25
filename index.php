@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 $currentPage = 'accueil';
 
 require __DIR__ . '/includes/head.php';

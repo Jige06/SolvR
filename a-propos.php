@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 $currentPage = 'a-propos';
 $technologies = require __DIR__ . '/includes/technologies.php';
 

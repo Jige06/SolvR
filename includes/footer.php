@@ -1,4 +1,9 @@
-<?php $contact = config()['contact']; ?>
+<?php
+
+declare(strict_types=1);
+
+$contact = config()['contact'];
+?>
 
 <footer class="site-footer">
     <div class="container py-5">

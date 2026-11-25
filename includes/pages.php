@@ -7,6 +7,9 @@
  * nav = true : la page apparaît dans le menu principal
  * (Contact est à false car il est affiché à part, sous forme de bouton)
  */
+
+declare(strict_types=1);
+
 return [
     'accueil' => [
         'path'        => '/',
@@ -33,7 +36,8 @@ return [
         'path'        => '/a-propos',
         'label'       => 'À propos',
         'title'       => 'À propos de SolvR, développeur web à Nice',
-        'description' => 'Scientifique de formation et ancien responsable de magasin pendant 17 ans, je crée des sites et des applications pour les artisans, commerçants et PME des Alpes-Maritimes.',        'nav'         => true,
+        'description' => 'Scientifique de formation et ancien responsable de magasin pendant 17 ans, je crée des sites et des applications pour les artisans, commerçants et PME des Alpes-Maritimes.',
+        'nav'         => true,
     ],
     'contact' => [
         'path'        => '/contact',

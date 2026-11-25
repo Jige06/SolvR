@@ -5,6 +5,9 @@
  * 2. Renseigner les vraies valeurs dans config.php
  * config.php est ignoré par Git : secrets et informations personnelles ne partent jamais sur GitHub.
  */
+
+declare(strict_types=1);
+
 return [
     // Coordonnées affichées sur le site (footer, page Contact, mentions légales)
     'contact' => [

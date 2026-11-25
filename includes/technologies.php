@@ -4,6 +4,9 @@
  * Chaque logo est un tracé SVG unique (viewBox 0 0 24 24), affiché en une seule couleur (currentColor).
  * Les logos restent des marques de leurs propriétaires respectifs.
  */
+
+declare(strict_types=1);
+
 return [
     'html5' => [
         'label' => 'HTML5',
