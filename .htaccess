@@ -1,14 +1,48 @@
-# Page d'erreur personnalisée
+# Pages d'erreur : un accès interdit (403) affiche la page 404,
+# pour ne pas révéler qu'un fichier protégé existe
 ErrorDocument 404 /404.php
+ErrorDocument 403 /404.php
 
-# Réécriture d'adresses et protection des fichiers internes
+# Pas de liste des fichiers quand un dossier n'a pas de page d'index
+Options -Indexes
+
+# ----------------------------------------------------------
+# En-têtes de sécurité HTTP
+# ----------------------------------------------------------
+<IfModule mod_headers.c>
+    # Liste blanche des ressources : uniquement celles du site.
+    # data: pour les petites icônes SVG intégrées au CSS de Bootstrap (menu burger, listes).
+    # Aucun script ni style en ligne : tout est dans des fichiers.
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
+
+    # Le navigateur ne devine pas le type des fichiers
+    Header always set X-Content-Type-Options "nosniff"
+
+    # Vers les autres sites, on n'envoie que le domaine, pas l'adresse complète de la page
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Fonctions du navigateur dont le site n'a pas besoin : coupées
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+
+    # Le site ne peut pas être affiché dans une iframe (anciens navigateurs ; frame-ancestors pour les récents)
+    Header always set X-Frame-Options "DENY"
+
+    # Une page ouverte depuis le site ne peut pas manipuler son onglet
+    Header always set Cross-Origin-Opener-Policy "same-origin"
+
+    # HTTPS obligatoire pendant un an, envoyé seulement quand le site est en HTTPS
+    Header always set Strict-Transport-Security "max-age=31536000" "expr=%{HTTPS} == 'on'"
+
+    # Ne révèle pas la version de PHP
+    Header always unset X-Powered-By
+    Header unset X-Powered-By
+</IfModule>
+
 RewriteEngine On
 
-# Fichiers pour les moteurs de recherche, générés en PHP
-RewriteRule ^robots\.txt$ robots.php [L]
-RewriteRule ^sitemap\.xml$ sitemap.php [L]
-
-# Interdit l'accès direct aux dossiers et fichiers internes du projet
+# ----------------------------------------------------------
+# 1. Protection : accès direct interdit aux fichiers internes
+# ----------------------------------------------------------
 # Dossiers de code (inclusions, classes, dépendances)
 RewriteRule ^(includes|src|vendor)(/|$) - [R=404,L]
 
@@ -17,3 +51,27 @@ RewriteRule ^(composer\.(json|lock)|Dockerfile|docker-compose\.yml|README\.md)$ 
 
 # Fichiers et dossiers cachés (.git, .gitignore, .env…)
 RewriteRule (^|/)\. - [R=404,L]
+
+# ----------------------------------------------------------
+# 2. Fichiers pour les moteurs de recherche, générés en PHP
+# ----------------------------------------------------------
+RewriteRule ^robots\.txt$ robots.php [L]
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+# ----------------------------------------------------------
+# 3. Adresses sans extension
+# ----------------------------------------------------------
+# Les anciennes adresses en .php redirigent (301 : déplacement définitif)
+# vers l'adresse propre, pour que Google n'indexe qu'une seule version.
+# THE_REQUEST = la requête d'origine du navigateur : on ne redirige que
+# ce que le visiteur a demandé, jamais nos propres réécritures (pas de boucle).
+RewriteCond %{THE_REQUEST} \s/index\.php[\s?] [NC]
+RewriteRule ^ / [R=301,L]
+
+RewriteCond %{THE_REQUEST} \s/([a-z0-9-]+)\.php[\s?] [NC]
+RewriteCond %1 !^(robots|sitemap|404)$
+RewriteRule ^ /%1 [R=301,L]
+
+# /services → services.php, si ce fichier existe
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([a-z0-9-]+)$ $1.php [L]

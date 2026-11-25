@@ -22,8 +22,8 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 
 - **Mobile first** et responsive
 - **Accessibilité** : respect des recommandations WCAG / RGAA (balises sémantiques, contrastes AA vérifiés, navigation au clavier, lien d'évitement, focus visible, formulaires accessibles, respect de `prefers-reduced-motion`)
-- **Sécurité** : échappement systématique des sorties, validation côté serveur, protection CSRF, honeypot anti-spam, sessions sécurisées, secrets hors du dépôt, fichiers internes inaccessibles depuis le web
-- **Référencement** : métadonnées uniques par page, Open Graph, URL canoniques, `robots.txt` et `sitemap.xml` générés depuis la configuration des pages, données structurées schema.org (`ProfessionalService`, `WebSite`) pour le référencement local
+- **Sécurité** : en-têtes HTTP de sécurité (Content-Security-Policy stricte, `nosniff`, `Referrer-Policy`, `Permissions-Policy`, protection contre l'affichage en iframe, HSTS en HTTPS, version de PHP masquée), échappement systématique des sorties, validation côté serveur, protection CSRF, honeypot et piège temporel anti-spam, limitation des envois (3 par heure, 30 s entre deux), sessions sécurisées, secrets hors du dépôt, fichiers internes inaccessibles depuis le web
+- **Référencement** : adresses propres sans extension (`/services`, les anciennes adresses en `.php` redirigent en 301), métadonnées uniques par page, Open Graph, URL canoniques, `robots.txt` et `sitemap.xml` générés depuis la configuration des pages, données structurées schema.org (`ProfessionalService`, `WebSite`) pour le référencement local
 - **RGPD** : aucune ressource chargée depuis un serveur tiers (polices et Bootstrap hébergés localement), minimisation des données collectées, information sous le formulaire
 - **Thème clair / sombre** : suit le réglage du système, bascule manuelle mémorisée, sans flash au chargement
 - **Animations** : discrètes et accessibles. Désactivées si `prefers-reduced-motion` est activé, aucun contenu masqué sans JavaScript, aucune animation en boucle (RGAA 13.8). Transitions entre les pages avec la View Transitions API, en amélioration progressive
@@ -82,13 +82,14 @@ solvr/
 ├── src/                    # Classes PHP (formulaire de contact)
 │   ├── ContactController.php # Traitement de la requête : CSRF, honeypot, validation, envoi
 │   ├── ContactStatus.php   # Résultats possibles du traitement (enum)
+│   ├── SubmissionLimiter.php # Limitation des envois par session et piège temporel
 │   ├── ContactForm.php     # Données, libellés et validation du formulaire
 │   ├── ContactMailer.php   # Envoi de l'e-mail via PHPMailer
 │   └── CsrfToken.php       # Jeton anti-CSRF
 ├── assets/
 │   ├── css/                # Styles personnalisés (style.css)
 │   ├── fonts/              # Polices Heebo et Inter (woff2) et leurs licences
-│   ├── js/                 # Scripts : main.js (bascule de thème), animations.js (animations, halo, visionneuse)
+│   ├── js/                 # Scripts : theme-init.js (thème avant affichage), main.js (bascule de thème), animations.js (animations, halo, visionneuse)
 │   ├── img/                # Images et illustrations
 │   │   ├── de-l-idee-au-site/  # Croquis, maquette et site en ligne (page Services)
 │   │   ├── realisations/       # Captures de l'étude de cas Vite & Gourmand
@@ -104,7 +105,7 @@ solvr/
 ├── 404.php                 # Page d'erreur 404
 ├── robots.php              # Consignes aux robots, servies à l'adresse /robots.txt
 ├── sitemap.php             # Plan du site, servi à l'adresse /sitemap.xml
-├── .htaccess               # Page 404, adresses robots.txt / sitemap.xml, protection des fichiers internes
+├── .htaccess               # Pages d'erreur, en-têtes de sécurité, protection des fichiers internes, robots.txt / sitemap.xml, adresses sans .php
 ├── .gitattributes          # Fins de ligne LF pour tous les fichiers texte
 ├── composer.json           # Dépendances PHP et autoload
 ├── Dockerfile              # Image PHP 8.5 + Apache + Composer
@@ -113,8 +114,8 @@ solvr/
 
 ### Ajouter une page
 
-1. Déclarer la page dans `includes/pages.php` (chemin, libellé, title, description, présence dans le menu). Elle apparaît automatiquement dans le sitemap, sauf avec `'noindex' => true`
-2. Créer le fichier `.php` à la racine en définissant `$currentPage` avec la clé correspondante
+1. Déclarer la page dans `includes/pages.php` (chemin **sans extension**, par exemple `/tarifs` pour `tarifs.php`, libellé, title, description, présence dans le menu). Elle apparaît automatiquement dans le sitemap, sauf avec `'noindex' => true`
+2. Créer le fichier `.php` à la racine, du même nom que le chemin, en définissant `$currentPage` avec la clé correspondante
 3. Inclure `head.php` et `header.php`, écrire le contenu dans `<main id="contenu">`, puis inclure `footer.php`
 
 ### Animer un élément
@@ -137,6 +138,10 @@ Ne pas placer de `data-reveal` à l'intérieur d'un élément déjà animé : il
 La fonction génère un lien vers l'image, qui s'ouvre dans la visionneuse au clic (ou seule, sans JavaScript). Paramètres facultatifs : la classe CSS de l'image (`img-fluid` par défaut) et `false` pour désactiver le chargement différé d'une image visible dès l'arrivée sur la page.
 
 ## Conventions
+
+### Sécurité du code
+
+La Content-Security-Policy n'autorise que les fichiers du site : **aucun script ni style écrit directement dans le HTML** (pas de `<script>…</script>` en ligne, pas d'attribut `style="…"`, pas d'attribut `onclick`). Un script va dans `assets/js/`, un style dans `style.css` (une classe plutôt qu'un attribut). Une ressource externe (police, vidéo, outil de statistiques) demande de modifier la CSP dans `.htaccess`.
 
 ### Branches
 

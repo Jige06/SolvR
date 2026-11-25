@@ -27,6 +27,11 @@ if ($controller->handle($_SERVER['REQUEST_METHOD'], $_POST)) {
 $form   = $controller->getForm();
 $status = $controller->getStatus();   // null au premier affichage, sinon un ContactStatus
 
+// Trop d'envois : le code HTTP 429 (« Too Many Requests ») le dit aussi aux machines
+if ($status === ContactStatus::TooManyRequests) {
+    http_response_code(429);
+}
+
 /* ==========================================================
    2. AFFICHAGE
    ========================================================== */
@@ -100,6 +105,16 @@ require __DIR__ . '/includes/header.php';
                                 <p class="mb-0">
                                     Désolé, votre message n'a pas pu être envoyé suite à un problème technique.
                                     Réessayez dans quelques minutes, ou contactez-moi directement par téléphone
+                                    au <a href="tel:<?= e($contact['phone_link']) ?>" class="alert-link"><?= e($contact['phone']) ?></a>.
+                                </p>
+                            </div>
+
+                        <?php elseif ($status === ContactStatus::TooManyRequests): ?>
+                            <div class="alert alert-danger" role="alert">
+                                <p class="mb-0">
+                                    Vous avez envoyé plusieurs messages en peu de temps. Merci de patienter
+                                    quelques minutes avant de réessayer : votre saisie est conservée.
+                                    Vous pouvez aussi me joindre directement par téléphone
                                     au <a href="tel:<?= e($contact['phone_link']) ?>" class="alert-link"><?= e($contact['phone']) ?></a>.
                                 </p>
                             </div>

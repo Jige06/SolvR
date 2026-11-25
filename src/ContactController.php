@@ -16,16 +16,21 @@ class ContactController
     private ContactForm $form;
     private ?ContactStatus $status = null;
 
+    private SubmissionLimiter $limiter;
+
     /**
-     * @param array              $config Configuration du site (SMTP, adresses…)
-     * @param ContactMailer|null $mailer Expéditeur à utiliser. Laissé vide, le vrai est créé
-     *                                   au moment d'envoyer ; un test peut en fournir un faux.
+     * @param array                  $config  Configuration du site (SMTP, adresses…)
+     * @param ContactMailer|null     $mailer  Expéditeur à utiliser. Laissé vide, le vrai est créé
+     *                                        au moment d'envoyer ; un test peut en fournir un faux.
+     * @param SubmissionLimiter|null $limiter Limitation des envois (un test peut lui donner une fausse horloge)
      */
     public function __construct(
         private array $config,
         private ?ContactMailer $mailer = null,
+        ?SubmissionLimiter $limiter = null,
     ) {
-        $this->form = new ContactForm();
+        $this->form    = new ContactForm();
+        $this->limiter = $limiter ?? new SubmissionLimiter();
     }
 
     /**
@@ -39,7 +44,7 @@ class ContactController
     {
         if ($method !== 'POST') {
             $this->readFlashMessage();
-            return false;
+            return $this->display();
         }
 
         // On garde toujours la saisie : en cas d'erreur, rien n'est à retaper.
@@ -48,18 +53,24 @@ class ContactController
         if (!CsrfToken::isValid($post['csrf_token'] ?? null)) {
             // Jeton absent ou faux : session expirée, ou tentative d'attaque CSRF
             $this->status = ContactStatus::Csrf;
-            return false;
+            return $this->display();
         }
 
-        if (($post['site_web'] ?? '') !== '') {
-            // Honeypot rempli : c'est un robot. On répond comme pour un succès,
-            // pour ne pas lui apprendre que son envoi a été bloqué.
+        if (($post['site_web'] ?? '') !== '' || $this->limiter->isTooFast()) {
+            // Honeypot rempli, ou formulaire envoyé en quelques secondes : c'est un robot.
+            // On répond comme pour un succès, pour ne pas lui apprendre qu'il a été bloqué.
             return $this->succeed();
+        }
+
+        if (!$this->limiter->canSend()) {
+            // Trop d'envois récents : on garde la saisie, le visiteur pourra renvoyer plus tard
+            $this->status = ContactStatus::TooManyRequests;
+            return $this->display();
         }
 
         if (!$this->form->validate()) {
             $this->status = ContactStatus::Invalid;
-            return false;
+            return $this->display();
         }
 
         try {
@@ -68,8 +79,10 @@ class ContactController
             // Le détail technique va dans le journal du serveur, jamais à l'écran
             error_log('Échec de l\'envoi du formulaire de contact : ' . $exception->getMessage());
             $this->status = ContactStatus::SendError;
-            return false;
+            return $this->display();
         }
+
+        $this->limiter->recordSend();
 
         return $this->succeed();
     }
@@ -83,6 +96,13 @@ class ContactController
     public function getStatus(): ?ContactStatus
     {
         return $this->status;
+    }
+
+    /** Le formulaire va être (ré)affiché : on note l'heure pour le piège temporel */
+    private function display(): bool
+    {
+        $this->limiter->markFormDisplayed();
+        return false;
     }
 
     /** Mémorise le succès pour l'afficher après la redirection */

@@ -30,6 +30,7 @@ class ContactMailer
         $mail->Host       = $this->config['smtp']['host'];
         $mail->Port       = (int) $this->config['smtp']['port'];
         $mail->SMTPAuth   = true;
+        $mail->Timeout    = 10;   // secondes (300 par défaut : un serveur lent bloquerait la page 5 min)
         $mail->Username   = $this->config['smtp']['username'];
         $mail->Password   = $this->config['smtp']['password'];
         $mail->SMTPSecure = match ($this->config['smtp']['encryption'] ?? 'tls') {
