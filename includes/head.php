@@ -36,6 +36,11 @@ $canonicalUrl    = SITE_URL . ($page['path'] ?? '/');
     <meta property="og:description" content="<?= e($pageDescription) ?>">
     <meta property="og:url" content="<?= e($canonicalUrl) ?>">
 
+    <!-- Icônes du site (onglet, favoris, écran d'accueil du téléphone) -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
     <?php if ($currentPage === 'accueil') require __DIR__ . '/structured-data.php'; ?>
 
     <!-- Préchargement des polices principales (texte et titres) -->
