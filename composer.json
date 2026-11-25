@@ -1,8 +1,20 @@
 {
     "require": {
+        "php": "^8.5",
         "phpmailer/phpmailer": "^7.2"
     },
     "autoload": {
         "classmap": ["src/"]
+    },
+    "scripts": {
+        "lint": "phpcs",
+        "lint:fix": "phpcbf"
+    },
+    "scripts-descriptions": {
+        "lint": "Vérifie le style du code PHP (norme PSR-12, voir phpcs.xml)",
+        "lint:fix": "Corrige automatiquement les écarts de style qui peuvent l'être"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^4.0"
     }
 }
