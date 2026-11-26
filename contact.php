@@ -5,8 +5,7 @@ declare(strict_types=1);
 /* ==========================================================
    1. TRAITEMENT : délégué au contrôleur (src/ContactController.php)
    ========================================================== */
-require_once __DIR__ . '/vendor/autoload.php';      // PHPMailer + nos classes (src/)
-require_once __DIR__ . '/includes/functions.php';
+require_once __DIR__ . '/includes/bootstrap.php';   // autoload (PHPMailer + nos classes) et fonctions
 require_once __DIR__ . '/includes/form-helpers.php';
 
 startSecureSession();   // nécessaire pour le jeton CSRF et le message de confirmation
@@ -46,15 +45,15 @@ require __DIR__ . '/includes/head.php';
 require __DIR__ . '/includes/header.php';
 ?>
 
-<main id="contenu">
+<main id="main-content">
 
     <!-- ========== EN-TÊTE DE PAGE ========== -->
-    <section class="hero section pb-4" aria-labelledby="page-titre">
+    <section class="hero section pb-4" aria-labelledby="page-title">
         <div class="container">
             <div class="col-lg-9">
-                <p class="hero-surtitre">Contact</p>
-                <h1 id="page-titre" class="display-5 fw-bold" data-entree="1">Parlons de votre projet</h1>
-                <p class="lead mt-3 mb-0" data-entree="2">
+                <p class="hero-eyebrow">Contact</p>
+                <h1 id="page-title" class="display-5 fw-bold" data-entrance="1">Parlons de votre projet</h1>
+                <p class="lead mt-3 mb-0" data-entrance="2">
                     Décrivez-moi votre besoin en quelques lignes : je vous réponds sous 48 h.
                     Le devis est gratuit et sans engagement.
                 </p>
@@ -63,19 +62,19 @@ require __DIR__ . '/includes/header.php';
     </section>
 
     <!-- ========== FORMULAIRE + COORDONNÉES ========== -->
-    <section class="section pt-4" aria-labelledby="formulaire-titre">
+    <section class="section pt-4" aria-labelledby="form-title">
         <div class="container">
             <div class="row gy-5 gx-lg-5">
 
                 <!-- Formulaire -->
-                <div class="col-12 col-lg-8" data-entree="3">
-                    <h2 id="formulaire-titre" class="visually-hidden">Formulaire de contact</h2>
+                <div class="col-12 col-lg-8" data-entrance="3">
+                    <h2 id="form-title" class="visually-hidden">Formulaire de contact</h2>
 
                     <!-- Zone de messages : annoncée par les lecteurs d'écran -->
                     <div aria-live="polite">
                         <?php if ($status === ContactStatus::Success): ?>
                             <div class="alert alert-success d-flex align-items-center gap-3" role="status">
-                                <svg class="coche-animee" viewBox="0 0 52 52" aria-hidden="true" focusable="false">
+                                <svg class="animated-check" viewBox="0 0 52 52" aria-hidden="true" focusable="false">
                                     <circle cx="26" cy="26" r="24" pathLength="1" />
                                     <path d="M15 27l7 7 15-15" pathLength="1" />
                                 </svg>
@@ -121,22 +120,22 @@ require __DIR__ . '/includes/header.php';
                         <?php endif; ?>
                     </div>
 
-                    <p>Les champs marqués d'un astérisque (<span class="champ-requis">*</span>) sont obligatoires.</p>
+                    <p>Les champs marqués d'un astérisque (<span class="required-mark">*</span>) sont obligatoires.</p>
 
-                    <form action="<?= e($pages['contact']['path']) ?>" method="post" class="formulaire-contact" data-formulaire-contact>
+                    <form action="<?= e($pages['contact']['path']) ?>" method="post" data-contact-form>
                         <input type="hidden" name="csrf_token" value="<?= e(CsrfToken::get()) ?>">
 
                         <div class="row g-3">
                             <div class="col-12 col-md-6">
-                                <label for="nom" class="form-label">Nom <span class="champ-requis">*</span></label>
-                                <input type="text" id="nom" name="nom" required maxlength="100"
-                                    autocomplete="name" value="<?= e($form->get('nom')) ?>"
-                                    <?= fieldAttributes($form, 'nom') ?>>
-                                <?= fieldError($form, 'nom') ?>
+                                <label for="name" class="form-label">Nom <span class="required-mark">*</span></label>
+                                <input type="text" id="name" name="name" required maxlength="100"
+                                    autocomplete="name" value="<?= e($form->get('name')) ?>"
+                                    <?= fieldAttributes($form, 'name') ?>>
+                                <?= fieldError($form, 'name') ?>
                             </div>
 
                             <div class="col-12 col-md-6">
-                                <label for="email" class="form-label">E-mail <span class="champ-requis">*</span></label>
+                                <label for="email" class="form-label">E-mail <span class="required-mark">*</span></label>
                                 <input type="email" id="email" name="email" required maxlength="254"
                                     autocomplete="email" value="<?= e($form->get('email')) ?>"
                                     <?= fieldAttributes($form, 'email') ?>>
@@ -144,13 +143,13 @@ require __DIR__ . '/includes/header.php';
                             </div>
 
                             <div class="col-12 col-md-6">
-                                <label for="telephone" class="form-label">Téléphone <span class="text-body-secondary">(facultatif)</span></label>
-                                <p id="telephone-aide" class="form-text mt-0 mb-2">Format : 06 12 34 56 78</p>
-                                <input type="tel" id="telephone" name="telephone" maxlength="17"
+                                <label for="phone" class="form-label">Téléphone <span class="text-body-secondary">(facultatif)</span></label>
+                                <p id="phone-help" class="form-text mt-0 mb-2">Format : 06 12 34 56 78</p>
+                                <input type="tel" id="phone" name="phone" maxlength="17"
                                     pattern="(0|\+33 ?)[1-9]([ .\-]?\d{2}){4}"
-                                    autocomplete="tel" value="<?= e($form->get('telephone')) ?>"
-                                    <?= fieldAttributes($form, 'telephone', 'form-control', 'telephone-aide') ?>>
-                                <?= fieldError($form, 'telephone') ?>
+                                    autocomplete="tel" value="<?= e($form->get('phone')) ?>"
+                                    <?= fieldAttributes($form, 'phone', 'form-control', 'phone-help') ?>>
+                                <?= fieldError($form, 'phone') ?>
                             </div>
 
                             <div class="col-12 col-md-6">
@@ -167,24 +166,24 @@ require __DIR__ . '/includes/header.php';
                             </div>
 
                             <div class="col-12">
-                                <label for="message" class="form-label">Votre projet <span class="champ-requis">*</span></label>
-                                <p id="message-aide" class="form-text mt-0 mb-2">
+                                <label for="message" class="form-label">Votre projet <span class="required-mark">*</span></label>
+                                <p id="message-help" class="form-text mt-0 mb-2">
                                     Votre activité, ce dont vous avez besoin, vos délais éventuels…
                                 </p>
                                 <textarea id="message" name="message" rows="6" required minlength="10" maxlength="5000"
-                                    <?= fieldAttributes($form, 'message', 'form-control', 'message-aide') ?>><?= e($form->get('message')) ?></textarea>
+                                    <?= fieldAttributes($form, 'message', 'form-control', 'message-help') ?>><?= e($form->get('message')) ?></textarea>
                                 <?= fieldError($form, 'message') ?>
                             </div>
 
                             <!-- Honeypot : invisible pour les humains, rempli par les robots -->
-                            <div class="champ-piege" aria-hidden="true">
-                                <label for="site_web">Ne remplissez pas ce champ</label>
-                                <input type="text" id="site_web" name="site_web" value="" tabindex="-1" autocomplete="off">
+                            <div class="honeypot" aria-hidden="true">
+                                <label for="website">Ne remplissez pas ce champ</label>
+                                <input type="text" id="website" name="website" value="" tabindex="-1" autocomplete="off">
                             </div>
 
                             <div class="col-12">
                                 <!-- Mention d'information RGPD (premier niveau) -->
-                                <p class="mention-rgpd">
+                                <p class="gdpr-notice">
                                     Les informations saisies sont utilisées uniquement par SolvR pour répondre à votre
                                     demande et, le cas échéant, établir un devis. Elles sont conservées 3 ans au plus
                                     après notre dernier échange. Vous pouvez y accéder, les rectifier ou demander leur
@@ -192,14 +191,14 @@ require __DIR__ . '/includes/header.php';
                                     <a href="<?= e($pages['confidentialite']['path']) ?>">En savoir plus sur la gestion de vos données</a>.
                                 </p>
 
-                                <button type="submit" class="btn btn-primary btn-lg btn-envoi">
-                                    <span class="btn-envoi-texte">Envoyer ma demande <?= icon('arrow-right', 'icone-fleche') ?></span>
-                                    <span class="btn-envoi-chargement">
+                                <button type="submit" class="btn btn-primary btn-lg btn-send">
+                                    <span class="btn-send-label">Envoyer ma demande <?= icon('arrow-right', 'icon-arrow') ?></span>
+                                    <span class="btn-send-loading">
                                         <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                                         Envoi…
                                     </span>
                                 </button>
-                                <p class="visually-hidden" role="status" data-statut-envoi></p>
+                                <p class="visually-hidden" role="status" data-send-status></p>
                             </div>
                         </div>
                     </form>
@@ -207,16 +206,16 @@ require __DIR__ . '/includes/header.php';
 
                 <!-- Coordonnées -->
                 <div class="col-12 col-lg-4">
-                    <aside class="encart" aria-labelledby="coordonnees-titre" data-reveal>
-                        <h2 id="coordonnees-titre" class="h5">Me contacter directement</h2>
-                        <ul class="list-unstyled atouts mt-3">
+                    <aside class="callout" aria-labelledby="contact-details-title" data-reveal>
+                        <h2 id="contact-details-title" class="h5">Me contacter directement</h2>
+                        <ul class="list-unstyled highlights mt-3">
                             <li><?= icon('phone', 'icon-accent') ?> <a href="tel:<?= e($contact['phone_link']) ?>"><?= e($contact['phone']) ?></a></li>
                             <li><?= icon('mail', 'icon-accent') ?> <a href="mailto:<?= e($contact['email']) ?>"><?= e($contact['email']) ?></a></li>
                             <li><?= icon('geo', 'icon-accent') ?> <span>Nice et les Alpes-Maritimes, toute la France à distance</span></li>
                         </ul>
 
                         <h2 class="h5 mt-4">Et ensuite ?</h2>
-                        <ol class="etapes-contact mt-3 mb-0">
+                        <ol class="contact-steps mt-3 mb-0">
                             <li>Je lis votre message et je vous réponds sous 48 h.</li>
                             <li>Nous échangeons sur votre projet, par téléphone ou en rendez-vous.</li>
                             <li>Je vous envoie un devis détaillé, gratuit et sans engagement.</li>

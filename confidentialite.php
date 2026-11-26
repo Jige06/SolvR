@@ -1,6 +1,9 @@
 <?php
+
+declare(strict_types=1);
+
 $currentPage = 'confidentialite';
-require_once __DIR__ . '/includes/functions.php';
+require_once __DIR__ . '/includes/bootstrap.php';
 
 $legal   = config()['legal'];
 $contact = config()['contact'];
@@ -9,11 +12,11 @@ require __DIR__ . '/includes/head.php';
 require __DIR__ . '/includes/header.php';
 ?>
 
-<main id="contenu">
-    <section class="section page-legale" aria-labelledby="page-titre">
+<main id="main-content">
+    <section class="section legal-page" aria-labelledby="page-title">
         <div class="container">
             <div class="col-lg-9 col-xl-8">
-                <h1 id="page-titre" class="mb-2">Politique de confidentialité</h1>
+                <h1 id="page-title" class="mb-2">Politique de confidentialité</h1>
                 <p class="text-body-secondary mb-4">Dernière mise à jour : <?= e($legal['updated']) ?></p>
 
                 <p class="lead mb-5">
@@ -43,7 +46,7 @@ require __DIR__ . '/includes/header.php';
 
                 <h2>Pourquoi et sur quelle base légale</h2>
                 <div class="table-responsive">
-                    <table class="table tableau-legal">
+                    <table class="table legal-table">
                         <caption class="visually-hidden">Finalités des traitements et bases légales</caption>
                         <thead>
                             <tr>
@@ -90,7 +93,7 @@ require __DIR__ . '/includes/header.php';
                     Seuls deux éléments strictement nécessaires sont utilisés, ce qui ne demande pas votre consentement :
                 </p>
                 <div class="table-responsive">
-                    <table class="table tableau-legal">
+                    <table class="table legal-table">
                         <caption class="visually-hidden">Cookies et stockage local utilisés par le site</caption>
                         <thead>
                             <tr>

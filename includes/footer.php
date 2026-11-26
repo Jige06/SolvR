@@ -1,4 +1,9 @@
-<?php $contact = config()['contact']; ?>
+<?php
+
+declare(strict_types=1);
+
+$contact = config()['contact'];
+?>
 
 <footer class="site-footer">
     <div class="container py-5">
@@ -41,8 +46,11 @@
 
 <!-- Bootstrap sans Popper (inutile : aucun menu déroulant ni infobulle) ; sert au menu burger -->
 <script src="<?= asset('/assets/vendor/bootstrap/bootstrap.min.js') ?>" defer></script>
-<script src="<?= asset('/assets/js/main.js') ?>" defer></script>
-<script src="<?= asset('/assets/js/animations.js') ?>" defer></script>
+
+<!-- Nos scripts sont des modules : chacun a sa propre portée et s'exécute,
+     comme defer, une fois la page analysée (defer est donc inutile ici) -->
+<script type="module" src="<?= asset('/assets/js/main.js') ?>"></script>
+<script type="module" src="<?= asset('/assets/js/animations.js') ?>"></script>
 </body>
 
 </html>

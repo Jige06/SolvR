@@ -24,10 +24,11 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 - **Accessibilité** : respect des recommandations WCAG / RGAA (balises sémantiques, contrastes AA vérifiés, navigation au clavier, lien d'évitement, focus visible, formulaires accessibles, respect de `prefers-reduced-motion`)
 - **Sécurité** : en-têtes HTTP de sécurité (Content-Security-Policy stricte, `nosniff`, `Referrer-Policy`, `Permissions-Policy`, protection contre l'affichage en iframe, HSTS en HTTPS, version de PHP masquée), échappement systématique des sorties, validation côté serveur, protection CSRF, honeypot et piège temporel anti-spam, limitation des envois (3 par heure, 30 s entre deux), sessions sécurisées, secrets hors du dépôt, fichiers internes inaccessibles depuis le web
 - **Référencement** : adresses propres sans extension (`/services`, les anciennes adresses en `.php` redirigent en 301), métadonnées uniques par page, Open Graph, URL canoniques, `robots.txt` et `sitemap.xml` générés depuis la configuration des pages, données structurées schema.org (`ProfessionalService`, `WebSite`) pour le référencement local
+- **Gestion des erreurs** : en production, toute erreur PHP affiche une page 500 statique avec le vrai code HTTP, sans aucun détail technique à l'écran ; les détails partent dans le journal d'erreurs du serveur. En développement, PHP affiche l'erreur détaillée. Une configuration manquante est signalée, jamais remplacée en silence par les valeurs d'exemple
 - **RGPD** : aucune ressource chargée depuis un serveur tiers (polices et Bootstrap hébergés localement), minimisation des données collectées, information sous le formulaire
 - **Thème clair / sombre** : suit le réglage du système, bascule manuelle mémorisée, sans flash au chargement
 - **Animations** : discrètes et accessibles. Désactivées si `prefers-reduced-motion` est activé, aucun contenu masqué sans JavaScript, aucune animation en boucle (RGAA 13.8). Transitions entre les pages avec la View Transitions API, en amélioration progressive
-- **Performance** : polices variables légères (78 Ko au total) et préchargées, images WebP optimisées, responsives (`srcset` / `sizes`, variantes de 480 et 800 px) et chargées à la demande (`loading="lazy"`), scripts en `defer`, fichiers CSS et JS versionnés (`?v=`) et gardés un an en cache par le navigateur, polices un an, images un mois, compression gzip des fichiers texte
+- **Performance** : polices variables légères (78 Ko au total) et préchargées, images WebP optimisées, responsives (`srcset` / `sizes`, variantes de 480 et 800 px) et chargées à la demande (`loading="lazy"`), scripts en `defer` ou en modules, fichiers CSS et JS versionnés (`?v=`) et gardés un an en cache par le navigateur, polices un an, images un mois, compression gzip des fichiers texte
 
 ## Prérequis
 
@@ -49,7 +50,7 @@ docker compose up -d --build
 docker compose exec web composer install
 ```
 
-**4. Configurer le site** : copier `includes/config.example.php` en `includes/config.php`, puis y renseigner les coordonnées, les informations légales et les identifiants SMTP de Mailtrap (*Sandboxes → Integration → SMTP*). Ce fichier est ignoré par Git : aucune donnée personnelle ni aucun secret ne part sur GitHub. Sans lui, le site fonctionne avec les valeurs d'exemple, surlignées.
+**4. Configurer le site** : copier `includes/config.example.php` en `includes/config.php`, puis y renseigner les coordonnées, les informations légales et les identifiants SMTP de Mailtrap (*Sandboxes → Integration → SMTP*). Ce fichier est ignoré par Git : aucune donnée personnelle ni aucun secret ne part sur GitHub. Il est obligatoire : sans lui, le site s'arrête avec un message qui le signale, plutôt que d'afficher de fausses coordonnées. Les valeurs encore à compléter (entre crochets) sont surlignées sur les pages légales.
 
 Le site est accessible sur **http://localhost:8080**.
 
@@ -72,8 +73,10 @@ Le site est accessible sur **http://localhost:8080**.
 ```
 solvr/
 ├── includes/
+│   ├── bootstrap.php       # Démarrage commun : mémoire tampon, page 500 en production, autoload, fonctions
 │   ├── functions.php       # Fonctions utilitaires (configuration, échappement, icônes…)
 │   ├── pages.php           # Configuration des pages (SEO, menu, liens)
+│   ├── icons.php           # Tracés des icônes de l'interface (Bootstrap Icons), utilisés par icon()
 │   ├── technologies.php    # Logos des technologies (page À propos)
 │   ├── head.php            # <head> : thème initial, métadonnées SEO, Open Graph, CSS
 │   ├── header.php          # Lien d'évitement, en-tête, navigation, bouton de thème
@@ -111,6 +114,7 @@ solvr/
 ├── mentions-legales.php    # Mentions légales
 ├── confidentialite.php     # Politique de confidentialité
 ├── 404.php                 # Page d'erreur 404
+├── 500.html                # Page d'erreur 500, statique pour s'afficher même si PHP est en panne
 ├── favicon.svg, favicon.ico, apple-touch-icon.png  # Icônes du site (provisoires, en attendant le logo)
 ├── robots.php              # Consignes aux robots, servies à l'adresse /robots.txt
 ├── sitemap.php             # Plan du site, servi à l'adresse /sitemap.xml
@@ -134,10 +138,10 @@ solvr/
 
 | Attribut | Effet |
 |---|---|
-| `data-entree="1"` à `"5"` | Entrée en cascade au chargement (hero), sans JavaScript |
+| `data-entrance="1"` à `"5"` | Entrée en cascade au chargement (hero), sans JavaScript |
 | `data-reveal` | Apparition de l'élément quand il arrive à l'écran |
-| `data-reveal-groupe` | Sur un parent : ses enfants directs apparaissent l'un après l'autre |
-| classe `carte-survol` | La carte se soulève au survol et son icône pivote |
+| `data-reveal-group` | Sur un parent : ses enfants directs apparaissent l'un après l'autre |
+| classe `hover-card` | La carte se soulève au survol et son icône pivote |
 
 Ne pas placer de `data-reveal` à l'intérieur d'un élément déjà animé : il bougerait deux fois.
 
@@ -163,11 +167,18 @@ Le formulaire de contact (validation, sécurité, limitation des envois) est cou
 ### Style du code
 
 - **Indentation de 4 espaces, UTF-8, fins de ligne LF**, saut de ligne final : réglés par `.editorconfig` (dans VS Code, installer l'extension *EditorConfig for VS Code*)
+- **Nommage** : le code est en **anglais** (classes CSS, attributs `data-*`, variables CSS, fonctions et variables PHP et JavaScript, `id` techniques, champs du formulaire) ; le **français** est réservé aux textes du site, aux commentaires et à la documentation. Exception : les adresses des pages et les ancres partageables (`/a-propos`, `/services#site-vitrine`) font partie du contenu visible et restent en français, comme les clés de `pages.php` qui les reprennent
 - **PHP** : norme [PSR-12](https://www.php-fig.org/psr/psr-12/), vérifiée par PHP_CodeSniffer avec `composer lint` sur les classes (`src/`) et les fichiers de logique. Les pages et les gabarits, qui mêlent PHP et HTML, ne sont pas concernés. Seule exception à la norme : les classes n'ont pas de namespace (choix du projet, autoload classmap)
 
 ### Sécurité du code
 
 La Content-Security-Policy n'autorise que les fichiers du site : **aucun script ni style écrit directement dans le HTML** (pas de `<script>…</script>` en ligne, pas d'attribut `style="…"`, pas d'attribut `onclick`). Un script va dans `assets/js/`, un style dans `style.css` (une classe plutôt qu'un attribut). Une ressource externe (police, vidéo, outil de statistiques) demande de modifier la CSP dans `.htaccess`.
+
+### JavaScript
+
+- **Un fichier = un module** (`<script type="module">` dans `footer.php`) : chaque fichier a sa propre portée, ses constantes et fonctions ne se mélangent pas avec celles des autres fichiers. Le mode strict est automatique, et le script s'exécute une fois la page analysée, comme avec `defer`
+- **Exception : `theme-init.js`** reste un script classique, chargé dans le `<head>` sans `defer`. Il doit appliquer le thème *avant* le premier affichage, alors qu'un module attend la fin de l'analyse de la page
+- **Pas d'`import` entre nos fichiers** : un fichier importé serait demandé sans le `?v=` de `asset()`, et le navigateur pourrait garder une ancienne version en cache pendant un an. Pour partager du code, il faudra d'abord versionner les imports
 
 ### Branches
 
@@ -213,7 +224,7 @@ Les messages de commit suivent la convention [Conventional Commits](https://www.
 - [x] Page Réalisations
 - [x] Page Contact et formulaire
 - [x] Typographies
-- [x] Pages légales et page 404
+- [x] Pages légales et pages d'erreur (404, 500)
 - [ ] Informations légales définitives (SIREN, adresse, hébergeur)
 - [x] Animations et interactions
 - [x] Captures des réalisations et illustrations des services

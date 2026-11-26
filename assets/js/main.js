@@ -2,6 +2,8 @@
  * Bascule entre le thème clair et le thème sombre.
  * Le thème initial est appliqué par le script du <head> (pas de flash).
  * Ce fichier gère uniquement le bouton et le suivi du réglage système.
+ *
+ * Module (type="module") : ses constantes restent privées à ce fichier.
  */
 const themeToggle = document.querySelector('[data-theme-toggle]');
 

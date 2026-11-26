@@ -17,20 +17,20 @@ class ContactForm
 
     /** Libellés des champs (récapitulatif des erreurs) */
     public const FIELD_LABELS = [
-        'nom'       => 'Nom',
-        'email'     => 'E-mail',
-        'telephone' => 'Téléphone',
-        'type'      => 'Type de projet',
-        'message'   => 'Votre projet',
+        'name'    => 'Nom',
+        'email'   => 'E-mail',
+        'phone'   => 'Téléphone',
+        'type'    => 'Type de projet',
+        'message' => 'Votre projet',
     ];
 
     /** Données du formulaire, initialisées à vide */
     private array $data = [
-        'nom'       => '',
-        'email'     => '',
-        'telephone' => '',
-        'type'      => '',
-        'message'   => '',
+        'name'    => '',
+        'email'   => '',
+        'phone'   => '',
+        'type'    => '',
+        'message' => '',
     ];
 
     /** Erreurs de validation : champ => message */
@@ -55,13 +55,13 @@ class ContactForm
         $this->errors = [];
 
         // Nom : obligatoire, longueur raisonnable, pas de retour à la ligne
-        $nom = $this->data['nom'];
-        if ($nom === '') {
-            $this->errors['nom'] = 'Indiquez votre nom.';
-        } elseif (mb_strlen($nom) < 2 || mb_strlen($nom) > 100) {
-            $this->errors['nom'] = 'Votre nom doit contenir entre 2 et 100 caractères.';
-        } elseif (preg_match('/[\r\n]/', $nom)) {
-            $this->errors['nom'] = 'Votre nom ne doit pas contenir de retour à la ligne.';
+        $name = $this->data['name'];
+        if ($name === '') {
+            $this->errors['name'] = 'Indiquez votre nom.';
+        } elseif (mb_strlen($name) < 2 || mb_strlen($name) > 100) {
+            $this->errors['name'] = 'Votre nom doit contenir entre 2 et 100 caractères.';
+        } elseif (preg_match('/[\r\n]/', $name)) {
+            $this->errors['name'] = 'Votre nom ne doit pas contenir de retour à la ligne.';
         }
 
         // E-mail : obligatoire et au bon format
@@ -74,9 +74,9 @@ class ContactForm
 
         // Téléphone : facultatif, mais s'il est rempli ce doit être un numéro français
         // (10 chiffres commençant par 0, ou +33 suivi de 9 chiffres ; espaces, points ou tirets acceptés)
-        $telephone = $this->data['telephone'];
-        if ($telephone !== '' && !preg_match('/^(0|\+33 ?)[1-9]([ .\-]?\d{2}){4}\z/', $telephone)) {
-            $this->errors['telephone'] = 'Indiquez un numéro à 10 chiffres, par exemple 06 12 34 56 78.';
+        $phone = $this->data['phone'];
+        if ($phone !== '' && !preg_match('/^(0|\+33 ?)[1-9]([ .\-]?\d{2}){4}\z/', $phone)) {
+            $this->errors['phone'] = 'Indiquez un numéro à 10 chiffres, par exemple 06 12 34 56 78.';
         }
 
         // Type de projet : facultatif, mais doit être une des valeurs proposées

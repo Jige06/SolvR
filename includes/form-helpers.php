@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 /**
  * Attributs d'accessibilité d'un champ selon qu'il est en erreur ou non.
- * Retourne par exemple : class="form-control is-invalid" aria-invalid="true" aria-describedby="nom-erreur"
+ * Retourne par exemple : class="form-control is-invalid" aria-invalid="true" aria-describedby="name-error"
  */
 function fieldAttributes(
     ContactForm $form,
@@ -18,7 +18,7 @@ function fieldAttributes(
     string $describedBy = '',
 ): string {
     $hasError = $form->getError($field) !== null;
-    $ids = trim($describedBy . ($hasError ? ' ' . $field . '-erreur' : ''));
+    $ids = trim($describedBy . ($hasError ? ' ' . $field . '-error' : ''));
 
     return 'class="' . $baseClass . ($hasError ? ' is-invalid' : '') . '"'
         . ($hasError ? ' aria-invalid="true"' : '')
@@ -32,5 +32,5 @@ function fieldError(ContactForm $form, string $field): string
 
     return $error === null
         ? ''
-        : '<p id="' . $field . '-erreur" class="invalid-feedback d-block">' . e($error) . '</p>';
+        : '<p id="' . $field . '-error" class="invalid-feedback d-block">' . e($error) . '</p>';
 }

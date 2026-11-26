@@ -20,10 +20,10 @@ final class ContactControllerTest extends TestCase
         $this->mailer = new FakeMailer();
         $this->post = [
             'csrf_token' => CsrfToken::get(),
-            'nom'        => 'Pierre Durand',
+            'name'       => 'Pierre Durand',
             'email'      => 'pierre.durand@exemple.fr',
             'message'    => 'Bonjour, je voudrais un site vitrine pour mon entreprise.',
-            'site_web'   => '',
+            'website'    => '',
         ];
     }
 
@@ -76,7 +76,7 @@ final class ContactControllerTest extends TestCase
 
     public function testInvalidSubmissionKeepsInput(): void
     {
-        $controller = $this->submit(['nom' => 'A']);
+        $controller = $this->submit(['name' => 'A']);
 
         $this->assertSame(ContactStatus::Invalid, $controller->getStatus());
         $this->assertSame('pierre.durand@exemple.fr', $controller->getForm()->get('email'));
@@ -96,7 +96,7 @@ final class ContactControllerTest extends TestCase
         $this->controller()->handle('GET', []);
         $this->now += 40;
 
-        $this->assertTrue($this->controller()->handle('POST', ['site_web' => 'http://spam.example'] + $this->post));
+        $this->assertTrue($this->controller()->handle('POST', ['website' => 'http://spam.example'] + $this->post));
         $this->assertSame(0, $this->mailer->sentCount);
     }
 

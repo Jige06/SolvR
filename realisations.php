@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 $currentPage = 'realisations';
 
 // Liens externes du projet (un seul endroit à modifier si une URL change)
@@ -9,17 +12,17 @@ require __DIR__ . '/includes/head.php';
 require __DIR__ . '/includes/header.php';
 ?>
 
-<main id="contenu">
+<main id="main-content">
 
     <!-- ========== EN-TÊTE DE PAGE ========== -->
-    <section class="hero section" aria-labelledby="page-titre">
+    <section class="hero section" aria-labelledby="page-title">
         <div class="container">
             <div class="col-lg-9">
-                <p class="hero-surtitre">Réalisations</p>
-                <h1 id="page-titre" class="display-5 fw-bold" data-entree="1">
+                <p class="hero-eyebrow">Réalisations</p>
+                <h1 id="page-title" class="display-5 fw-bold" data-entrance="1">
                     Des projets concrets, de la conception à la mise en ligne
                 </h1>
-                <p class="lead mt-3" data-entree="2">
+                <p class="lead mt-3" data-entrance="2">
                     Je lance mon activité freelance. Voici un projet complet que j'ai conçu et développé seul
                     pendant ma formation de développeur web et web mobile : il montre ce que je peux
                     réaliser pour votre entreprise.
@@ -29,12 +32,12 @@ require __DIR__ . '/includes/header.php';
     </section>
 
     <!-- ========== ÉTUDE DE CAS : VITE & GOURMAND ========== -->
-    <article id="traiteur" aria-labelledby="traiteur-titre">
+    <article id="traiteur" aria-labelledby="caterer-title">
 
         <!-- Présentation -->
-        <section class="section section-alt" aria-label="Présentation du projet">
+        <div class="section section-alt">
             <div class="container">
-                <div class="row align-items-center gy-5 gx-lg-5" data-reveal-groupe>
+                <div class="row align-items-center gy-5 gx-lg-5" data-reveal-group>
                     <div class="col-12 col-lg-6">
                         <ul class="tags mb-3">
                             <li>Projet de formation</li>
@@ -42,7 +45,7 @@ require __DIR__ . '/includes/header.php';
                             <li>Application installable</li>
                         </ul>
 
-                        <h2 id="traiteur-titre">Vite &amp; Gourmand : la commande en ligne pour un traiteur</h2>
+                        <h2 id="caterer-title">Vite &amp; Gourmand : la commande en ligne pour un traiteur</h2>
                         <p class="lead">
                             Une application web complète qui permet aux clients d'un traiteur bordelais de consulter
                             les menus et de commander en ligne, et à son équipe de tout gérer depuis un espace dédié.
@@ -59,7 +62,7 @@ require __DIR__ . '/includes/header.php';
                             </a>
                         </div>
 
-                        <p class="etude-note mt-3 mb-0">
+                        <p class="case-study-note mt-3 mb-0">
                             Cas client fictif, issu de l'examen du titre professionnel Développeur Web et Web Mobile (Studi).
                         </p>
                     </div>
@@ -74,13 +77,13 @@ require __DIR__ . '/includes/header.php';
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
         <!-- Besoin et solution -->
-        <section class="section" aria-labelledby="besoin-titre">
+        <section class="section" aria-labelledby="needs-title">
             <div class="container">
-                <h3 id="besoin-titre" class="visually-hidden">Le besoin et la solution</h3>
-                <div class="row gy-4 gx-lg-5" data-reveal-groupe>
+                <h3 id="needs-title" class="visually-hidden">Le besoin et la solution</h3>
+                <div class="row gy-4 gx-lg-5" data-reveal-group>
                     <div class="col-12 col-lg-6">
                         <h4 class="h3">Le besoin</h4>
                         <p class="mb-0">
@@ -102,10 +105,10 @@ require __DIR__ . '/includes/header.php';
                 </div>
 
                 <!-- Un espace pour chacun -->
-                <h3 class="h2 section-titre mt-5 pt-lg-4" data-reveal>Un espace pour chacun</h3>
-                <div class="row g-4" data-reveal-groupe>
+                <h3 class="h2 section-title mt-5 pt-lg-4" data-reveal>Un espace pour chacun</h3>
+                <div class="row g-4" data-reveal-group>
                     <div class="col-12 col-lg-4">
-                        <div class="encart carte-survol h-100">
+                        <div class="callout hover-card h-100">
                             <div class="mb-3">
                                 <?= zoomableImage(
                                     '/assets/img/realisations/traiteur/clients-commande.webp',
@@ -116,7 +119,7 @@ require __DIR__ . '/includes/header.php';
                             </div>
                             <span class="service-icon"><?= icon('people') ?></span>
                             <h4 class="h5">Pour les clients</h4>
-                            <ul class="list-unstyled atouts mt-3 mb-0">
+                            <ul class="list-unstyled highlights mt-3 mb-0">
                                 <li><?= icon('check', 'icon-accent') ?> <span>Consultation des menus, avec filtres</span></li>
                                 <li><?= icon('check', 'icon-accent') ?> <span>Commande en plusieurs étapes, avec calcul automatique des frais de livraison</span></li>
                                 <li><?= icon('check', 'icon-accent') ?> <span>Suivi, modification ou annulation de ses commandes</span></li>
@@ -126,7 +129,7 @@ require __DIR__ . '/includes/header.php';
                         </div>
                     </div>
                     <div class="col-12 col-lg-4">
-                        <div class="encart carte-survol h-100">
+                        <div class="callout hover-card h-100">
                             <div class="mb-3">
                                 <?= zoomableImage(
                                     '/assets/img/realisations/traiteur/equipe-commandes.webp',
@@ -137,7 +140,7 @@ require __DIR__ . '/includes/header.php';
                             </div>
                             <span class="service-icon"><?= icon('team') ?></span>
                             <h4 class="h5">Pour l'équipe</h4>
-                            <ul class="list-unstyled atouts mt-3 mb-0">
+                            <ul class="list-unstyled highlights mt-3 mb-0">
                                 <li><?= icon('check', 'icon-accent') ?> <span>Suivi des commandes et mise à jour de leur statut</span></li>
                                 <li><?= icon('check', 'icon-accent') ?> <span>Gestion des menus et des plats, avec photos</span></li>
                                 <li><?= icon('check', 'icon-accent') ?> <span>Modération des avis clients</span></li>
@@ -146,7 +149,7 @@ require __DIR__ . '/includes/header.php';
                         </div>
                     </div>
                     <div class="col-12 col-lg-4">
-                        <div class="encart carte-survol h-100">
+                        <div class="callout hover-card h-100">
                             <div class="mb-3">
                                 <?= zoomableImage(
                                     '/assets/img/realisations/traiteur/gerants-statistiques.webp',
@@ -157,7 +160,7 @@ require __DIR__ . '/includes/header.php';
                             </div>
                             <span class="service-icon"><?= icon('chart') ?></span>
                             <h4 class="h5">Pour les gérants</h4>
-                            <ul class="list-unstyled atouts mt-3 mb-0">
+                            <ul class="list-unstyled highlights mt-3 mb-0">
                                 <li><?= icon('check', 'icon-accent') ?> <span>Statistiques des commandes et du chiffre d'affaires, en graphiques</span></li>
                                 <li><?= icon('check', 'icon-accent') ?> <span>Création des comptes des employés</span></li>
                             </ul>
@@ -168,12 +171,12 @@ require __DIR__ . '/includes/header.php';
         </section>
 
         <!-- Sous le capot -->
-        <section class="section section-alt" aria-labelledby="capot-titre">
+        <section class="section section-alt" aria-labelledby="under-the-hood-title">
             <div class="container">
-                <h3 id="capot-titre" class="h2 section-titre mb-3" data-reveal>Sous le capot</h3>
+                <h3 id="under-the-hood-title" class="h2 section-title mb-3" data-reveal>Sous le capot</h3>
                 <p class="mb-5" data-reveal>Pour les plus curieux : les choix techniques du projet.</p>
 
-                <div class="row gy-5 gx-lg-5" data-reveal-groupe>
+                <div class="row gy-5 gx-lg-5" data-reveal-group>
                     <div class="col-12 col-lg-6">
                         <h4 class="h5">Technologies</h4>
                         <ul class="tags mt-3">
@@ -196,7 +199,7 @@ require __DIR__ . '/includes/header.php';
                     </div>
                     <div class="col-12 col-lg-6">
                         <h4 class="h5">Sécurité</h4>
-                        <ul class="list-unstyled atouts mt-3 mb-0">
+                        <ul class="list-unstyled highlights mt-3 mb-0">
                             <li><?= icon('shield', 'icon-accent') ?> <span>Requêtes préparées contre les injections SQL</span></li>
                             <li><?= icon('shield', 'icon-accent') ?> <span>Mots de passe hachés (bcrypt)</span></li>
                             <li><?= icon('shield', 'icon-accent') ?> <span>Protection CSRF et XSS</span></li>

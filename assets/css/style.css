@@ -52,6 +52,16 @@
     --solvr-footer-text:        var(--brand-bg);
     --solvr-danger:             #B42318;   /* erreurs : 6,5:1 sur fond */
 
+    /* Halo « émis » par le bouton Contact (hero et en-tête) : bleu très pâle opaque,
+       assez clair pour que le texte gris garde un contraste ≥ 4,5:1 au centre du halo */
+    --solvr-halo:               #E0E6FF;
+
+    /* Mouvement : durées, courbe d'accélération, ombre des cartes au survol */
+    --solvr-duration-fast:       0.2s;
+    --solvr-duration:              0.35s;
+    --solvr-ease:             cubic-bezier(0.2, 0.7, 0.2, 1);
+    --solvr-shadow-hover:       0 0.75rem 1.75rem rgb(24 23 29 / 0.12);
+
     /* Branchement sur Bootstrap : suit automatiquement le thème */
     --bs-body-bg: var(--solvr-bg);
     --bs-body-color: var(--solvr-text);
@@ -85,10 +95,34 @@
     --solvr-footer-bg:          #0F0E13;
     --solvr-footer-text:        #E9E4DC;
     --solvr-danger:             #FF8A80;   /* erreurs : 7,8:1 sur fond sombre */
+    --solvr-halo:               var(--solvr-accent-soft);   /* l'accent lavande, transparent */
+    --solvr-shadow-hover:       0 0.75rem 1.75rem rgb(0 0 0 / 0.5);
 }
 
 /* ==========================================================
-   2. Boutons
+   2. Typographie
+   ========================================================== */
+
+/* Titres : Heebo */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.display-5,
+.navbar-brand {
+    font-family: var(--brand-font-heading);
+    font-weight: 600;
+}
+
+/* Code (noms de cookies, de fichiers…) : texte de la page sur une pastille teintée.
+   Remplace le rose de Bootstrap, trop peu contrasté sur le fond beige (4,43:1). */
+code {
+    padding: 0.1em 0.35em;
+    border-radius: 0.3em;
+    background-color: var(--solvr-accent-soft);
+    color: var(--solvr-text);
+}
+
+/* ==========================================================
+   3. Boutons
    ========================================================== */
 .btn-primary {
     --bs-btn-bg: var(--brand-blue);
@@ -127,7 +161,7 @@
 }
 
 /* ==========================================================
-   3. Accessibilité
+   4. Accessibilité
    ========================================================== */
 .skip-link:focus {
     position: absolute;
@@ -140,7 +174,7 @@
 }
 
 /* ==========================================================
-   4. Header et navigation
+   5. Header et navigation
    ========================================================== */
 .site-header {
     background-color: var(--solvr-bg-alt);
@@ -149,7 +183,6 @@
 }
 
 .navbar-brand {
-    font-weight: 700;
     color: var(--solvr-text);
 }
 
@@ -233,7 +266,7 @@
 [data-bs-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
 /* ==========================================================
-   5. Footer
+   6. Footer
    ========================================================== */
 .site-footer {
     background-color: var(--solvr-footer-bg);
@@ -262,7 +295,7 @@
 }
 
 /* ==========================================================
-   6. Sections et éléments communs
+   7. Sections et éléments communs
    ========================================================== */
 .section {
     padding-block: 4.5rem;
@@ -278,7 +311,7 @@
     background-color: var(--solvr-bg-alt);
 }
 
-.section-titre {
+.section-title {
     margin-bottom: 2.5rem;
 }
 
@@ -286,7 +319,7 @@
     color: var(--solvr-accent);
 }
 
-.link-fleche {
+.link-arrow {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -294,16 +327,16 @@
     text-decoration: none;
 }
 
-.link-fleche:hover,
-.link-fleche:focus-visible {
+.link-arrow:hover,
+.link-arrow:focus-visible {
     text-decoration: underline;
 }
 
-.link-fleche .bi {
+.link-arrow .bi {
     transition: transform 0.2s ease;
 }
 
-.link-fleche:hover .bi {
+.link-arrow:hover .bi {
     transform: translateX(3px);
 }
 
@@ -319,21 +352,23 @@
     --bs-aspect-ratio: 125%;
 }
 
+/* Pastille numérotée des étapes : méthode (accueil) et « De l'idée au site » (Services) */
+.step-number {
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;                    /* garde sa taille à côté d'un titre en flex */
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background-color: var(--brand-blue);
+    color: #FFFFFF;
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
 /* ==========================================================
-   7. Hero
+   8. Hero
    ========================================================== */
-/* Halo de lumière « émis » par le bouton Contact.
-   Clair : bleu très pâle opaque. Il reste assez clair pour que le texte gris
-   garde un contraste ≥ 4,5:1 même au centre du halo.
-   Sombre : l'accent lavande transparent. */
-:root {
-    --solvr-halo: #E0E6FF;
-}
-
-[data-bs-theme="dark"] {
-    --solvr-halo: var(--solvr-accent-soft);
-}
-
 /* Mobile et tablette : le bouton Contact est caché dans le menu replié,
    le halo reste donc fixe en haut à droite du hero. */
 .hero {
@@ -363,13 +398,13 @@
     }
 }
 
-.hero-surtitre {
+.hero-eyebrow {
     color: var(--solvr-accent);
     font-weight: 600;
     letter-spacing: 0.02em;
 }
 
-.hero-atouts li {
+.hero-highlights li {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -377,7 +412,7 @@
 }
 
 /* ==========================================================
-   8. Cartes de services
+   9. Cartes de services
    ========================================================== */
 .service-card {
     background-color: var(--solvr-bg);
@@ -406,9 +441,9 @@
 }
 
 /* ==========================================================
-   9. Réalisation, méthode, zone
+   10. Réalisation, méthode, zone
    ========================================================== */
-.badge-formation {
+.training-badge {
     display: inline-block;
     padding: 0.25rem 0.75rem;
     border-radius: 999px;
@@ -417,7 +452,7 @@
     font-size: 0.875rem;
 }
 
-.methode-visuel {
+.method-visual {
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -432,28 +467,19 @@
     font-size: 2rem;
 }
 
-.methode-numero {
+/* La pastille numérotée (section 7), posée en haut à droite du cercle de l'icône */
+.method-visual .step-number {
     position: absolute;
     top: -0.25rem;
     right: -0.25rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.75rem;
-    height: 1.75rem;
-    border-radius: 50%;
-    background-color: var(--brand-blue);
-    color: #FFFFFF;
-    font-size: 0.875rem;
-    font-weight: 700;
 }
 
 @media (min-width: 992px) {
-    .methode-etape {
+    .method-step {
         position: relative;
     }
 
-    .methode-etape:not(:last-child)::after {
+    .method-step:not(:last-child)::after {
         content: "";
         position: absolute;
         top: 2.5rem;
@@ -463,13 +489,13 @@
     }
 }
 
-.atouts li {
+.highlights li {
     display: flex;
     gap: 0.75rem;
     margin-bottom: 1rem;
 }
 
-.atouts .bi {
+.highlights .bi {
     flex-shrink: 0;
     margin-top: 0.3rem;
 }
@@ -479,7 +505,7 @@
 }
 
 /* ==========================================================
-   10. Appel à l'action final (bleu de marque dans les deux thèmes)
+   11. Appel à l'action final (bleu de marque dans les deux thèmes)
    ========================================================== */
 .cta-final {
     background-color: var(--brand-blue);
@@ -491,11 +517,11 @@
 }
 
 /* ==========================================================
-   11. Page Services
+   12. Page Services
    ========================================================== */
 
 /* Sommaire : liens « pilules » vers les sections de la page */
-.sommaire a {
+.toc a {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -507,21 +533,21 @@
     transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-.sommaire a:hover,
-.sommaire a:focus-visible {
+.toc a:hover,
+.toc a:focus-visible {
     border-color: var(--solvr-accent);
     color: var(--solvr-accent);
 }
 
 /* Encart « Idéal pour » : se détache du fond de sa section */
-.encart {
+.callout {
     padding: 1.75rem 1.5rem;
     border: 1px solid var(--solvr-border);
     border-radius: 1rem;
     background-color: var(--solvr-bg);
 }
 
-.section:not(.section-alt) .encart {
+.section:not(.section-alt) .callout {
     background-color: var(--solvr-bg-alt);
 }
 
@@ -567,12 +593,19 @@
     outline-offset: 4px;
 }
 
-.faq-reponse {
+.faq-answer {
     padding-bottom: 1.25rem;
 }
 
 /* ==========================================================
-   12. Page Réalisations
+   13. Page Services : de l'idée au site
+   ========================================================== */
+.project-steps .zoomable {
+    margin-bottom: 1rem;
+}
+
+/* ==========================================================
+   14. Page Réalisations
    ========================================================== */
 
 /* Étiquettes (type de projet, technologies) */
@@ -593,13 +626,13 @@
     font-size: 0.875rem;
 }
 
-.etude-note {
+.case-study-note {
     color: var(--solvr-text-muted);
     font-size: 0.9rem;
 }
 
 /* ==========================================================
-   13. Formulaire de contact
+   15. Formulaire de contact
    ========================================================== */
 .form-label {
     font-weight: 600;
@@ -618,13 +651,13 @@
     box-shadow: 0 0 0 0.25rem rgba(var(--solvr-accent-rgb), 0.25);
 }
 
-.champ-requis {
+.required-mark {
     color: var(--solvr-danger);
     font-weight: 700;
 }
 
 /* Honeypot : hors de l'écran (pas display:none, que certains robots savent repérer) */
-.champ-piege {
+.honeypot {
     position: absolute;
     left: -10000px;
     width: 1px;
@@ -632,85 +665,63 @@
     overflow: hidden;
 }
 
-.mention-rgpd {
+.gdpr-notice {
     color: var(--solvr-text-muted);
     font-size: 0.875rem;
 }
 
-.etapes-contact {
+.contact-steps {
     padding-left: 1.25rem;
 }
 
-.etapes-contact li {
+.contact-steps li {
     margin-bottom: 0.5rem;
 }
 
 /* ==========================================================
-   14. Typographie
+   16. Pages légales et pages d'erreur
    ========================================================== */
-
-/* Titres : Heebo */
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6,
-.display-5,
-.navbar-brand {
-    font-family: var(--brand-font-heading);
-    font-weight: 600;
-}
-
-/* Code (noms de cookies, de fichiers…) : texte de la page sur une pastille teintée.
-   Remplace le rose de Bootstrap, trop peu contrasté sur le fond beige (4,43:1). */
-code {
-    padding: 0.1em 0.35em;
-    border-radius: 0.3em;
-    background-color: var(--solvr-accent-soft);
-    color: var(--solvr-text);
-}
-
-/* ==========================================================
-   15. Pages légales et 404
-   ========================================================== */
-.page-legale h2 {
+.legal-page h2 {
     margin-top: 2.5rem;
     margin-bottom: 1rem;
     font-size: 1.5rem;
 }
 
 /* Paires « intitulé : valeur » : empilées en mobile, sur deux colonnes ensuite */
-.infos-legales {
+.legal-info {
     display: grid;
     grid-template-columns: 1fr;
     gap: 0.25rem 1.5rem;
     margin-bottom: 0;
 }
 
-.infos-legales dt {
+.legal-info dt {
     font-weight: 600;
 }
 
-.infos-legales dd {
+.legal-info dd {
     margin-bottom: 0.75rem;
 }
 
 @media (min-width: 768px) {
-    .infos-legales {
+    .legal-info {
         grid-template-columns: 14rem 1fr;
     }
 
-    .infos-legales dd {
+    .legal-info dd {
         margin-bottom: 0.5rem;
     }
 }
 
 /* Tableaux aux couleurs du thème */
-.tableau-legal {
+.legal-table {
     --bs-table-bg: transparent;
     --bs-table-color: var(--solvr-text);
     --bs-table-border-color: var(--solvr-border-strong);
 }
 
-/* Page 404 */
-.page-404 .code-erreur {
+/* Pages d'erreur (404 et 500) */
+.error-page .error-code {
     margin-bottom: 1rem;
     color: var(--solvr-accent);
     font-family: var(--brand-font-heading);
@@ -720,9 +731,9 @@ code {
 }
 
 /* ==========================================================
-   16. Page À propos : frise du parcours
+   17. Page À propos : frise du parcours
    ========================================================== */
-.parcours {
+.timeline {
     position: relative;
     margin: 0;
     padding: 0;
@@ -730,7 +741,7 @@ code {
 }
 
 /* La ligne verticale qui relie les étapes */
-.parcours::before {
+.timeline::before {
     content: "";
     position: absolute;
     top: 0.5rem;
@@ -740,18 +751,18 @@ code {
     background-color: var(--solvr-border-strong);
 }
 
-.parcours li {
+.timeline li {
     position: relative;
     padding-left: 3.75rem;
     padding-bottom: 2.5rem;
 }
 
-.parcours li:last-child {
+.timeline li:last-child {
     padding-bottom: 0;
 }
 
 /* Pastille ronde avec l'icône de chaque étape */
-.parcours-icone {
+.timeline-icon {
     position: absolute;
     top: 0;
     left: 0;
@@ -768,14 +779,14 @@ code {
 }
 
 /* Étape actuelle (la dernière) : pastille pleine */
-.parcours li:last-child .parcours-icone {
+.timeline li:last-child .timeline-icon {
     border-color: var(--brand-blue);
     background-color: var(--brand-blue);
     color: #FFFFFF;
 }
 
 /* Grille des technologies (logos Simple Icons) */
-.technos {
+.tech-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
     gap: 1rem;
@@ -784,7 +795,7 @@ code {
     list-style: none;
 }
 
-.technos li {
+.tech-list li {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -797,51 +808,28 @@ code {
     text-align: center;
 }
 
-.techno-logo {
+.tech-logo {
     width: 2rem;
     height: 2rem;
     color: var(--solvr-text);
 }
 
 /* ==========================================================
-   17. Réduction des animations
+   18. Images agrandissables et visionneuse
    ========================================================== */
-/* ==========================================================
-   De l'idée au site (page Services)
-   ========================================================== */
-.etapes-projet .agrandir {
-    margin-bottom: 1rem;
-}
-
-.etape-numero {
-    display: inline-grid;
-    place-items: center;
-    flex-shrink: 0;
-    width: 1.75rem;
-    height: 1.75rem;
-    border-radius: 50%;
-    background-color: var(--brand-blue);
-    color: #fff;
-    font-size: 0.875rem;
-    font-weight: 700;
-}
-
-/* ==========================================================
-   Images agrandissables et visionneuse
-   ========================================================== */
-.agrandir {
+.zoomable {
     position: relative;
     display: block;
     border-radius: 1rem;
     cursor: zoom-in;
 }
 
-.agrandir img {
+.zoomable img {
     display: block;
 }
 
 /* Loupe au centre de l'image, visible au survol et au focus clavier */
-.agrandir-badge {
+.zoomable-badge {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -854,23 +842,23 @@ code {
     color: #fff;
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.8);
-    transition: opacity var(--solvr-duree) ease, transform var(--solvr-duree) var(--solvr-courbe);
+    transition: opacity var(--solvr-duration) ease, transform var(--solvr-duration) var(--solvr-ease);
     pointer-events: none;
 }
 
-.agrandir-badge svg {
+.zoomable-badge svg {
     width: 1.25rem;
     height: 1.25rem;
 }
 
-.agrandir:hover .agrandir-badge,
-.agrandir:focus-visible .agrandir-badge {
+.zoomable:hover .zoomable-badge,
+.zoomable:focus-visible .zoomable-badge {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
 }
 
 /* La visionneuse : une <dialog> ouverte avec showModal() */
-.visionneuse {
+.lightbox {
     max-width: none;
     max-height: none;
     padding: 0;
@@ -879,11 +867,11 @@ code {
     overflow: visible;
 }
 
-.visionneuse::backdrop {
+.lightbox::backdrop {
     background-color: rgb(15 14 19 / 0.88);
 }
 
-.visionneuse img {
+.lightbox img {
     display: block;
     width: auto;
     height: auto;
@@ -892,7 +880,7 @@ code {
     cursor: zoom-out;
 }
 
-.visionneuse-fermer {
+.lightbox-close {
     position: fixed;
     top: 1rem;
     right: 1rem;
@@ -906,60 +894,50 @@ code {
     color: #fff;
 }
 
-.visionneuse-fermer:hover {
+.lightbox-close:hover {
     background-color: rgb(0 0 0 / 0.8);
 }
 
-.visionneuse-fermer:focus-visible {
+.lightbox-close:focus-visible {
     outline: 3px solid #fff;
     outline-offset: 2px;
 }
 
 /* La page ne défile plus derrière la visionneuse */
-:root:has(.visionneuse[open]) {
+:root:has(.lightbox[open]) {
     overflow: hidden;
 }
 
-@keyframes solvr-zoom-entree { from { opacity: 0; transform: scale(0.94); } }
-@keyframes solvr-fondu-entree-simple { from { opacity: 0; } }
+@keyframes solvr-zoom-in { from { opacity: 0; transform: scale(0.94); } }
+@keyframes solvr-fade-in { from { opacity: 0; } }
 
 @media (prefers-reduced-motion: no-preference) {
-    .visionneuse[open] { animation: solvr-zoom-entree 0.3s cubic-bezier(0.2, 0.7, 0.2, 1); }
-    .visionneuse[open]::backdrop { animation: solvr-fondu-entree-simple 0.3s ease; }
+    .lightbox[open] { animation: solvr-zoom-in 0.3s cubic-bezier(0.2, 0.7, 0.2, 1); }
+    .lightbox[open]::backdrop { animation: solvr-fade-in 0.3s ease; }
 }
 
-/* ==========================================================================
-   Animations
+/* ==========================================================
+   19. Animations
    Tout ce qui bouge est réservé à prefers-reduced-motion: no-preference.
-   ========================================================================== */
-
-:root {
-  --solvr-duree-rapide: 0.2s;
-  --solvr-duree: 0.35s;
-  --solvr-courbe: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --solvr-ombre-survol: 0 0.75rem 1.75rem rgb(24 23 29 / 0.12);
-}
-
-[data-bs-theme="dark"] {
-  --solvr-ombre-survol: 0 0.75rem 1.75rem rgb(0 0 0 / 0.5);
-}
+   Les durées et la courbe sont dans les variables (section 1).
+   ========================================================== */
 
 /* --- Images clés --- */
-@keyframes solvr-apparition {
-  from { opacity: 0; translate: 0 1.5rem; }
-  to   { opacity: 1; translate: 0 0; }
+@keyframes solvr-reveal {
+    from { opacity: 0; translate: 0 1.5rem; }
+    to   { opacity: 1; translate: 0 0; }
 }
-@keyframes solvr-fondu-sortie { to { opacity: 0; } }
-@keyframes solvr-fondu-entree { from { opacity: 0; transform: translateY(0.75rem); } }
-@keyframes solvr-onde { to { transform: scale(1); opacity: 0; } }
-@keyframes solvr-pivot { from { opacity: 0; transform: rotate(-90deg) scale(0.6); } }
-@keyframes solvr-secousse {
-  20%, 60% { translate: -0.375rem 0; }
-  40%, 80% { translate: 0.375rem 0; }
+@keyframes solvr-fade-out { to { opacity: 0; } }
+@keyframes solvr-fade-in-up { from { opacity: 0; transform: translateY(0.75rem); } }
+@keyframes solvr-ripple { to { transform: scale(1); opacity: 0; } }
+@keyframes solvr-spin-in { from { opacity: 0; transform: rotate(-90deg) scale(0.6); } }
+@keyframes solvr-shake {
+    20%, 60% { translate: -0.375rem 0; }
+    40%, 80% { translate: 0.375rem 0; }
 }
-@keyframes solvr-trace { to { stroke-dashoffset: 0; } }
-@keyframes solvr-progression { to { transform: scaleX(1); } }
-@keyframes solvr-ombre-entete { to { box-shadow: var(--solvr-ombre-survol); } }
+@keyframes solvr-draw { to { stroke-dashoffset: 0; } }
+@keyframes solvr-progress { to { transform: scaleX(1); } }
+@keyframes solvr-header-shadow { to { box-shadow: var(--solvr-shadow-hover); } }
 
 /* --- 1. Ancres : ne pas finir cachées sous l'en-tête fixe --- */
 html { scroll-padding-top: 5rem; }
@@ -970,177 +948,183 @@ html { scroll-padding-top: 5rem; }
    (le lien cliqué a le focus). En arrivant d'une autre page (services.php#site-vitrine),
    rien n'a le focus : la page s'ouvre directement sur la bonne section. */
 @media (prefers-reduced-motion: no-preference) {
-  :root { scroll-behavior: auto; }
-  :root:focus-within { scroll-behavior: smooth; }
+    :root { scroll-behavior: auto; }
+    :root:focus-within { scroll-behavior: smooth; }
 }
 
 /* --- 2. Transition entre les pages --- */
 @media (prefers-reduced-motion: no-preference) {
-  @view-transition { navigation: auto; }
+    @view-transition { navigation: auto; }
 }
 
 body > header { position: relative; view-transition-name: entete; }
 
 ::view-transition-old(root) {
-  animation: solvr-fondu-sortie var(--solvr-duree-rapide) ease both;
+    animation: solvr-fade-out var(--solvr-duration-fast) ease both;
 }
 ::view-transition-new(root) {
-  animation: solvr-fondu-entree var(--solvr-duree) var(--solvr-courbe) both;
+    animation: solvr-fade-in-up var(--solvr-duration) var(--solvr-ease) both;
 }
 
 /* --- 3. Entrée du hero au chargement (sans JS) --- */
 @media (prefers-reduced-motion: no-preference) {
-  [data-entree] { animation: solvr-apparition 0.7s var(--solvr-courbe) both; }
-  [data-entree="2"] { animation-delay: 0.1s; }
-  [data-entree="3"] { animation-delay: 0.2s; }
-  [data-entree="4"] { animation-delay: 0.3s; }
-  [data-entree="5"] { animation-delay: 0.4s; }
+    [data-entrance] { animation: solvr-reveal 0.7s var(--solvr-ease) both; }
+    [data-entrance="2"] { animation-delay: 0.1s; }
+    [data-entrance="3"] { animation-delay: 0.2s; }
+    [data-entrance="4"] { animation-delay: 0.3s; }
+    [data-entrance="5"] { animation-delay: 0.4s; }
 }
 
 /* --- 4. Apparition au défilement (pilotée par animations.js) --- */
 @media (prefers-reduced-motion: no-preference) {
-  .js [data-reveal]:not(.est-visible),
-  .js [data-reveal-groupe] > :not(.est-visible) {
-    opacity: 0;
-  }
-  .js .est-visible {
-    animation: solvr-apparition 0.6s var(--solvr-courbe) var(--reveal-delai, 0s) both;
-  }
+    .js [data-reveal]:not(.is-visible),
+    .js [data-reveal-group] > :not(.is-visible) {
+        opacity: 0;
+    }
+    .js .is-visible {
+        animation: solvr-reveal 0.6s var(--solvr-ease) var(--reveal-delay, 0s) both;
+    }
 }
 
 /* --- 5. Cartes au survol --- */
-.carte-survol {
-  transition:
-    transform var(--solvr-duree) var(--solvr-courbe),
-    box-shadow var(--solvr-duree) var(--solvr-courbe);
+.hover-card {
+    transition:
+        transform var(--solvr-duration) var(--solvr-ease),
+        box-shadow var(--solvr-duration) var(--solvr-ease);
 }
-.carte-survol:focus-within {
-  transform: translateY(-0.375rem);
-  box-shadow: var(--solvr-ombre-survol);
+.hover-card:focus-within {
+    transform: translateY(-0.375rem);
+    box-shadow: var(--solvr-shadow-hover);
 }
 @media (hover: hover) {
-  .carte-survol:hover {
-    transform: translateY(-0.375rem);
-    box-shadow: var(--solvr-ombre-survol);
-  }
-  .carte-survol svg:not(.btn svg, .link-fleche svg, .agrandir svg) {
-    transition: transform var(--solvr-duree) var(--solvr-courbe);
-  }
-  .carte-survol:hover svg:not(.btn svg, .link-fleche svg, .agrandir svg) {
-    transform: scale(1.12) rotate(-6deg);
-  }
+    .hover-card:hover {
+        transform: translateY(-0.375rem);
+        box-shadow: var(--solvr-shadow-hover);
+    }
+    .hover-card svg:not(.btn svg, .link-arrow svg, .zoomable svg) {
+        transition: transform var(--solvr-duration) var(--solvr-ease);
+    }
+    .hover-card:hover svg:not(.btn svg, .link-arrow svg, .zoomable svg) {
+        transform: scale(1.12) rotate(-6deg);
+    }
 }
 
 /* --- 6. Boutons : appui, flèche, onde --- */
 .btn {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  transition:
-    color 0.15s ease-in-out,
-    background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out,
-    box-shadow 0.15s ease-in-out,
-    transform var(--solvr-duree-rapide) var(--solvr-courbe);
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition:
+        color 0.15s ease-in-out,
+        background-color 0.15s ease-in-out,
+        border-color 0.15s ease-in-out,
+        box-shadow 0.15s ease-in-out,
+        transform var(--solvr-duration-fast) var(--solvr-ease);
 }
 .btn:active { transform: scale(0.97); }
 
-.icone-fleche { transition: transform var(--solvr-duree) var(--solvr-courbe); }
+.icon-arrow { transition: transform var(--solvr-duration) var(--solvr-ease); }
 @media (hover: hover) {
-  .btn:hover .icone-fleche,
-  a:hover > .icone-fleche { transform: translateX(0.25rem); }
+    .btn:hover .icon-arrow,
+    a:hover > .icon-arrow { transform: translateX(0.25rem); }
 }
 
-.onde {
-  position: absolute;
-  z-index: -1;
-  border-radius: 50%;
-  background-color: currentColor;
-  opacity: 0.3;
-  transform: scale(0);
-  pointer-events: none;
-  animation: solvr-onde 0.6s ease-out forwards;
+.ripple {
+    position: absolute;
+    z-index: -1;
+    border-radius: 50%;
+    background-color: currentColor;
+    opacity: 0.3;
+    transform: scale(0);
+    pointer-events: none;
+    animation: solvr-ripple 0.6s ease-out forwards;
 }
 
 /* --- 7. Bouton de thème --- */
 @media (prefers-reduced-motion: no-preference) {
-  .theme-toggle svg { animation: solvr-pivot 0.5s var(--solvr-courbe); }
+    .theme-toggle svg { animation: solvr-spin-in 0.5s var(--solvr-ease); }
 }
 
 /* --- 8. Logos des outils --- */
 @media (hover: hover) {
-  .technos svg { transition: transform var(--solvr-duree) var(--solvr-courbe); }
-  .technos li:hover svg { transform: translateY(-0.25rem) scale(1.12); }
+    .tech-list svg { transition: transform var(--solvr-duration) var(--solvr-ease); }
+    .tech-list li:hover svg { transform: translateY(-0.25rem) scale(1.12); }
 }
 
 /* --- 9. FAQ : ouverture en douceur --- */
 @media (prefers-reduced-motion: no-preference) {
-  .faq { interpolate-size: allow-keywords; }
-  .faq details::details-content {
-    block-size: 0;
-    overflow: clip;
-    transition:
-      block-size var(--solvr-duree) var(--solvr-courbe),
-      content-visibility var(--solvr-duree) allow-discrete;
-  }
-  .faq details[open]::details-content { block-size: auto; }
+    .faq { interpolate-size: allow-keywords; }
+    .faq details::details-content {
+        block-size: 0;
+        overflow: clip;
+        transition:
+            block-size var(--solvr-duration) var(--solvr-ease),
+            content-visibility var(--solvr-duration) allow-discrete;
+    }
+    .faq details[open]::details-content { block-size: auto; }
 }
 
 /* --- 10. En-tête : ombre + barre de progression au défilement --- */
 @supports (animation-timeline: scroll()) {
-  @media (prefers-reduced-motion: no-preference) {
-    body > header {
-      animation: solvr-ombre-entete linear both;
-      animation-timeline: scroll(root);
-      animation-range: 0 6rem;
+    @media (prefers-reduced-motion: no-preference) {
+        body > header {
+            animation: solvr-header-shadow linear both;
+            animation-timeline: scroll(root);
+            animation-range: 0 6rem;
+        }
+        body > header::after {
+            content: "";
+            position: absolute;
+            inset-inline: 0;
+            inset-block-end: 0;
+            block-size: 3px;
+            background-color: var(--solvr-accent);
+            transform: scaleX(0);
+            transform-origin: 0 50%;
+            pointer-events: none;
+            animation: solvr-progress linear both;
+            animation-timeline: scroll(root);
+        }
     }
-    body > header::after {
-      content: "";
-      position: absolute;
-      inset-inline: 0;
-      inset-block-end: 0;
-      block-size: 3px;
-      background-color: var(--solvr-accent);
-      transform: scaleX(0);
-      transform-origin: 0 50%;
-      pointer-events: none;
-      animation: solvr-progression linear both;
-      animation-timeline: scroll(root);
-    }
-  }
 }
 
 /* --- 11. Formulaire de contact --- */
-.btn-envoi-chargement { display: none; align-items: center; gap: 0.5rem; }
-.btn-envoi.est-en-cours .btn-envoi-texte { display: none; }
-.btn-envoi.est-en-cours .btn-envoi-chargement { display: inline-flex; }
-.btn-envoi.est-en-cours:disabled { opacity: 1; cursor: progress; }
+.btn-send-loading { display: none; align-items: center; gap: 0.5rem; }
+.btn-send.is-sending .btn-send-label { display: none; }
+.btn-send.is-sending .btn-send-loading { display: inline-flex; }
+.btn-send.is-sending:disabled { opacity: 1; cursor: progress; }
 
-.coche-animee {
-  flex-shrink: 0;
-  inline-size: 2.5rem;
-  block-size: 2.5rem;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.animated-check {
+    flex-shrink: 0;
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  main .alert { animation: solvr-apparition 0.5s var(--solvr-courbe) both; }
-  [aria-invalid="true"] { animation: solvr-secousse 0.4s ease-in-out 0.3s; }
+    main .alert { animation: solvr-reveal 0.5s var(--solvr-ease) both; }
+    [aria-invalid="true"] { animation: solvr-shake 0.4s ease-in-out 0.3s; }
 
-  .coche-animee circle,
-  .coche-animee path {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    animation: solvr-trace 0.6s var(--solvr-courbe) forwards;
-  }
-  .coche-animee path { animation-delay: 0.45s; }
+    .animated-check circle,
+    .animated-check path {
+        stroke-dasharray: 1;
+        stroke-dashoffset: 1;
+        animation: solvr-draw 0.6s var(--solvr-ease) forwards;
+    }
+    .animated-check path { animation-delay: 0.45s; }
 }
 
-   @media (prefers-reduced-motion: reduce) {
+/* ==========================================================
+   20. Réduction des animations
+   ========================================================== */
+
+/* Toujours en dernier : coupe toutes les transitions et animations
+   pour les personnes qui ont demandé moins de mouvement dans leur système. */
+@media (prefers-reduced-motion: reduce) {
     *,
     *::before,
     *::after {

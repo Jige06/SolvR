@@ -1,5 +1,8 @@
 <?php
-require_once __DIR__ . '/functions.php';
+
+declare(strict_types=1);
+
+require_once __DIR__ . '/bootstrap.php';
 $pages = $pages ?? require __DIR__ . '/pages.php';   // déjà chargé par la page ? on le réutilise
 
 // Chaque page définit $currentPage avant d'inclure ce fichier
@@ -26,7 +29,9 @@ $canonicalUrl    = SITE_URL . ($page['path'] ?? '/');
 
     <title><?= e($pageTitle) ?></title>
     <meta name="description" content="<?= e($pageDescription) ?>">
-    <link rel="canonical" href="<?= e($canonicalUrl) ?>">
+    <?php if (empty($page['noindex'])): ?>
+        <link rel="canonical" href="<?= e($canonicalUrl) ?>">
+    <?php endif; ?>
 
     <!-- Open Graph : aperçu lors d'un partage (LinkedIn, WhatsApp…) -->
     <meta property="og:type" content="website">
@@ -34,7 +39,9 @@ $canonicalUrl    = SITE_URL . ($page['path'] ?? '/');
     <meta property="og:site_name" content="SolvR">
     <meta property="og:title" content="<?= e($pageTitle) ?>">
     <meta property="og:description" content="<?= e($pageDescription) ?>">
-    <meta property="og:url" content="<?= e($canonicalUrl) ?>">
+    <?php if (empty($page['noindex'])): ?>
+        <meta property="og:url" content="<?= e($canonicalUrl) ?>">
+    <?php endif; ?>
 
     <!-- Icônes du site (onglet, favoris, écran d'accueil du téléphone) -->
     <link rel="icon" href="/favicon.ico" sizes="32x32">

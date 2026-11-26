@@ -45,11 +45,11 @@ class ContactMailer
         // L'adresse du visiteur va dans « Répondre à » : il suffit de cliquer sur Répondre.
         $mail->setFrom($this->config['mail']['from'], $this->config['mail']['from_name']);
         $mail->addAddress($this->config['mail']['to']);
-        $mail->addReplyTo($form->get('email'), $form->get('nom'));
+        $mail->addReplyTo($form->get('email'), $form->get('name'));
 
         // Contenu en texte brut : aucun risque d'injection HTML dans le message reçu
         $mail->isHTML(false);
-        $mail->Subject = 'Nouvelle demande de contact : ' . $form->get('nom');
+        $mail->Subject = 'Nouvelle demande de contact : ' . $form->get('name');
         $mail->Body    = $this->buildBody($form);
 
         $mail->send();
@@ -58,13 +58,13 @@ class ContactMailer
     /** Construit le corps du message */
     private function buildBody(ContactForm $form): string
     {
-        $telephone = $form->get('telephone') !== '' ? $form->get('telephone') : 'Non renseigné';
+        $phone = $form->get('phone') !== '' ? $form->get('phone') : 'Non renseigné';
 
         return "Nouvelle demande depuis le site SolvR\n"
             . "=====================================\n\n"
-            . 'Nom : ' . $form->get('nom') . "\n"
+            . 'Nom : ' . $form->get('name') . "\n"
             . 'E-mail : ' . $form->get('email') . "\n"
-            . 'Téléphone : ' . $telephone . "\n"
+            . 'Téléphone : ' . $phone . "\n"
             . 'Type de projet : ' . $form->getProjectTypeLabel() . "\n\n"
             . "Message :\n"
             . $form->get('message') . "\n";
