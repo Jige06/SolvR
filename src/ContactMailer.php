@@ -8,6 +8,7 @@ use PHPMailer\PHPMailer\PHPMailer;
  * Envoie le message du formulaire de contact par e-mail (SMTP, via PHPMailer).
  * Le reste du site ne connaît que cette classe : si on change un jour
  * de bibliothèque d'envoi, c'est le seul fichier à modifier.
+ * Le contenu du mail (objet, HTML, texte) est préparé par ContactEmail.
  */
 class ContactMailer
 {
@@ -24,7 +25,9 @@ class ContactMailer
      */
     public function send(ContactForm $form): void
     {
-        $mail = new PHPMailer(true);   // true : les erreurs lèvent des exceptions
+        // Heure de Paris, quel que soit le fuseau du serveur
+        $email = new ContactEmail($form, new DateTimeImmutable('now', new DateTimeZone('Europe/Paris')));
+        $mail  = new PHPMailer(true);   // true : les erreurs lèvent des exceptions
 
         // Connexion au serveur SMTP
         $mail->isSMTP();
@@ -47,26 +50,12 @@ class ContactMailer
         $mail->addAddress($this->config['mail']['to']);
         $mail->addReplyTo($form->get('email'), $form->get('name'));
 
-        // Contenu en texte brut : aucun risque d'injection HTML dans le message reçu
-        $mail->isHTML(false);
-        $mail->Subject = 'Nouvelle demande de contact : ' . $form->get('name');
-        $mail->Body    = $this->buildBody($form);
+        // Contenu : HTML, avec une version texte pour les logiciels qui n'affichent pas le HTML
+        $mail->isHTML(true);
+        $mail->Subject = $email->subject();
+        $mail->Body    = $email->html();
+        $mail->AltBody = $email->text();
 
         $mail->send();
-    }
-
-    /** Construit le corps du message */
-    private function buildBody(ContactForm $form): string
-    {
-        $phone = $form->get('phone') !== '' ? $form->get('phone') : 'Non renseigné';
-
-        return "Nouvelle demande depuis le site SolvR\n"
-            . "=====================================\n\n"
-            . 'Nom : ' . $form->get('name') . "\n"
-            . 'E-mail : ' . $form->get('email') . "\n"
-            . 'Téléphone : ' . $phone . "\n"
-            . 'Type de projet : ' . $form->getProjectTypeLabel() . "\n\n"
-            . "Message :\n"
-            . $form->get('message') . "\n";
     }
 }
