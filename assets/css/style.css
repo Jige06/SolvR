@@ -52,6 +52,16 @@
     --solvr-footer-text:        var(--brand-bg);
     --solvr-danger:             #B42318;   /* erreurs : 6,5:1 sur fond */
 
+    /* Halo « émis » par le bouton Contact (hero et en-tête) : bleu très pâle opaque,
+       assez clair pour que le texte gris garde un contraste ≥ 4,5:1 au centre du halo */
+    --solvr-halo:               #E0E6FF;
+
+    /* Mouvement : durées, courbe d'accélération, ombre des cartes au survol */
+    --solvr-duree-rapide:       0.2s;
+    --solvr-duree:              0.35s;
+    --solvr-courbe:             cubic-bezier(0.2, 0.7, 0.2, 1);
+    --solvr-ombre-survol:       0 0.75rem 1.75rem rgb(24 23 29 / 0.12);
+
     /* Branchement sur Bootstrap : suit automatiquement le thème */
     --bs-body-bg: var(--solvr-bg);
     --bs-body-color: var(--solvr-text);
@@ -85,10 +95,34 @@
     --solvr-footer-bg:          #0F0E13;
     --solvr-footer-text:        #E9E4DC;
     --solvr-danger:             #FF8A80;   /* erreurs : 7,8:1 sur fond sombre */
+    --solvr-halo:               var(--solvr-accent-soft);   /* l'accent lavande, transparent */
+    --solvr-ombre-survol:       0 0.75rem 1.75rem rgb(0 0 0 / 0.5);
 }
 
 /* ==========================================================
-   2. Boutons
+   2. Typographie
+   ========================================================== */
+
+/* Titres : Heebo */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.display-5,
+.navbar-brand {
+    font-family: var(--brand-font-heading);
+    font-weight: 600;
+}
+
+/* Code (noms de cookies, de fichiers…) : texte de la page sur une pastille teintée.
+   Remplace le rose de Bootstrap, trop peu contrasté sur le fond beige (4,43:1). */
+code {
+    padding: 0.1em 0.35em;
+    border-radius: 0.3em;
+    background-color: var(--solvr-accent-soft);
+    color: var(--solvr-text);
+}
+
+/* ==========================================================
+   3. Boutons
    ========================================================== */
 .btn-primary {
     --bs-btn-bg: var(--brand-blue);
@@ -127,7 +161,7 @@
 }
 
 /* ==========================================================
-   3. Accessibilité
+   4. Accessibilité
    ========================================================== */
 .skip-link:focus {
     position: absolute;
@@ -140,7 +174,7 @@
 }
 
 /* ==========================================================
-   4. Header et navigation
+   5. Header et navigation
    ========================================================== */
 .site-header {
     background-color: var(--solvr-bg-alt);
@@ -149,7 +183,6 @@
 }
 
 .navbar-brand {
-    font-weight: 700;
     color: var(--solvr-text);
 }
 
@@ -233,7 +266,7 @@
 [data-bs-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
 /* ==========================================================
-   5. Footer
+   6. Footer
    ========================================================== */
 .site-footer {
     background-color: var(--solvr-footer-bg);
@@ -262,7 +295,7 @@
 }
 
 /* ==========================================================
-   6. Sections et éléments communs
+   7. Sections et éléments communs
    ========================================================== */
 .section {
     padding-block: 4.5rem;
@@ -320,20 +353,8 @@
 }
 
 /* ==========================================================
-   7. Hero
+   8. Hero
    ========================================================== */
-/* Halo de lumière « émis » par le bouton Contact.
-   Clair : bleu très pâle opaque. Il reste assez clair pour que le texte gris
-   garde un contraste ≥ 4,5:1 même au centre du halo.
-   Sombre : l'accent lavande transparent. */
-:root {
-    --solvr-halo: #E0E6FF;
-}
-
-[data-bs-theme="dark"] {
-    --solvr-halo: var(--solvr-accent-soft);
-}
-
 /* Mobile et tablette : le bouton Contact est caché dans le menu replié,
    le halo reste donc fixe en haut à droite du hero. */
 .hero {
@@ -377,7 +398,7 @@
 }
 
 /* ==========================================================
-   8. Cartes de services
+   9. Cartes de services
    ========================================================== */
 .service-card {
     background-color: var(--solvr-bg);
@@ -406,7 +427,7 @@
 }
 
 /* ==========================================================
-   9. Réalisation, méthode, zone
+   10. Réalisation, méthode, zone
    ========================================================== */
 .badge-formation {
     display: inline-block;
@@ -479,7 +500,7 @@
 }
 
 /* ==========================================================
-   10. Appel à l'action final (bleu de marque dans les deux thèmes)
+   11. Appel à l'action final (bleu de marque dans les deux thèmes)
    ========================================================== */
 .cta-final {
     background-color: var(--brand-blue);
@@ -491,7 +512,7 @@
 }
 
 /* ==========================================================
-   11. Page Services
+   12. Page Services
    ========================================================== */
 
 /* Sommaire : liens « pilules » vers les sections de la page */
@@ -572,7 +593,27 @@
 }
 
 /* ==========================================================
-   12. Page Réalisations
+   13. Page Services : de l'idée au site
+   ========================================================== */
+.etapes-projet .agrandir {
+    margin-bottom: 1rem;
+}
+
+.etape-numero {
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background-color: var(--brand-blue);
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+/* ==========================================================
+   14. Page Réalisations
    ========================================================== */
 
 /* Étiquettes (type de projet, technologies) */
@@ -599,7 +640,7 @@
 }
 
 /* ==========================================================
-   13. Formulaire de contact
+   15. Formulaire de contact
    ========================================================== */
 .form-label {
     font-weight: 600;
@@ -646,29 +687,7 @@
 }
 
 /* ==========================================================
-   14. Typographie
-   ========================================================== */
-
-/* Titres : Heebo */
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6,
-.display-5,
-.navbar-brand {
-    font-family: var(--brand-font-heading);
-    font-weight: 600;
-}
-
-/* Code (noms de cookies, de fichiers…) : texte de la page sur une pastille teintée.
-   Remplace le rose de Bootstrap, trop peu contrasté sur le fond beige (4,43:1). */
-code {
-    padding: 0.1em 0.35em;
-    border-radius: 0.3em;
-    background-color: var(--solvr-accent-soft);
-    color: var(--solvr-text);
-}
-
-/* ==========================================================
-   15. Pages légales et 404
+   16. Pages légales et pages d'erreur
    ========================================================== */
 .page-legale h2 {
     margin-top: 2.5rem;
@@ -720,7 +739,7 @@ code {
 }
 
 /* ==========================================================
-   16. Page À propos : frise du parcours
+   17. Page À propos : frise du parcours
    ========================================================== */
 .parcours {
     position: relative;
@@ -804,30 +823,7 @@ code {
 }
 
 /* ==========================================================
-   17. Réduction des animations
-   ========================================================== */
-/* ==========================================================
-   De l'idée au site (page Services)
-   ========================================================== */
-.etapes-projet .agrandir {
-    margin-bottom: 1rem;
-}
-
-.etape-numero {
-    display: inline-grid;
-    place-items: center;
-    flex-shrink: 0;
-    width: 1.75rem;
-    height: 1.75rem;
-    border-radius: 50%;
-    background-color: var(--brand-blue);
-    color: #fff;
-    font-size: 0.875rem;
-    font-weight: 700;
-}
-
-/* ==========================================================
-   Images agrandissables et visionneuse
+   18. Images agrandissables et visionneuse
    ========================================================== */
 .agrandir {
     position: relative;
@@ -928,34 +924,24 @@ code {
     .visionneuse[open]::backdrop { animation: solvr-fondu-entree-simple 0.3s ease; }
 }
 
-/* ==========================================================================
-   Animations
+/* ==========================================================
+   19. Animations
    Tout ce qui bouge est réservé à prefers-reduced-motion: no-preference.
-   ========================================================================== */
-
-:root {
-  --solvr-duree-rapide: 0.2s;
-  --solvr-duree: 0.35s;
-  --solvr-courbe: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --solvr-ombre-survol: 0 0.75rem 1.75rem rgb(24 23 29 / 0.12);
-}
-
-[data-bs-theme="dark"] {
-  --solvr-ombre-survol: 0 0.75rem 1.75rem rgb(0 0 0 / 0.5);
-}
+   Les durées et la courbe sont dans les variables (section 1).
+   ========================================================== */
 
 /* --- Images clés --- */
 @keyframes solvr-apparition {
-  from { opacity: 0; translate: 0 1.5rem; }
-  to   { opacity: 1; translate: 0 0; }
+    from { opacity: 0; translate: 0 1.5rem; }
+    to   { opacity: 1; translate: 0 0; }
 }
 @keyframes solvr-fondu-sortie { to { opacity: 0; } }
 @keyframes solvr-fondu-entree { from { opacity: 0; transform: translateY(0.75rem); } }
 @keyframes solvr-onde { to { transform: scale(1); opacity: 0; } }
 @keyframes solvr-pivot { from { opacity: 0; transform: rotate(-90deg) scale(0.6); } }
 @keyframes solvr-secousse {
-  20%, 60% { translate: -0.375rem 0; }
-  40%, 80% { translate: 0.375rem 0; }
+    20%, 60% { translate: -0.375rem 0; }
+    40%, 80% { translate: 0.375rem 0; }
 }
 @keyframes solvr-trace { to { stroke-dashoffset: 0; } }
 @keyframes solvr-progression { to { transform: scaleX(1); } }
@@ -970,144 +956,144 @@ html { scroll-padding-top: 5rem; }
    (le lien cliqué a le focus). En arrivant d'une autre page (services.php#site-vitrine),
    rien n'a le focus : la page s'ouvre directement sur la bonne section. */
 @media (prefers-reduced-motion: no-preference) {
-  :root { scroll-behavior: auto; }
-  :root:focus-within { scroll-behavior: smooth; }
+    :root { scroll-behavior: auto; }
+    :root:focus-within { scroll-behavior: smooth; }
 }
 
 /* --- 2. Transition entre les pages --- */
 @media (prefers-reduced-motion: no-preference) {
-  @view-transition { navigation: auto; }
+    @view-transition { navigation: auto; }
 }
 
 body > header { position: relative; view-transition-name: entete; }
 
 ::view-transition-old(root) {
-  animation: solvr-fondu-sortie var(--solvr-duree-rapide) ease both;
+    animation: solvr-fondu-sortie var(--solvr-duree-rapide) ease both;
 }
 ::view-transition-new(root) {
-  animation: solvr-fondu-entree var(--solvr-duree) var(--solvr-courbe) both;
+    animation: solvr-fondu-entree var(--solvr-duree) var(--solvr-courbe) both;
 }
 
 /* --- 3. Entrée du hero au chargement (sans JS) --- */
 @media (prefers-reduced-motion: no-preference) {
-  [data-entree] { animation: solvr-apparition 0.7s var(--solvr-courbe) both; }
-  [data-entree="2"] { animation-delay: 0.1s; }
-  [data-entree="3"] { animation-delay: 0.2s; }
-  [data-entree="4"] { animation-delay: 0.3s; }
-  [data-entree="5"] { animation-delay: 0.4s; }
+    [data-entree] { animation: solvr-apparition 0.7s var(--solvr-courbe) both; }
+    [data-entree="2"] { animation-delay: 0.1s; }
+    [data-entree="3"] { animation-delay: 0.2s; }
+    [data-entree="4"] { animation-delay: 0.3s; }
+    [data-entree="5"] { animation-delay: 0.4s; }
 }
 
 /* --- 4. Apparition au défilement (pilotée par animations.js) --- */
 @media (prefers-reduced-motion: no-preference) {
-  .js [data-reveal]:not(.est-visible),
-  .js [data-reveal-groupe] > :not(.est-visible) {
-    opacity: 0;
-  }
-  .js .est-visible {
-    animation: solvr-apparition 0.6s var(--solvr-courbe) var(--reveal-delai, 0s) both;
-  }
+    .js [data-reveal]:not(.est-visible),
+    .js [data-reveal-groupe] > :not(.est-visible) {
+        opacity: 0;
+    }
+    .js .est-visible {
+        animation: solvr-apparition 0.6s var(--solvr-courbe) var(--reveal-delai, 0s) both;
+    }
 }
 
 /* --- 5. Cartes au survol --- */
 .carte-survol {
-  transition:
-    transform var(--solvr-duree) var(--solvr-courbe),
-    box-shadow var(--solvr-duree) var(--solvr-courbe);
+    transition:
+        transform var(--solvr-duree) var(--solvr-courbe),
+        box-shadow var(--solvr-duree) var(--solvr-courbe);
 }
 .carte-survol:focus-within {
-  transform: translateY(-0.375rem);
-  box-shadow: var(--solvr-ombre-survol);
-}
-@media (hover: hover) {
-  .carte-survol:hover {
     transform: translateY(-0.375rem);
     box-shadow: var(--solvr-ombre-survol);
-  }
-  .carte-survol svg:not(.btn svg, .link-fleche svg, .agrandir svg) {
-    transition: transform var(--solvr-duree) var(--solvr-courbe);
-  }
-  .carte-survol:hover svg:not(.btn svg, .link-fleche svg, .agrandir svg) {
-    transform: scale(1.12) rotate(-6deg);
-  }
+}
+@media (hover: hover) {
+    .carte-survol:hover {
+        transform: translateY(-0.375rem);
+        box-shadow: var(--solvr-ombre-survol);
+    }
+    .carte-survol svg:not(.btn svg, .link-fleche svg, .agrandir svg) {
+        transition: transform var(--solvr-duree) var(--solvr-courbe);
+    }
+    .carte-survol:hover svg:not(.btn svg, .link-fleche svg, .agrandir svg) {
+        transform: scale(1.12) rotate(-6deg);
+    }
 }
 
 /* --- 6. Boutons : appui, flèche, onde --- */
 .btn {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  transition:
-    color 0.15s ease-in-out,
-    background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out,
-    box-shadow 0.15s ease-in-out,
-    transform var(--solvr-duree-rapide) var(--solvr-courbe);
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition:
+        color 0.15s ease-in-out,
+        background-color 0.15s ease-in-out,
+        border-color 0.15s ease-in-out,
+        box-shadow 0.15s ease-in-out,
+        transform var(--solvr-duree-rapide) var(--solvr-courbe);
 }
 .btn:active { transform: scale(0.97); }
 
 .icone-fleche { transition: transform var(--solvr-duree) var(--solvr-courbe); }
 @media (hover: hover) {
-  .btn:hover .icone-fleche,
-  a:hover > .icone-fleche { transform: translateX(0.25rem); }
+    .btn:hover .icone-fleche,
+    a:hover > .icone-fleche { transform: translateX(0.25rem); }
 }
 
 .onde {
-  position: absolute;
-  z-index: -1;
-  border-radius: 50%;
-  background-color: currentColor;
-  opacity: 0.3;
-  transform: scale(0);
-  pointer-events: none;
-  animation: solvr-onde 0.6s ease-out forwards;
+    position: absolute;
+    z-index: -1;
+    border-radius: 50%;
+    background-color: currentColor;
+    opacity: 0.3;
+    transform: scale(0);
+    pointer-events: none;
+    animation: solvr-onde 0.6s ease-out forwards;
 }
 
 /* --- 7. Bouton de thème --- */
 @media (prefers-reduced-motion: no-preference) {
-  .theme-toggle svg { animation: solvr-pivot 0.5s var(--solvr-courbe); }
+    .theme-toggle svg { animation: solvr-pivot 0.5s var(--solvr-courbe); }
 }
 
 /* --- 8. Logos des outils --- */
 @media (hover: hover) {
-  .technos svg { transition: transform var(--solvr-duree) var(--solvr-courbe); }
-  .technos li:hover svg { transform: translateY(-0.25rem) scale(1.12); }
+    .technos svg { transition: transform var(--solvr-duree) var(--solvr-courbe); }
+    .technos li:hover svg { transform: translateY(-0.25rem) scale(1.12); }
 }
 
 /* --- 9. FAQ : ouverture en douceur --- */
 @media (prefers-reduced-motion: no-preference) {
-  .faq { interpolate-size: allow-keywords; }
-  .faq details::details-content {
-    block-size: 0;
-    overflow: clip;
-    transition:
-      block-size var(--solvr-duree) var(--solvr-courbe),
-      content-visibility var(--solvr-duree) allow-discrete;
-  }
-  .faq details[open]::details-content { block-size: auto; }
+    .faq { interpolate-size: allow-keywords; }
+    .faq details::details-content {
+        block-size: 0;
+        overflow: clip;
+        transition:
+            block-size var(--solvr-duree) var(--solvr-courbe),
+            content-visibility var(--solvr-duree) allow-discrete;
+    }
+    .faq details[open]::details-content { block-size: auto; }
 }
 
 /* --- 10. En-tête : ombre + barre de progression au défilement --- */
 @supports (animation-timeline: scroll()) {
-  @media (prefers-reduced-motion: no-preference) {
-    body > header {
-      animation: solvr-ombre-entete linear both;
-      animation-timeline: scroll(root);
-      animation-range: 0 6rem;
+    @media (prefers-reduced-motion: no-preference) {
+        body > header {
+            animation: solvr-ombre-entete linear both;
+            animation-timeline: scroll(root);
+            animation-range: 0 6rem;
+        }
+        body > header::after {
+            content: "";
+            position: absolute;
+            inset-inline: 0;
+            inset-block-end: 0;
+            block-size: 3px;
+            background-color: var(--solvr-accent);
+            transform: scaleX(0);
+            transform-origin: 0 50%;
+            pointer-events: none;
+            animation: solvr-progression linear both;
+            animation-timeline: scroll(root);
+        }
     }
-    body > header::after {
-      content: "";
-      position: absolute;
-      inset-inline: 0;
-      inset-block-end: 0;
-      block-size: 3px;
-      background-color: var(--solvr-accent);
-      transform: scaleX(0);
-      transform-origin: 0 50%;
-      pointer-events: none;
-      animation: solvr-progression linear both;
-      animation-timeline: scroll(root);
-    }
-  }
 }
 
 /* --- 11. Formulaire de contact --- */
@@ -1117,30 +1103,36 @@ body > header { position: relative; view-transition-name: entete; }
 .btn-envoi.est-en-cours:disabled { opacity: 1; cursor: progress; }
 
 .coche-animee {
-  flex-shrink: 0;
-  inline-size: 2.5rem;
-  block-size: 2.5rem;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+    flex-shrink: 0;
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  main .alert { animation: solvr-apparition 0.5s var(--solvr-courbe) both; }
-  [aria-invalid="true"] { animation: solvr-secousse 0.4s ease-in-out 0.3s; }
+    main .alert { animation: solvr-apparition 0.5s var(--solvr-courbe) both; }
+    [aria-invalid="true"] { animation: solvr-secousse 0.4s ease-in-out 0.3s; }
 
-  .coche-animee circle,
-  .coche-animee path {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    animation: solvr-trace 0.6s var(--solvr-courbe) forwards;
-  }
-  .coche-animee path { animation-delay: 0.45s; }
+    .coche-animee circle,
+    .coche-animee path {
+        stroke-dasharray: 1;
+        stroke-dashoffset: 1;
+        animation: solvr-trace 0.6s var(--solvr-courbe) forwards;
+    }
+    .coche-animee path { animation-delay: 0.45s; }
 }
 
-   @media (prefers-reduced-motion: reduce) {
+/* ==========================================================
+   20. Réduction des animations
+   ========================================================== */
+
+/* Toujours en dernier : coupe toutes les transitions et animations
+   pour les personnes qui ont demandé moins de mouvement dans leur système. */
+@media (prefers-reduced-motion: reduce) {
     *,
     *::before,
     *::after {
