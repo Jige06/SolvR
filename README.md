@@ -25,6 +25,7 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 - **Sécurité** : en-têtes HTTP de sécurité (Content-Security-Policy stricte, `nosniff`, `Referrer-Policy`, `Permissions-Policy`, protection contre l'affichage en iframe, HSTS en HTTPS, version de PHP masquée), échappement systématique des sorties, validation côté serveur, protection CSRF, honeypot et piège temporel anti-spam, limitation des envois (3 par heure, 30 s entre deux), sessions sécurisées, secrets hors du dépôt, fichiers internes inaccessibles depuis le web
 - **Référencement** : adresses propres sans extension (`/services`, les anciennes adresses en `.php` redirigent en 301), métadonnées uniques par page, Open Graph, URL canoniques, `robots.txt` et `sitemap.xml` générés depuis la configuration des pages, données structurées schema.org (`ProfessionalService`, `WebSite`) pour le référencement local
 - **Gestion des erreurs** : en production, toute erreur PHP affiche une page 500 statique avec le vrai code HTTP, sans aucun détail technique à l'écran ; les détails partent dans le journal d'erreurs du serveur. En développement, PHP affiche l'erreur détaillée. Une configuration manquante est signalée, jamais remplacée en silence par les valeurs d'exemple
+- **E-mails** : chaque demande arrive en HTML (mise en page en tableaux et styles en ligne, compatibles Gmail et Outlook), avec une version texte ; toutes les saisies du visiteur sont échappées
 - **RGPD** : aucune ressource chargée depuis un serveur tiers (polices et Bootstrap hébergés localement), minimisation des données collectées, information sous le formulaire
 - **Thème clair / sombre** : suit le réglage du système, bascule manuelle mémorisée, sans flash au chargement
 - **Animations** : discrètes et accessibles. Désactivées si `prefers-reduced-motion` est activé, aucun contenu masqué sans JavaScript, aucune animation en boucle (RGAA 13.8). Transitions entre les pages avec la View Transitions API, en amélioration progressive
@@ -83,6 +84,7 @@ solvr/
 │   ├── cta.php             # Bloc d'appel à l'action partagé entre les pages
 │   ├── structured-data.php # Données structurées schema.org (JSON-LD) de la page d'accueil
 │   ├── form-helpers.php    # Aides d'affichage des formulaires (attributs ARIA, messages d'erreur)
+│   ├── emails/contact.php  # Gabarit HTML du mail reçu pour chaque demande de contact
 │   ├── footer.php          # Pied de page et scripts
 │   └── config.example.php  # Modèle de configuration (coordonnées, infos légales, SMTP)
 ├── src/                    # Classes PHP (formulaire de contact)
@@ -90,11 +92,13 @@ solvr/
 │   ├── ContactStatus.php   # Résultats possibles du traitement (enum)
 │   ├── SubmissionLimiter.php # Limitation des envois par session et piège temporel
 │   ├── ContactForm.php     # Données, libellés et validation du formulaire
+│   ├── ContactEmail.php    # Contenu du mail : objet, version HTML, version texte
 │   ├── ContactMailer.php   # Envoi de l'e-mail via PHPMailer
 │   └── CsrfToken.php       # Jeton anti-CSRF
 ├── tests/                  # Tests automatisés (PHPUnit)
 │   ├── ContactFormTest.php       # Validation des champs
 │   ├── ContactControllerTest.php # Traitement complet : envoi, erreurs, CSRF, robots, limites
+│   ├── ContactEmailTest.php      # Contenu du mail : échappement des saisies, liens, version texte
 │   ├── SubmissionLimiterTest.php # Piège temporel, délai et quota (avec une fausse horloge)
 │   └── Doubles/FakeMailer.php    # Faux expéditeur : compte les envois sans rien envoyer
 ├── assets/
@@ -162,7 +166,7 @@ La fonction génère un lien vers l'image, qui s'ouvre dans la visionneuse au cl
 
 ### Tests
 
-Le formulaire de contact (validation, sécurité, limitation des envois) est couvert par des tests PHPUnit. Les lancer avec `composer test` avant chaque commit qui touche à `src/`. Les tests utilisent un faux expéditeur et une fausse horloge : aucun e-mail n'est envoyé, aucune attente réelle.
+Le formulaire de contact (validation, sécurité, limitation des envois, contenu du mail) est couvert par des tests PHPUnit. Les lancer avec `composer test` avant chaque commit qui touche à `src/`. Les tests utilisent un faux expéditeur et une fausse horloge : aucun e-mail n'est envoyé, aucune attente réelle.
 
 ### Style du code
 
