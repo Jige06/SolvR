@@ -7,8 +7,10 @@
  * 5. Visionneuse : agrandir une image au clic
  *
  * Tout est désactivé si la personne a demandé à réduire les animations.
+ *
+ * Module (type="module") : ses fonctions restent privées à ce fichier,
+ * et le mode strict est automatique (plus besoin de 'use strict').
  */
-'use strict';
 
 const reduireAnimations = window.matchMedia('(prefers-reduced-motion: reduce)');
 

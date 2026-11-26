@@ -28,7 +28,7 @@ Sites vitrines, sites e-commerce et applications sur mesure pour les PME, commer
 - **RGPD** : aucune ressource chargée depuis un serveur tiers (polices et Bootstrap hébergés localement), minimisation des données collectées, information sous le formulaire
 - **Thème clair / sombre** : suit le réglage du système, bascule manuelle mémorisée, sans flash au chargement
 - **Animations** : discrètes et accessibles. Désactivées si `prefers-reduced-motion` est activé, aucun contenu masqué sans JavaScript, aucune animation en boucle (RGAA 13.8). Transitions entre les pages avec la View Transitions API, en amélioration progressive
-- **Performance** : polices variables légères (78 Ko au total) et préchargées, images WebP optimisées, responsives (`srcset` / `sizes`, variantes de 480 et 800 px) et chargées à la demande (`loading="lazy"`), scripts en `defer`, fichiers CSS et JS versionnés (`?v=`) et gardés un an en cache par le navigateur, polices un an, images un mois, compression gzip des fichiers texte
+- **Performance** : polices variables légères (78 Ko au total) et préchargées, images WebP optimisées, responsives (`srcset` / `sizes`, variantes de 480 et 800 px) et chargées à la demande (`loading="lazy"`), scripts en `defer` ou en modules, fichiers CSS et JS versionnés (`?v=`) et gardés un an en cache par le navigateur, polices un an, images un mois, compression gzip des fichiers texte
 
 ## Prérequis
 
@@ -172,6 +172,12 @@ Le formulaire de contact (validation, sécurité, limitation des envois) est cou
 ### Sécurité du code
 
 La Content-Security-Policy n'autorise que les fichiers du site : **aucun script ni style écrit directement dans le HTML** (pas de `<script>…</script>` en ligne, pas d'attribut `style="…"`, pas d'attribut `onclick`). Un script va dans `assets/js/`, un style dans `style.css` (une classe plutôt qu'un attribut). Une ressource externe (police, vidéo, outil de statistiques) demande de modifier la CSP dans `.htaccess`.
+
+### JavaScript
+
+- **Un fichier = un module** (`<script type="module">` dans `footer.php`) : chaque fichier a sa propre portée, ses constantes et fonctions ne se mélangent pas avec celles des autres fichiers. Le mode strict est automatique, et le script s'exécute une fois la page analysée, comme avec `defer`
+- **Exception : `theme-init.js`** reste un script classique, chargé dans le `<head>` sans `defer`. Il doit appliquer le thème *avant* le premier affichage, alors qu'un module attend la fin de l'analyse de la page
+- **Pas d'`import` entre nos fichiers** : un fichier importé serait demandé sans le `?v=` de `asset()`, et le navigateur pourrait garder une ancienne version en cache pendant un an. Pour partager du code, il faudra d'abord versionner les imports
 
 ### Branches
 
