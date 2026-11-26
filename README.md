@@ -138,10 +138,10 @@ solvr/
 
 | Attribut | Effet |
 |---|---|
-| `data-entree="1"` à `"5"` | Entrée en cascade au chargement (hero), sans JavaScript |
+| `data-entrance="1"` à `"5"` | Entrée en cascade au chargement (hero), sans JavaScript |
 | `data-reveal` | Apparition de l'élément quand il arrive à l'écran |
-| `data-reveal-groupe` | Sur un parent : ses enfants directs apparaissent l'un après l'autre |
-| classe `carte-survol` | La carte se soulève au survol et son icône pivote |
+| `data-reveal-group` | Sur un parent : ses enfants directs apparaissent l'un après l'autre |
+| classe `hover-card` | La carte se soulève au survol et son icône pivote |
 
 Ne pas placer de `data-reveal` à l'intérieur d'un élément déjà animé : il bougerait deux fois.
 
@@ -167,6 +167,7 @@ Le formulaire de contact (validation, sécurité, limitation des envois) est cou
 ### Style du code
 
 - **Indentation de 4 espaces, UTF-8, fins de ligne LF**, saut de ligne final : réglés par `.editorconfig` (dans VS Code, installer l'extension *EditorConfig for VS Code*)
+- **Nommage** : le code est en **anglais** (classes CSS, attributs `data-*`, variables CSS, fonctions et variables PHP et JavaScript, `id` techniques, champs du formulaire) ; le **français** est réservé aux textes du site, aux commentaires et à la documentation. Exception : les adresses des pages et les ancres partageables (`/a-propos`, `/services#site-vitrine`) font partie du contenu visible et restent en français, comme les clés de `pages.php` qui les reprennent
 - **PHP** : norme [PSR-12](https://www.php-fig.org/psr/psr-12/), vérifiée par PHP_CodeSniffer avec `composer lint` sur les classes (`src/`) et les fichiers de logique. Les pages et les gabarits, qui mêlent PHP et HTML, ne sont pas concernés. Seule exception à la norme : les classes n'ont pas de namespace (choix du projet, autoload classmap)
 
 ### Sécurité du code

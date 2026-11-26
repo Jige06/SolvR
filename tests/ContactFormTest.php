@@ -12,11 +12,11 @@ final class ContactFormTest extends TestCase
 {
     /** Une saisie correcte, modifiée champ par champ dans les tests */
     private const VALID = [
-        'nom'       => 'Pierre Durand',
-        'email'     => 'pierre.durand@exemple.fr',
-        'telephone' => '06 12 34 56 78',
-        'type'      => 'vitrine',
-        'message'   => 'Bonjour, je voudrais un site vitrine pour mon entreprise.',
+        'name'    => 'Pierre Durand',
+        'email'   => 'pierre.durand@exemple.fr',
+        'phone'   => '06 12 34 56 78',
+        'type'    => 'vitrine',
+        'message' => 'Bonjour, je voudrais un site vitrine pour mon entreprise.',
     ];
 
     public function testValidDataPasses(): void
@@ -29,7 +29,7 @@ final class ContactFormTest extends TestCase
 
     public function testOptionalFieldsCanBeEmpty(): void
     {
-        $form = new ContactForm(['telephone' => '', 'type' => ''] + self::VALID);
+        $form = new ContactForm(['phone' => '', 'type' => ''] + self::VALID);
 
         $this->assertTrue($form->validate());
     }
@@ -38,19 +38,19 @@ final class ContactFormTest extends TestCase
     public static function invalidValues(): array
     {
         return [
-            'nom vide'                  => ['nom', ''],
-            'nom d\'une lettre'         => ['nom', 'A'],
-            'nom trop long'             => ['nom', str_repeat('a', 101)],
-            'nom avec retour à la ligne' => ['nom', "Pierre\nDurand"],
-            'e-mail vide'               => ['email', ''],
-            'e-mail mal formé'          => ['email', 'pierre.durand'],
-            'téléphone trop court'      => ['telephone', '06 12 34'],
-            'téléphone étranger'        => ['telephone', '+44 20 7946 0958'],
-            'téléphone avec lettres'    => ['telephone', '06 12 AB 56 78'],
-            'type inconnu'              => ['type', 'piratage'],
-            'message vide'              => ['message', ''],
-            'message trop court'        => ['message', 'Bonjour'],
-            'message trop long'         => ['message', str_repeat('a', 5001)],
+            'nom vide'                  => ['name', ''],
+            'nom d\'une lettre'         => ['name', 'A'],
+            'nom trop long'              => ['name', str_repeat('a', 101)],
+            'nom avec retour à la ligne' => ['name', "Pierre\nDurand"],
+            'e-mail vide'                => ['email', ''],
+            'e-mail mal formé'           => ['email', 'pierre.durand'],
+            'téléphone trop court'       => ['phone', '06 12 34'],
+            'téléphone étranger'         => ['phone', '+44 20 7946 0958'],
+            'téléphone avec lettres'     => ['phone', '06 12 AB 56 78'],
+            'type inconnu'               => ['type', 'piratage'],
+            'message vide'               => ['message', ''],
+            'message trop court'         => ['message', 'Bonjour'],
+            'message trop long'          => ['message', str_repeat('a', 5001)],
         ];
     }
 
@@ -68,12 +68,12 @@ final class ContactFormTest extends TestCase
     public static function validPhones(): array
     {
         return [
-            'espaces'          => ['06 12 34 56 78'],
-            'collé'            => ['0612345678'],
-            'points'           => ['06.12.34.56.78'],
-            'tirets'           => ['06-12-34-56-78'],
-            'fixe'             => ['04 93 12 34 56'],
-            'international'    => ['+33 6 12 34 56 78'],
+            'espaces'             => ['06 12 34 56 78'],
+            'collé'               => ['0612345678'],
+            'points'              => ['06.12.34.56.78'],
+            'tirets'              => ['06-12-34-56-78'],
+            'fixe'                => ['04 93 12 34 56'],
+            'international'       => ['+33 6 12 34 56 78'],
             'international collé' => ['+33612345678'],
         ];
     }
@@ -81,24 +81,24 @@ final class ContactFormTest extends TestCase
     #[DataProvider('validPhones')]
     public function testFrenchPhoneFormatsAreAccepted(string $phone): void
     {
-        $form = new ContactForm(['telephone' => $phone] + self::VALID);
+        $form = new ContactForm(['phone' => $phone] + self::VALID);
 
         $this->assertTrue($form->validate());
     }
 
     public function testInputIsTrimmed(): void
     {
-        $form = new ContactForm(['nom' => '   Pierre Durand  '] + self::VALID);
+        $form = new ContactForm(['name' => '   Pierre Durand  '] + self::VALID);
 
-        $this->assertSame('Pierre Durand', $form->get('nom'));
+        $this->assertSame('Pierre Durand', $form->get('name'));
     }
 
     public function testNonStringValueBecomesEmpty(): void
     {
-        // Un robot peut envoyer nom[]=… : PHP reçoit alors un tableau au lieu d'une chaîne
-        $form = new ContactForm(['nom' => ['Pierre', 'Durand']] + self::VALID);
+        // Un robot peut envoyer name[]=… : PHP reçoit alors un tableau au lieu d'une chaîne
+        $form = new ContactForm(['name' => ['Pierre', 'Durand']] + self::VALID);
 
-        $this->assertSame('', $form->get('nom'));
+        $this->assertSame('', $form->get('name'));
         $this->assertFalse($form->validate());
     }
 

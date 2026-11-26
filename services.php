@@ -8,23 +8,23 @@ require __DIR__ . '/includes/head.php';
 require __DIR__ . '/includes/header.php';
 ?>
 
-<main id="contenu">
+<main id="main-content">
 
     <!-- ========== EN-TÊTE DE PAGE ========== -->
-    <section class="hero section" aria-labelledby="page-titre">
+    <section class="hero section" aria-labelledby="page-title">
         <div class="container">
             <div class="col-lg-9">
-                <p class="hero-surtitre">Mes services</p>
-                <h1 id="page-titre" class="display-5 fw-bold" data-entree="1">
+                <p class="hero-eyebrow">Mes services</p>
+                <h1 id="page-title" class="display-5 fw-bold" data-entrance="1">
                     Création de sites internet et d'applications sur mesure à Nice
                 </h1>
-                <p class="lead mt-3" data-entree="2">
+                <p class="lead mt-3" data-entrance="2">
                     Que vous ayez besoin d'être visible sur Google, de vendre en ligne ou de gagner du temps
                     au quotidien, je vous propose une solution adaptée à votre activité et à votre budget.
                 </p>
 
-                <nav class="mt-4" aria-label="Sur cette page" data-entree="3">
-                    <ul class="sommaire list-unstyled d-flex flex-wrap gap-2 mb-0">
+                <nav class="mt-4" aria-label="Sur cette page" data-entrance="3">
+                    <ul class="toc list-unstyled d-flex flex-wrap gap-2 mb-0">
                         <li><a href="#site-vitrine"><?= icon('laptop') ?> Site vitrine</a></li>
                         <li><a href="#site-ecommerce"><?= icon('cart') ?> Site e-commerce</a></li>
                         <li><a href="#application-sur-mesure"><?= icon('phone') ?> Application sur mesure</a></li>
@@ -35,12 +35,12 @@ require __DIR__ . '/includes/header.php';
     </section>
 
     <!-- ========== SITE VITRINE ========== -->
-    <section id="site-vitrine" class="section section-alt" aria-labelledby="vitrine-titre">
+    <section id="site-vitrine" class="section section-alt" aria-labelledby="showcase-title">
         <div class="container">
-            <div class="row gy-4 gx-lg-5 align-items-start" data-reveal-groupe>
+            <div class="row gy-4 gx-lg-5 align-items-start" data-reveal-group>
                 <div class="col-12 col-lg-7">
                     <span class="service-icon"><?= icon('laptop') ?></span>
-                    <h2 id="vitrine-titre">Site vitrine</h2>
+                    <h2 id="showcase-title">Site vitrine</h2>
                     <p class="lead">Votre carte de visite en ligne, disponible jour et nuit.</p>
                     <p>
                         Un site vitrine présente votre entreprise, vos services et vos coordonnées. C'est souvent
@@ -49,7 +49,7 @@ require __DIR__ . '/includes/header.php';
                     </p>
 
                     <h3 class="h5 mt-4">Ce qui est inclus</h3>
-                    <ul class="list-unstyled atouts mt-3 mb-0">
+                    <ul class="list-unstyled highlights mt-3 mb-0">
                         <li><?= icon('check', 'icon-accent') ?> <span>Un design sur mesure, à vos couleurs</span></li>
                         <li><?= icon('check', 'icon-accent') ?> <span>Les pages essentielles : accueil, services, réalisations, contact…</span></li>
                         <li><?= icon('check', 'icon-accent') ?> <span>Un formulaire de contact sécurisé</span></li>
@@ -67,7 +67,7 @@ require __DIR__ . '/includes/header.php';
                             sizes: 'offer'
                         ) ?>
                     </div>
-                    <div class="encart carte-survol">
+                    <div class="callout hover-card">
                         <h3 class="h5 d-flex align-items-center gap-2">
                             <?= icon('people', 'icon-accent') ?> Idéal pour<span class="visually-hidden"> un site vitrine</span>
                         </h3>
@@ -79,12 +79,12 @@ require __DIR__ . '/includes/header.php';
     </section>
 
     <!-- ========== SITE E-COMMERCE ========== -->
-    <section id="site-ecommerce" class="section" aria-labelledby="ecommerce-titre">
+    <section id="site-ecommerce" class="section" aria-labelledby="ecommerce-title">
         <div class="container">
-            <div class="row gy-4 gx-lg-5 align-items-start" data-reveal-groupe>
+            <div class="row gy-4 gx-lg-5 align-items-start" data-reveal-group>
                 <div class="col-12 col-lg-7 order-lg-2">
                     <span class="service-icon"><?= icon('cart') ?></span>
-                    <h2 id="ecommerce-titre">Site e-commerce</h2>
+                    <h2 id="ecommerce-title">Site e-commerce</h2>
                     <p class="lead">Vendez vos produits en ligne, même quand votre boutique est fermée.</p>
                     <p>
                         Une boutique en ligne vous ouvre à de nouveaux clients, au-delà de votre quartier.
@@ -93,7 +93,7 @@ require __DIR__ . '/includes/header.php';
                     </p>
 
                     <h3 class="h5 mt-4">Ce qui est inclus</h3>
-                    <ul class="list-unstyled atouts mt-3 mb-0">
+                    <ul class="list-unstyled highlights mt-3 mb-0">
                         <li><?= icon('check', 'icon-accent') ?> <span>Un catalogue de produits avec photos et fiches détaillées</span></li>
                         <li><?= icon('check', 'icon-accent') ?> <span>Un panier et un paiement en ligne sécurisé</span></li>
                         <li><?= icon('check', 'icon-accent') ?> <span>Un espace de gestion des produits, des stocks et des commandes</span></li>
@@ -111,7 +111,7 @@ require __DIR__ . '/includes/header.php';
                             sizes: 'offer'
                         ) ?>
                     </div>
-                    <div class="encart carte-survol">
+                    <div class="callout hover-card">
                         <h3 class="h5 d-flex align-items-center gap-2">
                             <?= icon('people', 'icon-accent') ?> Idéal pour<span class="visually-hidden"> un site e-commerce</span>
                         </h3>
@@ -123,12 +123,12 @@ require __DIR__ . '/includes/header.php';
     </section>
 
     <!-- ========== APPLICATION SUR MESURE ========== -->
-    <section id="application-sur-mesure" class="section section-alt" aria-labelledby="app-titre">
+    <section id="application-sur-mesure" class="section section-alt" aria-labelledby="app-title">
         <div class="container">
-            <div class="row gy-4 gx-lg-5 align-items-start" data-reveal-groupe>
+            <div class="row gy-4 gx-lg-5 align-items-start" data-reveal-group>
                 <div class="col-12 col-lg-7">
                     <span class="service-icon"><?= icon('phone') ?></span>
-                    <h2 id="app-titre">Application sur mesure</h2>
+                    <h2 id="app-title">Application sur mesure</h2>
                     <p class="lead">Un outil pensé pour votre façon de travailler.</p>
                     <p>
                         Quand les logiciels du marché ne correspondent pas à votre activité, une application
@@ -137,7 +137,7 @@ require __DIR__ . '/includes/header.php';
                     </p>
 
                     <h3 class="h5 mt-4">Quelques exemples</h3>
-                    <ul class="list-unstyled atouts mt-3 mb-0">
+                    <ul class="list-unstyled highlights mt-3 mb-0">
                         <li><?= icon('check', 'icon-accent') ?> <span>La prise de commande en ligne</span></li>
                         <li><?= icon('check', 'icon-accent') ?> <span>La réservation et la prise de rendez-vous</span></li>
                         <li><?= icon('check', 'icon-accent') ?> <span>Un espace client ou un espace employé</span></li>
@@ -155,12 +155,12 @@ require __DIR__ . '/includes/header.php';
                             sizes: 'offer'
                         ) ?>
                     </div>
-                    <div class="encart carte-survol">
+                    <div class="callout hover-card">
                         <h3 class="h5 d-flex align-items-center gap-2">
                             <?= icon('people', 'icon-accent') ?> Idéal pour<span class="visually-hidden"> une application sur mesure</span>
                         </h3>
                         <p>PME, restaurateurs, traiteurs, prestataires de services… toute entreprise qui perd du temps sur des tâches répétitives.</p>
-                        <a class="link-fleche" href="<?= e($pages['realisations']['path']) ?>#traiteur">
+                        <a class="link-arrow" href="<?= e($pages['realisations']['path']) ?>#traiteur">
                             Voir un exemple : l'application traiteur <?= icon('arrow-right') ?>
                         </a>
                     </div>
@@ -170,15 +170,15 @@ require __DIR__ . '/includes/header.php';
     </section>
 
     <!-- ========== DE L'IDÉE AU SITE ========== -->
-    <section class="section" aria-labelledby="idee-titre">
+    <section class="section" aria-labelledby="idea-title">
         <div class="container">
-            <h2 id="idee-titre" class="section-titre" data-reveal>De l'idée au site en ligne</h2>
+            <h2 id="idea-title" class="section-title" data-reveal>De l'idée au site en ligne</h2>
             <p class="lead mb-5" data-reveal>
                 Avant d'écrire la moindre ligne de code, on construit votre site pas à pas.
                 Voici les trois étapes, illustrées avec la page d'accueil de ce site.
             </p>
 
-            <ol class="list-unstyled row g-4 g-lg-5 mb-0 etapes-projet" data-reveal-groupe>
+            <ol class="list-unstyled row g-4 g-lg-5 mb-0 project-steps" data-reveal-group>
                 <li class="col-12 col-md-4">
                     <figure class="mb-0">
                         <?= zoomableImage(
@@ -188,7 +188,7 @@ require __DIR__ . '/includes/header.php';
                             sizes: 'step'
                         ) ?>
                         <figcaption>
-                            <h3 class="h5 d-flex align-items-center gap-2"><span class="etape-numero" aria-hidden="true">1</span> Le croquis</h3>
+                            <h3 class="h5 d-flex align-items-center gap-2"><span class="step-number" aria-hidden="true">1</span> Le croquis</h3>
                             <p class="mb-0">On organise ensemble le contenu de chaque page : ce qu'il faut montrer, et dans quel ordre. Rien n'est encore figé.</p>
                         </figcaption>
                     </figure>
@@ -202,7 +202,7 @@ require __DIR__ . '/includes/header.php';
                             sizes: 'step'
                         ) ?>
                         <figcaption>
-                            <h3 class="h5 d-flex align-items-center gap-2"><span class="etape-numero" aria-hidden="true">2</span> La maquette</h3>
+                            <h3 class="h5 d-flex align-items-center gap-2"><span class="step-number" aria-hidden="true">2</span> La maquette</h3>
                             <p class="mb-0">Je mets en forme votre site à vos couleurs : typographies, boutons, espacements. Vous validez avant la première ligne de code.</p>
                         </figcaption>
                     </figure>
@@ -216,7 +216,7 @@ require __DIR__ . '/includes/header.php';
                             sizes: 'step'
                         ) ?>
                         <figcaption>
-                            <h3 class="h5 d-flex align-items-center gap-2"><span class="etape-numero" aria-hidden="true">3</span> Le site en ligne</h3>
+                            <h3 class="h5 d-flex align-items-center gap-2"><span class="step-number" aria-hidden="true">3</span> Le site en ligne</h3>
                             <p class="mb-0">Je développe le site, adapté à tous les écrans, puis je le mets en ligne. Il ne reste plus qu'à le faire connaître.</p>
                         </figcaption>
                     </figure>
@@ -226,11 +226,11 @@ require __DIR__ . '/includes/header.php';
     </section>
 
     <!-- ========== INCLUS DANS CHAQUE PROJET ========== -->
-    <section class="section section-alt" aria-labelledby="inclus-titre">
+    <section class="section section-alt" aria-labelledby="included-title">
         <div class="container">
-            <h2 id="inclus-titre" class="section-titre" data-reveal>Inclus dans chaque projet</h2>
+            <h2 id="included-title" class="section-title" data-reveal>Inclus dans chaque projet</h2>
 
-            <ul class="list-unstyled row g-4 mb-0" data-reveal-groupe>
+            <ul class="list-unstyled row g-4 mb-0" data-reveal-group>
                 <li class="col-12 col-sm-6 col-lg-4">
                     <span class="service-icon"><?= icon('phone') ?></span>
                     <h3 class="h5">Adapté au mobile</h3>
@@ -266,50 +266,50 @@ require __DIR__ . '/includes/header.php';
     </section>
 
     <!-- ========== QUESTIONS FRÉQUENTES ========== -->
-    <section class="section" aria-labelledby="faq-titre">
+    <section class="section" aria-labelledby="faq-title">
         <div class="container">
             <div class="col-lg-9 mx-auto">
-                <h2 id="faq-titre" class="section-titre" data-reveal>Questions fréquentes</h2>
+                <h2 id="faq-title" class="section-title" data-reveal>Questions fréquentes</h2>
 
-                <div class="faq" data-reveal-groupe>
+                <div class="faq" data-reveal-group>
                     <details>
                         <summary>Combien coûte un site internet ?</summary>
-                        <div class="faq-reponse">
+                        <div class="faq-answer">
                             <p class="mb-0">Chaque projet est différent : le prix dépend du nombre de pages, des fonctionnalités et du contenu à créer. Après un premier échange, je vous remets un devis gratuit, détaillé et sans engagement.</p>
                         </div>
                     </details>
 
                     <details>
                         <summary>Combien de temps faut-il pour créer mon site ?</summary>
-                        <div class="faq-reponse">
+                        <div class="faq-answer">
                             <p class="mb-0">Le délai dépend de l'ampleur du projet et de la rapidité avec laquelle les contenus (textes, photos) sont prêts. Il est précisé dans le devis, avec les grandes étapes du projet.</p>
                         </div>
                     </details>
 
                     <details>
                         <summary>Pourrai-je modifier mon site moi-même ?</summary>
-                        <div class="faq-reponse">
+                        <div class="faq-answer">
                             <p class="mb-0">Selon vos besoins, je peux prévoir un espace d'administration pour modifier vous-même certains contenus (actualités, horaires, produits…), ou m'occuper des mises à jour pour vous.</p>
                         </div>
                     </details>
 
                     <details>
                         <summary>Qui s'occupe de l'hébergement et du nom de domaine ?</summary>
-                        <div class="faq-reponse">
+                        <div class="faq-answer">
                             <p class="mb-0">Je vous accompagne dans leur choix et leur mise en place. Ils sont enregistrés au nom de votre entreprise : vous en restez propriétaire.</p>
                         </div>
                     </details>
 
                     <details>
                         <summary>Mon site sera-t-il bien placé sur Google ?</summary>
-                        <div class="faq-reponse">
+                        <div class="faq-answer">
                             <p class="mb-0">Votre site est construit selon les bonnes pratiques du référencement : structure, rapidité, contenus, référencement local. Personne ne peut honnêtement garantir une première place, mais un site bien construit vous donne toutes les chances d'être trouvé.</p>
                         </div>
                     </details>
 
                     <details>
                         <summary>Et après la mise en ligne ?</summary>
-                        <div class="faq-reponse">
+                        <div class="faq-answer">
                             <p class="mb-0">Je reste disponible pour répondre à vos questions, faire évoluer votre site et assurer sa maintenance (mises à jour, sauvegardes, sécurité).</p>
                         </div>
                     </details>

@@ -12,15 +12,15 @@ require __DIR__ . '/includes/head.php';
 require __DIR__ . '/includes/header.php';
 ?>
 
-<main id="contenu">
-    <section class="section page-legale" aria-labelledby="page-titre">
+<main id="main-content">
+    <section class="section legal-page" aria-labelledby="page-title">
         <div class="container">
             <div class="col-lg-9 col-xl-8">
-                <h1 id="page-titre" class="mb-2">Mentions légales</h1>
+                <h1 id="page-title" class="mb-2">Mentions légales</h1>
                 <p class="text-body-secondary mb-5">Dernière mise à jour : <?= e($legal['updated']) ?></p>
 
                 <h2>Éditeur du site</h2>
-                <dl class="infos-legales">
+                <dl class="legal-info">
                     <dt>Responsable</dt>
                     <dd><?= legalValue($legal['editor']['name']) ?></dd>
 
@@ -49,7 +49,7 @@ require __DIR__ . '/includes/header.php';
                 <p><?= legalValue($legal['editor']['name']) ?></p>
 
                 <h2>Hébergement</h2>
-                <dl class="infos-legales">
+                <dl class="legal-info">
                     <dt>Hébergeur</dt>
                     <dd><?= legalValue($legal['host']['name']) ?></dd>
 

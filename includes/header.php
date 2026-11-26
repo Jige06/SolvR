@@ -7,7 +7,7 @@ $navItems = array_filter($pages, fn(array $p): bool => $p['nav']);
 ?>
 
 <body>
-    <a class="visually-hidden-focusable skip-link" href="#contenu">Aller au contenu</a>
+    <a class="visually-hidden-focusable skip-link" href="#main-content">Aller au contenu</a>
 
     <header class="site-header sticky-top">
         <nav class="navbar navbar-expand-lg" aria-label="Navigation principale">
@@ -23,13 +23,13 @@ $navItems = array_filter($pages, fn(array $p): bool => $p['nav']);
                 </button>
 
                 <button class="navbar-toggler ms-2" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#menu-principal"
-                    aria-controls="menu-principal" aria-expanded="false"
+                    data-bs-toggle="collapse" data-bs-target="#main-menu"
+                    aria-controls="main-menu" aria-expanded="false"
                     aria-label="Ouvrir le menu">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="menu-principal">
+                <div class="collapse navbar-collapse" id="main-menu">
                     <ul class="navbar-nav ms-auto mb-3 mb-lg-0 align-items-lg-center">
 
                         <!-- 1. Les liens du menu : un passage de boucle par page -->

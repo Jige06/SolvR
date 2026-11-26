@@ -18,7 +18,7 @@ $structuredData = [
         [
             // L'entreprise : un prestataire de services local
             '@type'       => 'ProfessionalService',
-            '@id'         => SITE_URL . '/#entreprise',
+            '@id'         => SITE_URL . '/#organization',
             'name'        => 'SolvR',
             'description' => $pages['accueil']['description'],
             'url'         => SITE_URL . '/',
@@ -49,11 +49,11 @@ $structuredData = [
         [
             // Le site lui-même (aide Google à afficher le nom « SolvR » dans les résultats)
             '@type'      => 'WebSite',
-            '@id'        => SITE_URL . '/#site',
+            '@id'        => SITE_URL . '/#website',
             'name'       => 'SolvR',
             'url'        => SITE_URL . '/',
             'inLanguage' => 'fr-FR',
-            'publisher'  => ['@id' => SITE_URL . '/#entreprise'],
+            'publisher'  => ['@id' => SITE_URL . '/#organization'],
         ],
     ],
 ];

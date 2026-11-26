@@ -12,144 +12,144 @@
  * et le mode strict est automatique (plus besoin de 'use strict').
  */
 
-const reduireAnimations = window.matchMedia('(prefers-reduced-motion: reduce)');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 /* 1. Apparition au défilement ------------------------------------------- */
-function initApparitions() {
+function initReveal() {
     // Les enfants d'un groupe apparaissent en cascade : 0 s, 0,08 s, 0,16 s…
-    document.querySelectorAll('[data-reveal-groupe]').forEach((groupe) => {
-        [...groupe.children].forEach((enfant, index) => {
-            enfant.style.setProperty('--reveal-delai', `${Math.min(index, 5) * 0.08}s`);
+    document.querySelectorAll('[data-reveal-group]').forEach((group) => {
+        [...group.children].forEach((child, index) => {
+            child.style.setProperty('--reveal-delay', `${Math.min(index, 5) * 0.08}s`);
         });
     });
 
-    const elements = document.querySelectorAll('[data-reveal], [data-reveal-groupe] > *');
+    const elements = document.querySelectorAll('[data-reveal], [data-reveal-group] > *');
 
     // Navigateur trop ancien ou animations réduites : on affiche tout de suite.
-    if (!('IntersectionObserver' in window) || reduireAnimations.matches) {
-        elements.forEach((element) => element.classList.add('est-visible'));
+    if (!('IntersectionObserver' in window) || reduceMotion.matches) {
+        elements.forEach((element) => element.classList.add('is-visible'));
         return;
     }
 
-    const observateur = new IntersectionObserver((entrees, obs) => {
-        entrees.forEach((entree) => {
-            if (!entree.isIntersecting) return;
-            entree.target.classList.add('est-visible');
-            obs.unobserve(entree.target); // une seule fois par élément
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target); // une seule fois par élément
         });
     }, { rootMargin: '0px 0px -10% 0px' });
 
-    elements.forEach((element) => observateur.observe(element));
+    elements.forEach((element) => observer.observe(element));
 }
 
 /* 2. Onde au clic -------------------------------------------------------- */
-function initOndes() {
+function initRipples() {
     // Délégation d'événement : un seul écouteur pour tous les boutons de la page.
     document.addEventListener('pointerdown', (event) => {
-        const bouton = event.target.closest('.btn');
-        if (!bouton || reduireAnimations.matches) return;
+        const button = event.target.closest('.btn');
+        if (!button || reduceMotion.matches) return;
 
-        const zone = bouton.getBoundingClientRect();
-        const taille = Math.max(zone.width, zone.height) * 2;
-        const onde = document.createElement('span');
+        const rect = button.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height) * 2;
+        const ripple = document.createElement('span');
 
-        onde.className = 'onde';
-        onde.style.width = `${taille}px`;
-        onde.style.height = `${taille}px`;
-        onde.style.left = `${event.clientX - zone.left - taille / 2}px`;
-        onde.style.top = `${event.clientY - zone.top - taille / 2}px`;
+        ripple.className = 'ripple';
+        ripple.style.width = `${size}px`;
+        ripple.style.height = `${size}px`;
+        ripple.style.left = `${event.clientX - rect.left - size / 2}px`;
+        ripple.style.top = `${event.clientY - rect.top - size / 2}px`;
 
-        bouton.append(onde);
-        onde.addEventListener('animationend', () => onde.remove());
+        button.append(ripple);
+        ripple.addEventListener('animationend', () => ripple.remove());
     });
 }
 
 /* 3. Formulaire de contact ---------------------------------------------- */
-function initFormulaireContact() {
-    const formulaire = document.querySelector('[data-formulaire-contact]');
-    if (!formulaire) return;
+function initContactForm() {
+    const form = document.querySelector('[data-contact-form]');
+    if (!form) return;
 
-    const bouton = formulaire.querySelector('[type="submit"]');
-    const statut = formulaire.querySelector('[data-statut-envoi]');
+    const button = form.querySelector('[type="submit"]');
+    const status = form.querySelector('[data-send-status]');
 
-    const definirEnvoi = (enCours) => {
-        bouton.disabled = enCours; // empêche le double envoi
-        bouton.classList.toggle('est-en-cours', enCours);
-        formulaire.setAttribute('aria-busy', String(enCours));
-        statut.textContent = enCours ? 'Envoi en cours, merci de patienter…' : '';
+    const setSending = (isSending) => {
+        button.disabled = isSending; // empêche le double envoi
+        button.classList.toggle('is-sending', isSending);
+        form.setAttribute('aria-busy', String(isSending));
+        status.textContent = isSending ? 'Envoi en cours, merci de patienter…' : '';
     };
 
-    formulaire.addEventListener('submit', () => definirEnvoi(true));
+    form.addEventListener('submit', () => setSending(true));
 
     // Retour arrière du navigateur : la page peut revenir du cache
     // avec le bouton encore désactivé. On la remet à zéro.
     window.addEventListener('pageshow', (event) => {
-        if (event.persisted) definirEnvoi(false);
+        if (event.persisted) setSending(false);
     });
 }
 
 /* 4. Halo du bouton Contact --------------------------------------------- */
 function initHalo() {
-    const bouton = document.querySelector('.site-header .btn-primary');
-    if (!bouton) return;
+    const button = document.querySelector('.site-header .btn-primary');
+    if (!button) return;
 
     // Donne au CSS le centre exact du bouton, en pixels depuis le coin de l'écran.
-    const placerHalo = () => {
-        const zone = bouton.getBoundingClientRect();
-        if (zone.width === 0) return; // bouton caché (menu mobile replié)
+    const placeHalo = () => {
+        const rect = button.getBoundingClientRect();
+        if (rect.width === 0) return; // bouton caché (menu mobile replié)
 
-        const racine = document.documentElement.style;
-        racine.setProperty('--solvr-halo-x', `${zone.left + zone.width / 2}px`);
-        racine.setProperty('--solvr-halo-y', `${zone.top + zone.height / 2}px`);
+        const root = document.documentElement.style;
+        root.setProperty('--solvr-halo-x', `${rect.left + rect.width / 2}px`);
+        root.setProperty('--solvr-halo-y', `${rect.top + rect.height / 2}px`);
     };
 
-    placerHalo();
-    window.addEventListener('resize', placerHalo);
-    document.fonts?.ready.then(placerHalo); // les polices peuvent décaler le bouton
+    placeHalo();
+    window.addEventListener('resize', placeHalo);
+    document.fonts?.ready.then(placeHalo); // les polices peuvent décaler le bouton
 }
 
 /* 5. Visionneuse --------------------------------------------------------- */
-function initVisionneuse() {
-    const liens = document.querySelectorAll('[data-agrandir]');
-    if (liens.length === 0 || typeof HTMLDialogElement !== 'function') return;
+function initLightbox() {
+    const links = document.querySelectorAll('[data-zoomable]');
+    if (links.length === 0 || typeof HTMLDialogElement !== 'function') return;
 
     // Une seule visionneuse par page, créée seulement si la page a des images à agrandir.
-    const visionneuse = document.createElement('dialog');
-    visionneuse.className = 'visionneuse';
-    visionneuse.setAttribute('aria-label', 'Image agrandie');
-    visionneuse.innerHTML = `
-        <button type="button" class="visionneuse-fermer">
+    const lightbox = document.createElement('dialog');
+    lightbox.className = 'lightbox';
+    lightbox.setAttribute('aria-label', 'Image agrandie');
+    lightbox.innerHTML = `
+        <button type="button" class="lightbox-close">
             <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/></svg>
             <span class="visually-hidden">Fermer</span>
         </button>
         <img alt="">`;
-    document.body.append(visionneuse);
+    document.body.append(lightbox);
 
-    const image = visionneuse.querySelector('img');
-    let declencheur = null;
+    const image = lightbox.querySelector('img');
+    let trigger = null;
 
-    liens.forEach((lien) => {
-        lien.addEventListener('click', (event) => {
+    links.forEach((link) => {
+        link.addEventListener('click', (event) => {
             // Ctrl/Cmd/Maj + clic : on laisse le navigateur ouvrir l'image dans un onglet.
             if (event.ctrlKey || event.metaKey || event.shiftKey) return;
             event.preventDefault();
 
-            image.src = lien.href;
-            image.alt = lien.querySelector('img').alt;
-            declencheur = lien;
-            visionneuse.showModal(); // modale : Échap ferme, le focus reste dedans
+            image.src = link.href;
+            image.alt = link.querySelector('img').alt;
+            trigger = link;
+            lightbox.showModal(); // modale : Échap ferme, le focus reste dedans
         });
     });
 
     // Un clic n'importe où (image, fond, croix) referme la visionneuse.
-    visionneuse.addEventListener('click', () => visionneuse.close());
+    lightbox.addEventListener('click', () => lightbox.close());
 
     // À la fermeture, le focus revient sur l'image cliquée (navigation au clavier).
-    visionneuse.addEventListener('close', () => declencheur?.focus());
+    lightbox.addEventListener('close', () => trigger?.focus());
 }
 
-initApparitions();
-initOndes();
-initFormulaireContact();
+initReveal();
+initRipples();
+initContactForm();
 initHalo();
-initVisionneuse();
+initLightbox();

@@ -57,7 +57,7 @@ class ContactController
             return $this->display();
         }
 
-        if (($post['site_web'] ?? '') !== '' || $this->limiter->isTooFast()) {
+        if (($post['website'] ?? '') !== '' || $this->limiter->isTooFast()) {
             // Honeypot rempli, ou formulaire envoyé en quelques secondes : c'est un robot.
             // On répond comme pour un succès, pour ne pas lui apprendre qu'il a été bloqué.
             return $this->succeed();

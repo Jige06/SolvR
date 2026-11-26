@@ -171,11 +171,11 @@ function zoomableImage(
 ): string {
     $sizes = IMAGE_SIZES[$sizes] ?? $sizes;
 
-    return '<a class="agrandir" href="' . e($src) . '" data-agrandir>'
+    return '<a class="zoomable" href="' . e($src) . '" data-zoomable>'
         . '<img src="' . e($src) . '" srcset="' . e(responsiveSrcset($src, $width)) . '" sizes="' . e($sizes) . '"'
         . ' alt="' . e($alt) . '" width="' . $width . '" height="' . $height . '"'
         . ' class="' . e($class) . '"' . ($lazy ? ' loading="lazy"' : '') . '>'
         . '<span class="visually-hidden"> (agrandir l\'image)</span>'
-        . '<span class="agrandir-badge" aria-hidden="true">' . icon('zoom') . '</span>'
+        . '<span class="zoomable-badge" aria-hidden="true">' . icon('zoom') . '</span>'
         . '</a>';
 }
